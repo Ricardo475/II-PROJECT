@@ -4,6 +4,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 
 public class Erp_connection extends Thread{
 		private DatagramSocket socket;
@@ -17,7 +21,7 @@ public class Erp_connection extends Thread{
 	        running = true;
 	      
 	        while (running) {
-	        	  byte[] buf = new byte[1500];
+	        	byte[] buf =   new byte[1500];
 	            DatagramPacket packet 
 	              = new DatagramPacket(buf, buf.length);
 	            try {
@@ -30,18 +34,30 @@ public class Erp_connection extends Thread{
 		  
 	            InetAddress address = packet.getAddress();
 	            int port = packet.getPort();
-	            packet = new DatagramPacket(buf, buf.length, address, port);
+	            packet = new DatagramPacket(buf, packet.getLength(), address, port);
 	            String received 
 	              = new String(packet.getData(), 0, packet.getLength());
 	            //System.out.println(received);
-	            String[] aux=received.split("]>");
+	            /*String[] aux=received.split("]>");
 	          
-	            System.out.println("new:"+aux[1]);
+	            System.out.println("new:"+aux[1]);*/
+
 	            
-	            if (received.equals("end")) {
-	                running = false;
-	                continue;
-	            }
+	            System.out.print(received);
+	            XML_parser parse= new XML_parser();
+	            try {
+					parse.parse(received);
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        
 	           
 	        }
 	        socket.close();
