@@ -8,14 +8,19 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 
+
+
+
 public class Erp_connection extends Thread{
 		private DatagramSocket socket;
 	    private boolean running;
-	   String xml;
+	    String xml;
+	    private float start;
 	    
 	    public Erp_connection(OrdersList O) throws SocketException {
 	        socket = new DatagramSocket(54321);
 	        this.xml="aaa";
+	       
 	    }
 
 	    public void run() {
@@ -45,7 +50,7 @@ public class Erp_connection extends Thread{
 	            System.out.println("new:"+aux[1]);*/
 	            //System.out.print(received);
 	            write(received);
-	          
+	           
 	           
 	           
 	        }

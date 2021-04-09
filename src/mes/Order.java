@@ -4,11 +4,12 @@ public class Order {
 	
 	int orderNumber;
 	boolean activeOrder;
-	
+	boolean done;
 	public Order(int orderNumber) {
 		
 		this.orderNumber = orderNumber;
-		this.activeOrder = false;  
+		this.activeOrder = false; 
+		this.done=false;
 	}
 	
 	public int getOrderNumber() {
@@ -23,6 +24,14 @@ public class Order {
 	
 	void orderDisactivate() {
 		this.activeOrder=false;
+	}
+	
+	@Override
+	public String toString()
+	{
+		
+		return "ola";
+		
 	}
 	
 }

@@ -26,9 +26,9 @@ public class OrdersList {
 	}
 	
 	
-	public void orderDone(int orderNumber) {
+	public void orderDone(Order orderNumber) {
 		
-		OrdersList.remove(orderNumber);
+		
 		this.DoneOrders++;
 		
 	}

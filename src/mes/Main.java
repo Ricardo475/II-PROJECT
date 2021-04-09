@@ -11,6 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
+		int start=(int) System.currentTimeMillis();
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
@@ -24,12 +25,24 @@ public class Main {
 			{
 			
 				ordem=aux;
-				parse.parse(ordem, OL);
+				int duration= (((int)System.currentTimeMillis()-start)/1000);
+				System.out.println(duration);
+				parse.parse(ordem, OL,duration);
 				
-						
+										
 			}
-			//Thread.sleep(1);
 			
+			if((OL.LengthOrderList()-OL.DoneOrders)!=0)
+			{
+							
+				/*for(int j=0;j<OL.LengthOrderList();j++)
+				{
+					System.out.print(OL.OrdersList.get(j)); System.out.println("  n: "+OL.OrdersList.get(j).getOrderNumber());
+				}
+				OL.OrdersList.clear();*/
+				
+			}
+			Thread.sleep(1);
 		}
 	
 	}

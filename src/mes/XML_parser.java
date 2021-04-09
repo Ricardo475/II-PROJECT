@@ -20,22 +20,23 @@ import org.xml.sax.SAXException;
 
 public class XML_parser {
 	String orderN;
-	public void parse(String xml,OrdersList OL) throws ParserConfigurationException, IOException, SAXException {
+	public void parse(String xml,OrdersList OL,int timeE) throws ParserConfigurationException, IOException, SAXException {
 		
-		if(xml.contains("Order"))
+		if(xml.contains("ORDERS"))
 		{
-			System.out.println("OLA");
+			
 			//File inputFile = new File("C:\\4ano\\2_semestre\\II\\II_comands_A_v1\\command1.xml");
-
 			DocumentBuilderFactory dbFactory= DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder= dbFactory.newDocumentBuilder();
 			InputStream inputStream = new    ByteArrayInputStream(xml.getBytes());
 			Document doc=dBuilder.parse(inputStream);
 			doc.getDocumentElement().normalize();
-			NodeList nlist=doc.getElementsByTagName("Order");
+			
 
 			if(xml.contains("Transform"))
 			{
+				NodeList nlist=doc.getElementsByTagName("Order");
+				
 				for(int i=0;i<nlist.getLength();i++)
 				{
 
@@ -43,22 +44,28 @@ public class XML_parser {
 					System.out.println("\nCurrent element: "+nNode.getNodeName());
 					if(nNode.getNodeType() == Node.ELEMENT_NODE)
 					{
-
+						
 						Element eElement= (Element) nNode;
 						System.out.println("Order roll no :"+eElement.getAttribute("Number"));
 						Integer Number=Integer.valueOf(eElement.getAttribute("Number"));
 						String From = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("From").getTextContent();
-						System.out.println("Order:"+ eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("From").getTextContent());
+						//System.out.println("Order:"+ eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("From").getTextContent());
 						String To = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("To").getTextContent();
 						int Quant = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Quantity").getTextContent());
 						int Time = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Time").getTextContent());
 						int MaxDelay = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent());
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
-						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty);
+						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
 						OL.addOrder(trans);
 					}
 
 				}
+			}
+			if(xml.contains("Stores"))
+			{
+				System.out.println("REQUEST ORDER");
+				Order n= new Order(0);
+				OL.addOrder(n);
 			}
 		}
 
