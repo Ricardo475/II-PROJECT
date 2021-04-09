@@ -3,21 +3,19 @@ package mes;
 public class Order {
 	
 	int orderNumber;
-	int activeOrder;
+	boolean activeOrder;
 	
-	public Order(int orderNumber ,int activeOrder) {
+	public Order(int orderNumber) {
 		
 		this.orderNumber = orderNumber;
-		this.activeOrder = activeOrder;   //idk if this is right :/
+		this.activeOrder = false;  
 	}
 	
 	public int getOrderNumber() {
 		return this.orderNumber;
 	}
 	
-	//void orderActivate(int orderNumber){}
-	//void orderDisactivate(int orderNumber){}
-	
-	
+	void orderActivate(){this.activeOrder=true;}
+	void orderDisactivate(){this.activeOrder=false;}
 	
 }

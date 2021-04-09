@@ -20,5 +20,8 @@ public class OrdersList {
 		this.DoneOrders++;
 		
 	}
-
+	public int LengthOrderList()
+	{
+		return OrdersList.size();
+	}
 }

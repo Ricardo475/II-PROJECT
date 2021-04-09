@@ -1,26 +1,28 @@
+package mes;
+
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 
 public class Erp_connection extends Thread{
 		private DatagramSocket socket;
 	    private boolean running;
-
-	    public Erp_connection() throws SocketException {
+	   String xml;
+	    
+	    public Erp_connection(OrdersList O) throws SocketException {
 	        socket = new DatagramSocket(54321);
+	        this.xml="aaa";
 	    }
 
 	    public void run() {
 	        running = true;
 	      
 	        while (running) {
+	        	
 	        	byte[] buf =   new byte[1500];
 	            DatagramPacket packet 
 	              = new DatagramPacket(buf, buf.length);
@@ -41,25 +43,21 @@ public class Erp_connection extends Thread{
 	            /*String[] aux=received.split("]>");
 	          
 	            System.out.println("new:"+aux[1]);*/
-
-	            
-	            System.out.print(received);
-	            XML_parser parse= new XML_parser();
-	            try {
-					parse.parse(received);
-				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        
+	            //System.out.print(received);
+	            write(received);
+	          
+	           
 	           
 	        }
 	        socket.close();
 	    }
+	   synchronized public String getXML()
+	    {
+			return this.xml;
+	    	
+	    }
+	   synchronized private void write(String s)
+	   {
+		   this.xml=s;
+	   }
 }

@@ -1,3 +1,4 @@
+package mes;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,10 +20,11 @@ import org.xml.sax.SAXException;
 
 public class XML_parser {
 	String orderN;
-	public void parse(String xml) throws ParserConfigurationException, IOException, SAXException {
+	public void parse(String xml,OrdersList OL) throws ParserConfigurationException, IOException, SAXException {
+		
 		if(xml.contains("Order"))
 		{
-
+			System.out.println("OLA");
 			//File inputFile = new File("C:\\4ano\\2_semestre\\II\\II_comands_A_v1\\command1.xml");
 
 			DocumentBuilderFactory dbFactory= DocumentBuilderFactory.newInstance();
@@ -44,13 +46,16 @@ public class XML_parser {
 
 						Element eElement= (Element) nNode;
 						System.out.println("Order roll no :"+eElement.getAttribute("Number"));
+						Integer Number=Integer.valueOf(eElement.getAttribute("Number"));
 						String From = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("From").getTextContent();
 						System.out.println("Order:"+ eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("From").getTextContent());
 						String To = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("To").getTextContent();
-						String Quant = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Quantity").getTextContent();
-						String Time = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Time").getTextContent();
-						String MaxDelay = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent();
-						String Penalty = eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent();
+						int Quant = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Quantity").getTextContent());
+						int Time = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Time").getTextContent());
+						int MaxDelay = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent());
+						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
+						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty);
+						OL.addToList(trans);
 					}
 
 				}
