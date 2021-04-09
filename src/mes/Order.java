@@ -15,7 +15,14 @@ public class Order {
 		return this.orderNumber;
 	}
 	
-	void orderActivate(){this.activeOrder=true;}
-	void orderDisactivate(){this.activeOrder=false;}
+	
+	void orderActivate() {
+		this.activeOrder=true;
+	}
+	
+	
+	void orderDisactivate() {
+		this.activeOrder=false;
+	}
 	
 }

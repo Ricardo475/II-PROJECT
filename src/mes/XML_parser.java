@@ -55,7 +55,7 @@ public class XML_parser {
 						int MaxDelay = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent());
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
 						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty);
-						OL.addToList(trans);
+						OL.addOrder(trans);
 					}
 
 				}

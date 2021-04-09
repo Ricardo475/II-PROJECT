@@ -10,7 +10,7 @@ public class DataBase {
 	
 	
 	void connect() {
-		
+		//connect to db postgresql
 		
 	}
 	
@@ -21,6 +21,7 @@ public class DataBase {
 	
 	ArrayList<Order> getOrdersList(){
 		ArrayList<Order> ordersList = new ArrayList<Order>();
+		
 		
 		return ordersList;
 		
