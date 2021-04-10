@@ -2,10 +2,10 @@ package mes;
 
 public class Order {
 	
-	int orderNumber;
+	int orderNumber,MaxD,instanteEnviado,instanteChegada;
 	boolean activeOrder;
 	boolean done;
-	public Order(int orderNumber) {
+	public Order(int orderNumber,int MaxD,int instanteEnviado,int instanteChegada) {
 		
 		this.orderNumber = orderNumber;
 		this.activeOrder = false; 
@@ -32,6 +32,19 @@ public class Order {
 		
 		return "ola";
 		
+	}
+	
+	public int PrazoEntrega()
+	{
+		return this.instanteChegada+this.MaxD;
+		
+	}
+
+	public void doOrder()
+	{
+		System.out.println("nada");
+		this.orderDisactivate();
+		this.done=true;
 	}
 	
 }

@@ -1,32 +1,38 @@
 package mes;
 
 public class Transformação extends Order {
-	int Quant,MaxD,Penalty,instanteEnviado,instanteChegada,TempoIni,TempoFim,PenalidadeIncurrida;
+	int Quant,Penalty,TempoIni,TempoFim,PenalidadeIncurrida;
 	String From,To;
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
-		super(orderNumber);
+		super(orderNumber,MaxDelay,Time,timeE);
 		this.From=From;
 		this.To=to;
 		this.Quant=Quantity;
-		this.instanteEnviado=Time;
 		this.MaxD=MaxDelay;
 		this.Penalty=Penalty;
-		this.instanteChegada=timeE;
 	}
 	
 	@Override
 	public String toString()
 	{
-		
 		return "ola2";
-		
 	}
 	
-	public int PrazoEntrega()
+	public void doOrder()
 	{
-		return this.instanteChegada+this.MaxD;
-		
+		if(Quant > 0)
+		{
+			//this.SelectPath();
+			System.out.println("Quant: "+Quant);
+			Quant--;
+			if(Quant==0) {	this.orderDisactivate();this.done=true;System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
-	
 	
 }

@@ -11,13 +11,13 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
-		int start=(int) System.currentTimeMillis();
+		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
 		Erp.start();
-		
+		Order prio = new Order(0,0,0,0);
 		for(int i=1;i>0;i++)
 		{
 			String aux=Erp.getXML();
@@ -26,7 +26,7 @@ public class Main {
 			
 				ordem=aux;
 				int duration= (((int)System.currentTimeMillis()-start)/1000);
-				System.out.println(duration);
+				//System.out.println(duration);
 				parse.parse(ordem, OL,duration);
 				
 										
@@ -34,13 +34,23 @@ public class Main {
 			
 			if((OL.LengthOrderList()-OL.DoneOrders)!=0)
 			{
-							
-				/*for(int j=0;j<OL.LengthOrderList();j++)
-				{
-					System.out.print(OL.OrdersList.get(j)); System.out.println("  n: "+OL.OrdersList.get(j).getOrderNumber());
-				}
-				OL.OrdersList.clear();*/
 				
+					
+					prio=OL.OrdemPrioritária();
+					if(prio != null)
+					{
+					prio.orderActivate();;
+					prio.doOrder();
+					l=0;
+					}
+					else
+					{
+						if(l==0)
+						{
+						System.out.println("===============NAO HA MAIS ORDENS===============");
+						l=1;
+						}
+					}
 			}
 			Thread.sleep(1);
 		}

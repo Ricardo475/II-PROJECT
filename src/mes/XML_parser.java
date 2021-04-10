@@ -32,8 +32,13 @@ public class XML_parser {
 			Document doc=dBuilder.parse(inputStream);
 			doc.getDocumentElement().normalize();
 			
-
-			if(xml.contains("Transform"))
+			if(xml.contains("<Request_Stores/>"))
+			{
+				System.out.println(xml);
+				Order n= new Order(0,0,0,0);
+				OL.addOrder(n);
+			}
+			else if(xml.contains("Transform"))
 			{
 				NodeList nlist=doc.getElementsByTagName("Order");
 				
@@ -61,12 +66,7 @@ public class XML_parser {
 
 				}
 			}
-			if(xml.contains("Stores"))
-			{
-				System.out.println("REQUEST ORDER");
-				Order n= new Order(0);
-				OL.addOrder(n);
-			}
+			
 		}
 
 	}
