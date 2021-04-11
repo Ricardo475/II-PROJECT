@@ -118,7 +118,7 @@ public class PathFinder {
 	
     void print_fabric() {
     	
-		for(int i=0;i < maze.length;i++) 
+	/*	for(int i=0;i < maze.length;i++) 
 		{
 	
 			for(int j = 0; j< maze[0].length; j++) {
@@ -128,7 +128,7 @@ public class PathFinder {
 			}
 	
 			System.out.println();
-		}
+		}*/
     }
 										 
 				

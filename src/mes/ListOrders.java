@@ -7,7 +7,7 @@ public class ListOrders extends Order{
 	
 	
 	public ListOrders(int orderNumber) {
-		super(orderNumber);
+		super(orderNumber,0,0,0);
 		
 	}
 	

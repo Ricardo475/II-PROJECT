@@ -7,7 +7,7 @@ public class SoredInWarehouse extends Order{
 	
 	
 	public SoredInWarehouse(int orderNumber) {
-		super(orderNumber);
+		super(orderNumber,0,0,0);
 	}
 	
 	void setPieceType(String pieceType) {

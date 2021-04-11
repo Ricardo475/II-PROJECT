@@ -19,7 +19,10 @@ public class Main {
 		Erp_connection Erp =new Erp_connection(OL);
 		Erp.start();
 		Order prio = new Order(0,0,0,0);
-		for(int i=1;i>0;i++)
+		OPC_UA opc=new OPC_UA();
+		opc.connect();
+		System.out.println(opc.get_Value("int_var"));
+		/*for(int i=1;i>0;i++)
 		{
 			String aux=Erp.getXML();
 			if(!aux.equals(ordem))
@@ -56,7 +59,7 @@ public class Main {
 			Thread.sleep(1);
 		
 		}
-	
+	*/
 	}
 
 }
