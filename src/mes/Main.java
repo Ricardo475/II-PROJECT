@@ -12,6 +12,21 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
+		//------------------------------------------------PAULO--------------------------------------------------------------//
+		PathFinder pr = new PathFinder();
+		Transformação trans = new Transformação(1, "P1", "P2", 1, 0, 0, 0, 0);
+		pr.initializeMachines();
+		
+		System.out.println("------------------------------------------------------------");
+		pr.setInitValidPaths();
+		
+		System.out.println("------------------------------------------------------------");
+		
+		System.out.print(pr.buildPathTransformation(trans));
+		
+		
+		//----------------------------------------------------LOIRO---------------------------------------------------------//
+		/*
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
