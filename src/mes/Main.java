@@ -1,5 +1,6 @@
 package mes;
 
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -7,13 +8,20 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import dijkstraAlgorithm_Test.test;
+
 
 public class Main {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
 		//------------------------------------------------PAULO--------------------------------------------------------------//
-		PathFinder pr = new PathFinder();
+		
+		
+		test t = new test();
+		t.doTest();
+		
+		/*PathFinder pr = new PathFinder();
 		Transformação trans = new Transformação(1, "P1", "P2", 1, 0, 0, 0, 0);
 		pr.initializeMachines();
 		
