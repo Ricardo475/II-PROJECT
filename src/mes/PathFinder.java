@@ -7,12 +7,11 @@ public class PathFinder {
 	int cell, piece, typeBegin, typeEnd;
 	
 	Machine mchs[] = new Machine[4];
-	paths paths[] = new paths[100];
 	
 	static int[] positionLeft = {0,2};
 	//ArrayList<Machine> machines = new ArrayList<Machine>();
 	
-	
+	/*
 	public static String[][] fabric_map = {{"[CL1T0]","[CL0T1]","[ALT5]","[XXXX]","[ART1]","[CR0T1]","[CR1T0]","[CR2Ta]" ,"[CR2T1b]"},
 									 	   {"[CL1T1]","[CL0T2]","[XXXX]","[XXXX]","[XXXX]","[CR0T2]","[CR1T1]","[CR2T2]" ,"[XXXX]"  },
 									       {"[CL1T2]","[CL0T3]","[XXXX]","[XXXX]","[XXXX]","[CR0T3]","[CR1T2]","[CR2T3]" ,"[XXXX]"  },
@@ -24,7 +23,7 @@ public class PathFinder {
 	
 	
 	//  Note: The 2nd to last row, the below R is connected to the LH's on his left and right
-	
+	/*
 	void setInitValidPaths() {
 			
 		//LEFT SIDE
@@ -54,129 +53,80 @@ public class PathFinder {
 			
 	}
 	
-
-	String buildPathTransformation(Transformação trans) {
+*/
+	
+	
+	String buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
-		String result = "";
-		result  = result.concat(fabric_map[positionLeft[0]][positionLeft[1]]);
-		//System.out.println(fabric_map[positionLeft[0]][positionLeft[1]]);
-		int n = 0;
-		boolean done = false;
+		String transformation = contructTranformations(trans, tts);
+		//System.out.println();
+		String[] divideTransformation;
+		divideTransformation = transformation.split("/");
 		
-		while(!done) {
+		for(String aux: divideTransformation) {
+			System.out.println(aux);
 			
-			for(int i = 0; i<15; i++) {
-				
-				
-				//UP
-				if(positionLeft[0]!=0) {
-					if(paths[i].isConnected(fabric_map[positionLeft[0]][positionLeft[1]], fabric_map[positionLeft[0]-1][positionLeft[1]])) {
-						
-						result = result.concat(fabric_map[positionLeft[0]-1][positionLeft[1]]);
-						positionLeft[0]--;
-						n++;
-						
-					}
-					
-				}
-				
-				//DOWN
-				if(positionLeft[0]!=6) {
-					if(paths[i].isConnected(fabric_map[positionLeft[0]][positionLeft[1]], fabric_map[positionLeft[0]+1][positionLeft[1]])) {
-						
-						result = result.concat(fabric_map[positionLeft[0]+1][positionLeft[1]]);
-						positionLeft[0]++;
-						n++;
-						
-					}
-					
-				}
-				
-				//LEFT
-				if(positionLeft[1]!=0) {
-					if(paths[i].isConnected(fabric_map[positionLeft[0]][positionLeft[1]], fabric_map[positionLeft[0]][positionLeft[1]-1])) {
-						
-						result = result.concat(fabric_map[positionLeft[0]][positionLeft[1]-1]);
-						positionLeft[1]--;
-						n++;
-						
-					}
-					
-				}
-				
-				//RIGHT
-				if(positionLeft[1]!=2) {
-					if(paths[i].isConnected(fabric_map[positionLeft[0]][positionLeft[1]], fabric_map[positionLeft[0]][positionLeft[1]+1])) {
-						
-						result = result.concat(fabric_map[positionLeft[0]][positionLeft[1]+1]);
-						positionLeft[1]++;
-						n++;
-						
-					}
-					
-				}
-				
-				
 			
-			}
 			
-			if(n==6) done = true;
-			
-			if(fabric_map[positionLeft[0]][positionLeft[1]].compareTo("[ALT6]")==0)
-				done = true;
 			
 		}
 		
-		/*String destMachine = " ";
-		Machine mch = new Machine();
-		
-		for(int i = 0; i < mchs.length; i++) {
-			
-			if(mchs[i].state == true && mchs[i].correctPart(trans.To)) {
-				mch.setMachine(mchs[i].machineID, mchs[i].tool, mchs[i].processTime);
-				destMachine = "MACHINE" + mch.machineID;
-				System.out.println("------------------------------------------------------------");
-				break;
-			}
-			
-		}
-		
-		//LEFT
-		
-		int length = 1;
-		boolean out = false;
-		
-		while(length!=0) {
-			
-			if(maze[0][2] == "WI") {
-				
-				result = "[ALT5][CL0T1][CL0T2]";
-			
-				if(destMachine.compareTo("MACHINE0")==0) {
-				
-					result = result + "[CL1T1]";
-					position[0] = 1;
-					position[1] = 0;
-				
-					//System.out.println("OK");
-				}
-			}
-			
-			length--;	
-		}
-
-		
-		if(maze[position[0]][position[1]] == "LM1")
-			result = result + "[CL0T2][CL0T3][CL0T4][CL0T5][CL0T6][ALT8][ALT7][ALT6]";
 		
 		
-		*/
-		return result;
-		
+		return transformation;
 		
 	}
 	
 	
+	private String contructTranformations(Transformação trans, TransformationTable[] tts) {
+		
+		String result = trans.From;
+		String newBegin = trans.From;
+		int n = 0;
+		
+		while(newBegin.compareTo(trans.To)!=0) {
+			
+			for(int i = 0; i<tts.length;i++) {
+				
+				if(tts[i].existsTranformationInTable(newBegin, trans.To)) {
+					newBegin = tts[i].producedPartByStartingPart(newBegin);;
+					result = result.concat("/" + newBegin);
+					break;
+				}
+				
+				else if(tts[i].startingPart.compareTo(newBegin) == 0) {
+					if(tts[i].startingPart.compareTo("P5")==0 && trans.To.compareTo("P9")!=0) {
+						newBegin = "P6";
+						result = result.concat("/" + newBegin);
+						break;
+					}
+					else if(tts[i].startingPart.compareTo("P5")==0 && trans.To.compareTo("P9")==0) {
+						newBegin = "P9";
+						result = result.concat("/" + newBegin);
+						break;
+					}
+					else if(tts[i].startingPart.compareTo("P6")!=0) {
+						newBegin = tts[i].producedPartByStartingPart(newBegin);
+						result = result.concat("/" + newBegin);
+						break;	
+					}	
+				
+				}
+				
+				
+			}
+			n++;
+			if(n > 10) {
+				System.out.println("INVALID PATHING");
+				return "-1";
+			}
+			
+		}
+		System.out.println("TRANSFORMATIONS: " + result);
+		return result;
+}
+
+
 	/*
 	void print_machines() {
 		
@@ -202,7 +152,7 @@ public class PathFinder {
 	
 	
 	
-	
+	/*
     void print_fabric() {
     	
 		for(int i=0;i < fabric_map.length;i++) 
@@ -218,6 +168,7 @@ public class PathFinder {
 		}
     }
 		
+		*/
 
 				
 

@@ -58,7 +58,7 @@ public class test {
 		
 		System.out.println("The shorted path from node: ");
 		for(int i = 0; i<dpq.distances.length;i++)
-			//if(i!=dpq.distances.length-1)
+			//if(i==dpq.distances.length-1)
 				System.out.println(source + " to " + i + " is " + dpq.distances[i]);
 	}
 

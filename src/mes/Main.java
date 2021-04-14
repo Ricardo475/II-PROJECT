@@ -17,25 +17,39 @@ public class Main {
 		
 		//------------------------------------------------PAULO--------------------------------------------------------------//
 		
+		/*
+		test t = new test();
+		t.doTest();
 		
-		
-		//test t = new test();
-		//t.doTest();
-		
-		/*PathFinder pr = new PathFinder();
-		Transformação trans = new Transformação(1, "P1", "P2", 1, 0, 0, 0, 0);
-		pr.initializeMachines();
-		
-		System.out.println("------------------------------------------------------------");
-		pr.setInitValidPaths();
-		
-		System.out.println("------------------------------------------------------------");
-		
-		System.out.print(pr.buildPathTransformation(trans));
 		*/
 		
-		//----------------------------------------------------LOIRO---------------------------------------------------------//
+		PathFinder pr = new PathFinder();
+		TransformationTable[] tts = new TransformationTable[8];
+		Transformação trans = new Transformação(1, "P1", "P8", 1, 0, 0, 0, 0);
 		
+		pr.initializeMachines();
+		
+		tts[0] = new TransformationTable("P1","P2","T1",15);
+		tts[1] = new TransformationTable("P4","P5","T1",15);
+		tts[2] = new TransformationTable("P6","P8","T1",15);
+		tts[3] = new TransformationTable("P2","P3","T2",15);
+		tts[4] = new TransformationTable("P5","P6","T2",30);
+		tts[5] = new TransformationTable("P3","P4","T3",15);
+		tts[6] = new TransformationTable("P5","P9","T3",30);
+		tts[7] = new TransformationTable("P6","P7","T3",30);
+		
+		System.out.println("------------------------------------------------------------");
+		
+		pr.buildPathTransformation(trans,tts);
+		
+		
+		//System.out.println("------------------------------------------------------------");
+		
+		
+		
+		
+		//----------------------------------------------------LOIRO---------------------------------------------------------//
+		/*
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
