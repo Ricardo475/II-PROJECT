@@ -18,8 +18,9 @@ public class Main {
 		//------------------------------------------------PAULO--------------------------------------------------------------//
 		
 		
-		test t = new test();
-		t.doTest();
+		
+		//test t = new test();
+		//t.doTest();
 		
 		/*PathFinder pr = new PathFinder();
 		Transformação trans = new Transformação(1, "P1", "P2", 1, 0, 0, 0, 0);
@@ -31,10 +32,10 @@ public class Main {
 		System.out.println("------------------------------------------------------------");
 		
 		System.out.print(pr.buildPathTransformation(trans));
-		
+		*/
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		/*
+		
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
@@ -44,6 +45,12 @@ public class Main {
 		Order prio = new Order(0,0,0,0);
 		OPC_UA opc=new OPC_UA();
 		opc.connect();
+		try {
+			opc.createSubscription();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(opc.get_Value("int_var"));
 		/*for(int i=1;i>0;i++)
 		{
@@ -81,8 +88,8 @@ public class Main {
 			}
 			Thread.sleep(1);
 		
-		}
-	*/
+		}*/
+	
 	}
 
 }
