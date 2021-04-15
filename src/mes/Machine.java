@@ -27,4 +27,10 @@ public class Machine {
 		
 	}
 
+	public void changeTool(String toolNeeded) {
+		
+		this.tool = toolNeeded;
+		
+	}
+
 }

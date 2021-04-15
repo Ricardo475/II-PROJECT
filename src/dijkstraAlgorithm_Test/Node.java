@@ -2,7 +2,7 @@ package dijkstraAlgorithm_Test;
 
 import java.util.Comparator;
 
-class Node implements Comparator<Node>
+public class Node implements Comparator<Node>
 
 {
 
