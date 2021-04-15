@@ -1,5 +1,6 @@
 package mes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -34,6 +35,7 @@ public class OPC_UA {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
 			client.connect().get();
+			this.createSubscription();
 		} catch (UaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +43,9 @@ public class OPC_UA {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -111,7 +116,8 @@ public class OPC_UA {
 			return;
 		}
 		sub = client.getSubscriptionManager().createSubscription(1000.0).get();
-
+		List<MonitoredItemCreateRequest> lmr= new ArrayList<>();
+		
 		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path + "int_var"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
@@ -122,13 +128,13 @@ public class OPC_UA {
 				true // discard oldest
 		);
 
-		MonitoredItemCreateRequest request = new MonitoredItemCreateRequest(readValueId, MonitoringMode.Reporting,
-				parameters);
+		lmr.add(new MonitoredItemCreateRequest(readValueId, MonitoringMode.Reporting,
+				parameters));
 
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
-				.createMonitoredItems(TimestampsToReturn.Both, newArrayList(request), onItemCreated).get();
+				.createMonitoredItems(TimestampsToReturn.Both, lmr, onItemCreated).get();
 
 	}
 
