@@ -25,9 +25,16 @@ public class Main {
 		
 		PathFinder pr = new PathFinder();
 		TransformationTable[] tts = new TransformationTable[8];
-		Transformação trans = new Transformação(1, "P1", "P8", 1, 0, 0, 0, 0);
+		Transformação trans = new Transformação(1, "P3", "P9", 10, 0, 0, 0, 0);
 		
 		pr.initializeMachines();
+		pr.mchs[1].changeTool("T2");
+		pr.mchs[2].changeTool("T3");
+		
+		System.out.println("------------------------------------------------------------");
+		
+		for(int i= 0; i<pr.mchs.length;i++) 
+			pr.mchs[i].print_machine();
 		
 		tts[0] = new TransformationTable("P1","P2","T1",15);
 		tts[1] = new TransformationTable("P4","P5","T1",15);

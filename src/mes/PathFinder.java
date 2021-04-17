@@ -64,32 +64,22 @@ public class PathFinder {
 		
 		//ONLY LEFT SIDE
 		
-		String str_tools = "[CL";
-		String result = "[TL";
+		//String str_tools = "CL ";
+		String result = "TL" + trans.Quant + " ";
 		String transformation = contructTranformations(trans, tts);
-		//System.out.println();
 		String[] divideTransformation;
 		divideTransformation = transformation.split("/");
 		
-		//mchs[0].state = false;
-		
-		/*
-		for(String aux: divideTransformation) {
-			System.out.println(aux);	
-		}
-		*/
-		
-		ArrayList<Integer> machineAvailable_noTool = new ArrayList<Integer>();
-		ArrayList<Integer> counterTime_noTool = new ArrayList<Integer>();
-		
-		String toolToUse = "";
-		int processTimeToUse = 0;
 		int[] counter_time = {0,0,0,0};
 		
 		//ONLY MACHINES PATH
 		
+		//str_tools = str_tools + "[";
+		String aux_result = "[";
+		
 		for(int k = 0; k < divideTransformation.length-1;k++) {
 				
+			//System.out.println(divideTransformation[k]);
 			int counter_min = Integer.MAX_VALUE;
 			
 			for(int i = 0; i<counter_time.length;i++) {
@@ -97,119 +87,59 @@ public class PathFinder {
 				if(counter_min > counter_time[i])
 					counter_min = counter_time[i];
 				
-				//System.out.println(counter_min);
 			}
 			
-			//System.out.println("---------------------");
-			//System.out.println(k);
 			for(int n = 0; n < 4; n++) {
 				
+				boolean already_chosen = false;
 				
 				if(mchs[n].state) {
 					
-					//counter_available++;
-					if(counter_time[n]==counter_min) {
-						for(int i = 0; i<tts.length;i++) {
+					if(k>0 && n==0) continue;
+					
+					for(int i = 0; i<tts.length;i++) {
+						
+						if(tts[i].existsTranformationInTable(divideTransformation[k], divideTransformation[k+1])) {
 							
-							if(tts[i].existsTranformationInTable(divideTransformation[k], divideTransformation[k+1])) {
+							if(mchs[n].tool == tts[i].get_toolNeeded(divideTransformation[k], divideTransformation[k+1])) {
 								
-								if(mchs[n].tool == tts[i].get_toolNeeded(divideTransformation[k], divideTransformation[k+1])) {
-									
-									result = result + (n+1);
-									str_tools = str_tools + "0";
-									machineAvailable_noTool.clear();
-									counterTime_noTool.clear();
-									toolToUse = mchs[n].tool;
-									counter_time[n] = counter_time[n] + tts[i].processTimeSeconds;
-									
-								}
-								else {
-									machineAvailable_noTool.add(n);
-									counterTime_noTool.add(counter_min);
-									toolToUse = tts[i].get_toolNeeded(divideTransformation[k], divideTransformation[k+1]);
-									processTimeToUse = tts[i].processTimeSeconds;
-									//System.out.println(toolToUse);
-								}
+								//System.out.println("MACHINE NO:" + mchs[n].machineID + " Tool: " + mchs[n].tool + " Tool Needed: " + tts[i].get_toolNeeded("P2", "P3"));
 								
+								aux_result = aux_result + (n+1);
+								counter_time[n] = counter_time[n] + tts[i].processTimeSeconds;
+								already_chosen  = true;
 								break;
 							}
 							
 						}
-						 break;		
+						
 					}
+					if(already_chosen) break;	
 					
 				}
 				
 				else if (n==3) System.out.println("NO MACHINES AVAILABLE");
 			}
 			
-			if(machineAvailable_noTool.size()!=0) {
-				
-				int order = -1;
-				int counter_time2 = Integer.MAX_VALUE;
-				
-				for(int i = 0; i < machineAvailable_noTool.size();i++) {
-					
-					if(counter_time2 > counterTime_noTool.get(i)) {
-						counter_time2 = counterTime_noTool.get(i);
-						order = i;
-					}
-				}
-				
-				
-				int n = machineAvailable_noTool.get(order);
-				mchs[n].changeTool(toolToUse);
-				result = result + (n+1);
-				
-				if(toolToUse == "T1")
-					str_tools = str_tools + "1";
-				else if(toolToUse == "T2")
-					str_tools = str_tools + "2";
-				else if(toolToUse == "T3")
-					str_tools = str_tools + "3";
-				
-				counter_time[n] = counter_time[n] + processTimeToUse + 30;
-					
-					
-			}
-			
-			machineAvailable_noTool.clear();
-			counterTime_noTool.clear();
-
-			
 		}
 		
-		
-		
-		
-		if(result.length()!=9) {
+		if(aux_result.length()!=7) {
 			
-			int length = result.length();
+			int length = aux_result.length();
 			
-			for(int i = 0; i< 9-length; i++) {
+			for(int i = 0; i< 7-length; i++) {
 				
-				result = result + "0";
+				aux_result = aux_result + "0";
 				
 			}
 		}
 		
-		if(str_tools.length()!=9) {
-			
-			int length = str_tools.length();
-			
-			for(int i = 0; i< 9-length; i++) {
-				
-				str_tools = str_tools + "0";
-				
-			}
-		}
+		result = result + aux_result + "]";
+		//str_tools = str_tools + "]";
 		
 		
-		result = result + "]";
-		str_tools = str_tools + "]";
-		
-		System.out.println("PATHING:\t" + result + "\t" );
-		System.out.println("TOOL SWAP:\t" + str_tools + "\t");
+		System.out.println("PATHING:" + result);
+		//System.out.println("TOOL SWAP:\t" + str_tools + "\t");
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
 		return result;
 		
