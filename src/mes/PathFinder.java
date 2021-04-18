@@ -10,6 +10,7 @@ public class PathFinder {
 	int cell, piece, typeBegin, typeEnd;
 	
 	Machine mchs[] = new Machine[4];
+	SystemState sys;
 	List<List<Node>> adjLeft = new ArrayList<List<Node>>();
 	
 	static int[] positionLeft = {0,2};
@@ -59,7 +60,6 @@ public class PathFinder {
 	
 */
 	
-	
 	String buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
 		//ONLY LEFT SIDE
@@ -72,7 +72,6 @@ public class PathFinder {
 		
 		int[] counter_time = {0,0,0,0};
 		
-		//ONLY MACHINES PATH
 		
 		//str_tools = str_tools + "[";
 		String aux_result = "[";
@@ -206,13 +205,22 @@ public class PathFinder {
 	}
 	*/
 	
+	void initializeSystemState() {
+		
+		this.sys = new SystemState();
+		sys.print_quantityPieces();
+		
+	}
+	
+	
+	
 	void initializeMachines() {
 		
 		for(int i = 0; i < 4; i++) {
 			
 			//mchs = new Machine[i];
 			mchs[i] = new Machine();
-			mchs[i].setMachine(i, "T1", 15);
+			mchs[i].setMachine(i, "T1");
 			
 			mchs[i].print_machine();
 		}

@@ -13,6 +13,9 @@ import dijkstraAlgorithm_Test.test;
 
 public class Main {
 
+	static PathFinder pr = new PathFinder();
+	static TransformationTable[] tts = new TransformationTable[8];
+	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
 		//------------------------------------------------PAULO--------------------------------------------------------------//
@@ -20,16 +23,20 @@ public class Main {
 		/*
 		test t = new test();
 		t.doTest();
-		
 		*/
 		
-		PathFinder pr = new PathFinder();
-		TransformationTable[] tts = new TransformationTable[8];
-		Transformação trans = new Transformação(1, "P3", "P9", 10, 0, 0, 0, 0);
+		//int orderNumber = 1;
+		
+		//Transformação trans = new Transformação(orderNumber, "P3", "P9", 10, 0, 0, 0, 0);
+		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
 		pr.mchs[1].changeTool("T2");
 		pr.mchs[2].changeTool("T3");
+		
+		System.out.println("------------------------------------------------------------");
+		
+		pr.initializeSystemState();
 		
 		System.out.println("------------------------------------------------------------");
 		
@@ -46,17 +53,34 @@ public class Main {
 		tts[7] = new TransformationTable("P6","P7","T3",30);
 		
 		System.out.println("------------------------------------------------------------");
-		
+		/*
 		pr.buildPathTransformation(trans,tts);
 		
 		
-		//System.out.println("------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------");
 		
+		String storedMessage = "<Current_Stores>";
 		
+		for(int i = 0; i<9;i++) {
+			
+			int pNumber = i+1;
+			siw[i] = new SoredInWarehouse(orderNumber);
+			
+			if( siw[i].sendResponse(orderNumber,"P" + pNumber,pr.sys).compareTo("DOESNT EXIST")!=0)
+				storedMessage = storedMessage + "\n" + siw[i].sendResponse(orderNumber,"P" + pNumber,pr.sys);
+			
+			orderNumber++;	
+			
+		}
+		storedMessage = storedMessage + "\n" + "</Current_Stores>";
+		System.out.println(storedMessage);
+		
+		System.out.println("------------------------------------------------------------");
+		*/
 		
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		/*
+		
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
@@ -65,17 +89,21 @@ public class Main {
 		Erp.start();
 		Order prio = new Order(0,0,0,0);
 		OPC_UA opc=new OPC_UA();
-		opc.connect();
+		/*opc.connect();
 		try {
 			opc.createSubscription();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(opc.get_Value("int_var"));
-		/*for(int i=1;i>0;i++)
+		*/
+		//System.out.println(opc.get_Value("int_var"));
+		for(int i=1;i>0;i++)
 		{
 			String aux=Erp.getXML();
+			//System.out.println(i);
+			
+			
 			if(!aux.equals(ordem))
 			{
 			
@@ -83,7 +111,7 @@ public class Main {
 				int duration= (((int)System.currentTimeMillis()-start)/1000);
 				//System.out.println(duration);
 				parse.parse(ordem, OL,duration);
-				
+				System.out.println("------------------------------------------------------------");
 										
 			}
 			
@@ -94,7 +122,7 @@ public class Main {
 					prio=OL.OrdemPrioritária();
 					if(prio != null)
 					{
-					prio.orderActivate();;
+					prio.orderActivate();
 					prio.doOrder();
 					l=0;
 					}
@@ -109,7 +137,7 @@ public class Main {
 			}
 			Thread.sleep(1);
 		
-		}*/
+		}
 	
 	}
 

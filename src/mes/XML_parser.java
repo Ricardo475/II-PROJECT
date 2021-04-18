@@ -22,21 +22,37 @@ public class XML_parser {
 	String orderN;
 	public void parse(String xml,OrdersList OL,int timeE) throws ParserConfigurationException, IOException, SAXException {
 		
+		//System.out.println("Estou aqui fora");
 		if(xml.contains("ORDERS"))
 		{
-			
+			//System.out.println("Estou aqui dentro");
 			//File inputFile = new File("C:\\4ano\\2_semestre\\II\\II_comands_A_v1\\command1.xml");
 			DocumentBuilderFactory dbFactory= DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder= dbFactory.newDocumentBuilder();
-			InputStream inputStream = new    ByteArrayInputStream(xml.getBytes());
+			InputStream inputStream = new ByteArrayInputStream(xml.getBytes());
 			Document doc=dBuilder.parse(inputStream);
 			doc.getDocumentElement().normalize();
 			
 			if(xml.contains("<Request_Stores/>"))
 			{
+				SoredInWarehouse[] siw = new SoredInWarehouse[9];
 				System.out.println(xml);
 				Order n= new Order(0,0,0,0);
 				OL.addOrder(n);
+				String storedMessage = "<Current_Stores>";
+				
+				for(int i = 0; i<9;i++) {
+					
+					int pNumber = i+1;
+					siw[i] = new SoredInWarehouse(i);
+					
+					if( siw[i].sendResponse(i,"P" + pNumber,Main.pr.sys).compareTo("DOESNT EXIST")!=0)
+						storedMessage = storedMessage + "\n" + siw[i].sendResponse(i,"P" + pNumber,Main.pr.sys);	
+					
+				}
+				storedMessage = storedMessage + "\n" + "</Current_Stores>";
+				System.out.println(storedMessage);
+				
 			}
 			else if(xml.contains("Transform"))
 			{
@@ -62,12 +78,15 @@ public class XML_parser {
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
 						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
 						OL.addOrder(trans);
+						Main.pr.buildPathTransformation(trans,Main.tts);
+						
 					}
 
 				}
 			}
 			
 		}
+		else System.out.println(xml);
 
 	}
 }
