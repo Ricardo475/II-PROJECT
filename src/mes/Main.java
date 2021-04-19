@@ -89,15 +89,13 @@ public class Main {
 		Erp.start();
 		Order prio = new Order(0,0,0,0);
 		OPC_UA opc=new OPC_UA();
-		/*opc.connect();
-		try {
-			opc.createSubscription();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
+		opc.connect();
+		int[] ola= new int[8];
+		ola[0]=1;
+		ola[1]=2;
+		ola[2]=4;
+		opc.Set_value("begin_piece.path", ola);
+
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{

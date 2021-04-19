@@ -35,7 +35,7 @@ public class OPC_UA {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
 			client.connect().get();
-			this.createSubscription();
+			//this.createSubscription();
 		} catch (UaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,7 +109,14 @@ public class OPC_UA {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void Set_value(String VarName, int[] value) {
+		for(int i:value)
+		{
+			this.Set_value(VarName+"["+i+"]", value[i]);
+		}
+	}
+	
 	public void createSubscription() throws Exception {
 
 		if (sub != null) {
