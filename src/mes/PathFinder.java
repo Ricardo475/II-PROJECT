@@ -10,6 +10,7 @@ public class PathFinder {
 	int cell, piece, typeBegin, typeEnd;
 	
 	Machine mchs[] = new Machine[4];
+	SystemState sys;
 	List<List<Node>> adjLeft = new ArrayList<List<Node>>();
 	
 	static int[] positionLeft = {0,2};
@@ -59,20 +60,19 @@ public class PathFinder {
 	
 */
 	
-	
-	String buildPathTransformation(Transformação trans, TransformationTable[] tts) {
+	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
 		//ONLY LEFT SIDE
 		
 		//String str_tools = "CL ";
-		String result = "TL" + trans.Quant + " ";
+		String result = "";
+		int[] res = {0,0,0,0,0,0};
 		String transformation = contructTranformations(trans, tts);
 		String[] divideTransformation;
 		divideTransformation = transformation.split("/");
 		
 		int[] counter_time = {0,0,0,0};
 		
-		//ONLY MACHINES PATH
 		
 		//str_tools = str_tools + "[";
 		String aux_result = "[";
@@ -106,6 +106,7 @@ public class PathFinder {
 								//System.out.println("MACHINE NO:" + mchs[n].machineID + " Tool: " + mchs[n].tool + " Tool Needed: " + tts[i].get_toolNeeded("P2", "P3"));
 								
 								aux_result = aux_result + (n+1);
+								res[k] = (n+1);
 								counter_time[n] = counter_time[n] + tts[i].processTimeSeconds;
 								already_chosen  = true;
 								break;
@@ -134,14 +135,24 @@ public class PathFinder {
 			}
 		}
 		
-		result = result + aux_result + "]";
+		/*
+		for(int i = 0; i < res.length;i++) {
+			System.out.println(res[i]);
+			
+		}
+		*/
+		result = "TL" + trans.Quant + " [";
 		//str_tools = str_tools + "]";
 		
+		for(int i = 0; i < res.length;i++)
+			result = result + res[i];
 		
+		result = result + "]";
 		System.out.println("PATHING:" + result);
 		//System.out.println("TOOL SWAP:\t" + str_tools + "\t");
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
-		return result;
+		
+		return res;
 		
 	}
 	
@@ -206,13 +217,22 @@ public class PathFinder {
 	}
 	*/
 	
+	void initializeSystemState() {
+		
+		this.sys = new SystemState();
+		sys.print_quantityPieces();
+		
+	}
+	
+	
+	
 	void initializeMachines() {
 		
 		for(int i = 0; i < 4; i++) {
 			
 			//mchs = new Machine[i];
 			mchs[i] = new Machine();
-			mchs[i].setMachine(i, "T1", 15);
+			mchs[i].setMachine(i, "T1");
 			
 			mchs[i].print_machine();
 		}

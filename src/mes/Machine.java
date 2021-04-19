@@ -2,22 +2,21 @@ package mes;
 
 public class Machine {
 	
-	int machineID, processTime;
+	int machineID;
 	String tool;
 	boolean state;
 	
-	public void setMachine(int id, String tool, int processTime) {
+	public void setMachine(int id, String tool) {
 		
 		this.machineID = id;
 		this.tool = tool;
-		this.processTime = processTime;
 		this.state = true;
 		
 	}
 	
 	public void print_machine() {
 		
-		System.out.println("MACHINE NO:" + this.machineID +"|| Tool: " + this.tool + " || Processing Time: " + this.processTime + "|| State: " + this.state);
+		System.out.println("MACHINE NO:" + this.machineID +"|| Tool: " + this.tool + "|| State: " + this.state);
 	}
 	
 	public boolean correctPart(String dest) {
