@@ -27,7 +27,7 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		Transformação trans = new Transformação(0, "P1", "P8", 10, 0, 0, 0, 0);
+		//Transformação trans = new Transformação(0, "P1", "P8", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
@@ -53,10 +53,10 @@ public class Main {
 		tts[7] = new TransformationTable("P6","P7","T3",30);
 		
 		System.out.println("------------------------------------------------------------");
-		
+		/*
 		pr.buildPathTransformation(trans,tts);
 		
-		/*
+		
 		System.out.println("------------------------------------------------------------");
 		
 		String storedMessage = "<Current_Stores>";
@@ -80,7 +80,7 @@ public class Main {
 		
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-	/*	
+		
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersList OL=new OrdersList();
 		String ordem="aaa";
@@ -97,7 +97,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		*/
-		/*
+		
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
@@ -139,7 +139,6 @@ public class Main {
 			Thread.sleep(1);
 		
 		}
-	*/
 	}
 
 }
