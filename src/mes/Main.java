@@ -82,12 +82,12 @@ public class Main {
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
 		int start=(int) System.currentTimeMillis(),l=0;
-		OrdersList OL=new OrdersList();
+		OrdersState OL=new OrdersState();
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
 		Erp.start();
-		Order prio = new Order(0,0,0,0,"prio");
+		Order prio = new Order(0,0,0,0);
 	//	OPC_UA opc=new OPC_UA();
 		
 		/*opc.connect();

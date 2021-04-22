@@ -6,7 +6,7 @@ public class Loading extends Order{
 	
 	
 	public Loading(int orderNumber) {
-		super(orderNumber,0,0,0,"Loading");
+		super(orderNumber,0,0,0);
 		
 	}
 

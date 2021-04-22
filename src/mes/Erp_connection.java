@@ -17,7 +17,7 @@ public class Erp_connection extends Thread{
 	    String xml;
 	    private float start;
 	    
-	    public Erp_connection(OrdersList O) throws SocketException {
+	    public Erp_connection(OrdersState O) throws SocketException {
 	        socket = new DatagramSocket(54321);
 	        this.xml="aaa";
 	       

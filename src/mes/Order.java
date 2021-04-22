@@ -2,16 +2,18 @@ package mes;
 
 public class Order {
 	
-	int orderNumber,MaxD,instanteEnviado,instanteChegada;
+	int orderNumber,MaxDelay,instanteEnviado,instanteChegada;
 	boolean activeOrder;
 	boolean done;
-	String type;
-	public Order(int orderNumber,int MaxD,int instanteEnviado,int instanteChegada, String type) {
+	
+	public Order(int orderNumber,int MaxDelay,int instanteEnviado,int instanteChegada) {
 		
 		this.orderNumber = orderNumber;
 		this.activeOrder = false; 
+		this.MaxDelay = MaxDelay;
+		this.instanteEnviado = instanteEnviado;
+		this.instanteChegada = instanteChegada;
 		this.done=false;
-		this.type = type;
 	}
 	
 	public Order() {
@@ -21,21 +23,6 @@ public class Order {
 	public int getOrderNumber() {
 		return this.orderNumber;
 	}
-	
-	boolean isTranformation(int orderNumber, String type) {
-		
-		if (this.orderNumber==orderNumber && this.type.compareTo(type)==0)
-			return true;
-		else return false;
-	}
-	
-	Transformação getTrans(int orderNumber) {
-		
-		Transformação trans = new Transformação();
-		trans = trans.get_trans(orderNumber);
-		return trans;
-	}
-	
 	
 	void orderActivate() {
 		this.activeOrder=true;
@@ -56,7 +43,7 @@ public class Order {
 	
 	public int PrazoEntrega()
 	{
-		return this.instanteChegada+this.MaxD;
+		return this.instanteChegada+this.MaxDelay;
 		
 	}
 

@@ -2,7 +2,7 @@ package mes;
 
 import java.util.ArrayList;
 
-public class OrdersList {
+public class OrdersState {
 
 	//Order order;
 	ArrayList<Order> OrdersList;
@@ -11,7 +11,7 @@ public class OrdersList {
 
 
 
-	public OrdersList() {
+	public OrdersState() {
 
 		this.OrdersList = new ArrayList<Order>();
 		this.DoneOrders = 0;

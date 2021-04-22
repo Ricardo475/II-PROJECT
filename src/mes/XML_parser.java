@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 
 public class XML_parser {
 	String orderN;
-	public void parse(String xml,OrdersList OL,int timeE) throws ParserConfigurationException, IOException, SAXException {
+	public void parse(String xml,OrdersState OL,int timeE) throws ParserConfigurationException, IOException, SAXException {
 		
 		//System.out.println("Estou aqui fora");
 		if(xml.contains("ORDERS"))
@@ -37,7 +37,7 @@ public class XML_parser {
 			{
 				SoredInWarehouse[] siw = new SoredInWarehouse[9];
 				System.out.println(xml);
-				Order n= new Order(0,0,0,0,"StoredInWarehouse");
+				Order n= new Order(0,0,0,0);
 				OL.addOrder(n);
 				String storedMessage = "<Current_Stores>";
 				
@@ -96,6 +96,8 @@ public class XML_parser {
 					
 					storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + ">\n</Order>\n";
 					
+					
+					/*
 					if(order.isTranformation(order.getOrderNumber(), order.type)) {
 						
 						Transformação trans = order.getTrans(order.getOrderNumber());
@@ -103,6 +105,8 @@ public class XML_parser {
 						storedOrders = storedOrders + "<Transform From:" + trans.From + " To" + trans.To + " Quantity=" + trans.Quant;
 						
 					}
+					*/
+					
 					
 					
 				}

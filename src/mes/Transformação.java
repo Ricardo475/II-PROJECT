@@ -1,32 +1,19 @@
 package mes;
 
 public class Transformação extends Order {
+	
 	int Quant,Penalty,TempoIni,TempoFim,PenalidadeIncurrida;
 	String From,To;
+	
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
-		super(orderNumber,MaxDelay,Time,timeE,"Transformation");
+		super(orderNumber,MaxDelay,Time,timeE);
 		this.From=From;
 		this.To=to;
 		this.Quant=Quantity;
-		this.MaxD=MaxDelay;
+		this.MaxDelay=MaxDelay;
 		this.Penalty=Penalty;
 	}
 	
-
-	public Transformação() {
-	}
-
-
-	public Transformação get_trans(int orderNumber) {
-		
-		Transformação trans = new Transformação();
-		
-		if(orderNumber==this.orderNumber) 
-			trans = new Transformação(this.orderNumber,this.From,this.To,this.Quant,this.instanteEnviado,this.MaxD,this.Penalty,this.instanteChegada);
-			
-		return trans;
-		
-	}
 	
 	@Override
 	public String toString()
