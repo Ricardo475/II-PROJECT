@@ -12,12 +12,29 @@ public class Transformação extends Order {
 		this.Penalty=Penalty;
 	}
 	
+
+	public Transformação() {
+	}
+
+
+	public Transformação get_trans(int orderNumber) {
+		
+		Transformação trans = new Transformação();
+		
+		if(orderNumber==this.orderNumber) 
+			trans = new Transformação(this.orderNumber,this.From,this.To,this.Quant,this.instanteEnviado,this.MaxD,this.Penalty,this.instanteChegada);
+			
+		return trans;
+		
+	}
+	
 	@Override
 	public String toString()
 	{
 		return "ola2";
 	}
 	
+
 	public void doOrder(PathFinder pr)
 	{
 		if(Quant > 0)

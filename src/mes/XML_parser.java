@@ -85,6 +85,32 @@ public class XML_parser {
 				}
 			}
 			
+			else if(xml.contains("<Request_Orders/>")) {
+				String storedOrders = "<Order_Schedule>\n";
+				
+				for(int i = 0; i<OL.OrdersList.size(); i++) {
+					
+					Order order = new Order();
+					
+					order = OL.OrdersList.get(i);
+					
+					storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + ">\n</Order>\n";
+					
+					if(order.isTranformation(order.getOrderNumber(), order.type)) {
+						
+						Transformação trans = order.getTrans(order.getOrderNumber());
+						
+						storedOrders = storedOrders + "<Transform From:" + trans.From + " To" + trans.To + " Quantity=" + trans.Quant;
+						
+					}
+					
+					
+				}
+				
+				storedOrders = storedOrders + "</Order_Schedule>";
+				System.out.println(storedOrders);
+			}
+			
 		}
 		else System.out.println(xml);
 

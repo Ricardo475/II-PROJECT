@@ -88,11 +88,11 @@ public class Main {
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
 		Erp.start();
+
 		Order prio = new Order(0,0,0,0);
 		
 		opc.connect();
 		
-
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
