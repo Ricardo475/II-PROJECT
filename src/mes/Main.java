@@ -15,6 +15,7 @@ public class Main {
 
 	static PathFinder pr = new PathFinder();
 	static TransformationTable[] tts = new TransformationTable[8];
+	static OPC_UA opc=new OPC_UA();
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
@@ -87,16 +88,11 @@ public class Main {
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
 		Erp.start();
+		//OPC_UA opc=new OPC_UA();
+
 		Order prio = new Order(0,0,0,0);
-	//	OPC_UA opc=new OPC_UA();
 		
-		/*opc.connect();
-		int[] ola= new int[8];
-		ola[0]=1;
-		ola[1]=2;
-		ola[2]=4;
-		opc.Set_value("begin_piece.path", ola);
-*/
+		opc.connect();
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
@@ -123,7 +119,7 @@ public class Main {
 					if(prio != null)
 					{
 					prio.orderActivate();
-					prio.doOrder();
+					prio.doOrder(pr);
 					l=0;
 					}
 					else
@@ -135,7 +131,7 @@ public class Main {
 						}
 					}
 			}
-			Thread.sleep(1);
+			Thread.sleep(1000);
 		
 		}
 	}

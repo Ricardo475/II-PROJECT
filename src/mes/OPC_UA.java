@@ -75,7 +75,7 @@ public class OPC_UA {
 		int i = value;
 
 		try {
-			System.out.println(client.writeValue(nodeidstring, new DataValue(new Variant((short) i))).get());
+			System.out.println(client.writeValue(nodeidstring, new DataValue(new Variant((short) i))).get() + "  ------ > " +value);
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

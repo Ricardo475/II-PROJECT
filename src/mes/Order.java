@@ -47,7 +47,7 @@ public class Order {
 		
 	}
 
-	public void doOrder()
+	public void doOrder(PathFinder pr)
 	{
 		System.out.println("nada");
 		this.orderDisactivate();
