@@ -6,59 +6,15 @@ public class PathFinder {
 	
 	Machine mchs[] = new Machine[8];
 	SystemState sys;
-	//List<List<Node>> adjLeft = new ArrayList<List<Node>>();
 	
-	//ArrayList<Machine> machines = new ArrayList<Machine>();
-	
-	/*
-	public static String[][] fabric_map = {{"[CL1T0]","[CL0T1]","[ALT5]","[XXXX]","[ART1]","[CR0T1]","[CR1T0]","[CR2Ta]" ,"[CR2T1b]"},
-									 	   {"[CL1T1]","[CL0T2]","[XXXX]","[XXXX]","[XXXX]","[CR0T2]","[CR1T1]","[CR2T2]" ,"[XXXX]"  },
-									       {"[CL1T2]","[CL0T3]","[XXXX]","[XXXX]","[XXXX]","[CR0T3]","[CR1T2]","[CR2T3]" ,"[XXXX]"  },
-									       {"[CL1T3]","[CL0T4]","[ALT6]","[XXXX]","[ART2]","[CR0T4]","[CR1T3]","[CR2T4]" ,"[XXXX]"  },
-									       {"[CL1T4]","[CL0T5]","[ALT7]","[XXXX]","[ART3]","[CR0T5]","[CR1T4]","[CR2T5]" ,"[XXXX]"  },
-									       {"[CL1T5]","[CL0T6]","[ALT8]","[XXXX]","[ART4]","[CR0T6]","[CR1T5]","[CR2T6]" ,"[CR2T7b]"},
-									       {"[XXXX]" ,"[XXXX]" ,"[XXXX]","[XXXX]","[XXXX]","[XXXX]" ,"[XXXX]" ,"[CR2T7a]","[XXXX]" }};
-	
-	
-	
-	//  Note: The 2nd to last row, the below R is connected to the LH's on his left and right
-	/*
-	void setInitValidPaths() {
-			
-		//LEFT SIDE
-			paths[0] = new paths("[CL0T1]","[CL1T0]");
-			paths[1] = new paths("[CL0T1]","[CL0T2]");
-			paths[2] = new paths("[ALT5]","[CL0T1]");
-			paths[3] = new paths("[CL1T1]","[CL0T2]");
-			paths[4] = new paths("[CL0T2]","[CL1T1]");
-			paths[5] = new paths("[CL0T2]","[CL0T3]");
-			paths[6] = new paths("[CL1T2]","[CL0T3]");
-			paths[7] = new paths("[CL0T3]","[CL0T4]");
-			paths[8] = new paths("[CL1T3]","[CL0T4]");
-			paths[9] = new paths("[CL0T4]","[CL0T5]");
-			paths[10] = new paths("[CL1T4]","[CL0T5]");
-			paths[11] = new paths("[CL0T5]","[CL0T6]");
-			paths[12] = new paths("[CL0T6]","[CL1T5]");
-			paths[13] = new paths("[CL0T6]","[ALT8]");
-			paths[14] = new paths("[ALT8]","[ALT7]");
-			paths[15] = new paths("[ALT7]","[ALT6]");
-		
-			System.out.println("LEFT SIDE:");
-			for(int i = 0; i<15; i++)
-				paths[i].print_path();
-		
-			
-		//RIGHT SIDE	
-			
-	}
-	
-*/
 	
 	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
 		//ONLY LEFT SIDE
 		
-		//String str_tools = "CL ";
+		//
+		//TO DO: DECIDE HOW TO CHOOSE LEFT AND RIGHT SIDE
+		//
 		String result = "";
 		int[] res = {0,0,0,0,0,0};
 		String transformation = contructTranformations(trans, tts);
@@ -67,22 +23,10 @@ public class PathFinder {
 		
 		int[] counter_time = {0,0,0,0};
 		
-		
-		//str_tools = str_tools + "[";
 		String aux_result = "[";
 		
 		for(int k = 0; k < divideTransformation.length-1;k++) {
-				
-			//System.out.println(divideTransformation[k]);
-		/*	int counter_min = Integer.MAX_VALUE;
-			
-			for(int i = 0; i<counter_time.length;i++) {
-				
-				if(counter_min > counter_time[i])
-					counter_min = counter_time[i];
-				
-			}
-			*/
+
 			for(int n = 0; n < 4; n++) {
 				
 				boolean already_chosen = false;
@@ -96,8 +40,6 @@ public class PathFinder {
 						if(tts[i].existsTranformationInTable(divideTransformation[k], divideTransformation[k+1])) {
 							
 							if(mchs[n].tool == tts[i].get_toolNeeded(divideTransformation[k], divideTransformation[k+1])) {
-								
-								//System.out.println("MACHINE NO:" + mchs[n].machineID + " Tool: " + mchs[n].tool + " Tool Needed: " + tts[i].get_toolNeeded("P2", "P3"));
 								
 								aux_result = aux_result + (n+1);
 								res[k] = (n+1);
@@ -129,26 +71,20 @@ public class PathFinder {
 			}
 		}
 		
-		/*
-		for(int i = 0; i < res.length;i++) {
-			System.out.println(res[i]);
-			
-		}
-		*/
+
 		result = "TL" + trans.quantTotal + " [";
-		//str_tools = str_tools + "]";
 		
 		for(int i = 0; i < res.length;i++)
 			result = result + res[i];
 		
 		result = result + "]";
 		System.out.println("PATHING:" + result);
-		//System.out.println("TOOL SWAP:\t" + str_tools + "\t");
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
 		
 		return res;
 		
 	}
+	
 	
 	
 	private String contructTranformations(Transformação trans, TransformationTable[] tts) {
@@ -210,6 +146,7 @@ public class PathFinder {
 		}
 	}
 	*/
+	
 	
 	void initializeSystemState() {
 		

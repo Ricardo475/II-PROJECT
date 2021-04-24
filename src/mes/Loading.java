@@ -9,5 +9,12 @@ public class Loading extends Order{
 		super(orderNumber,0,0,0);
 		
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "loading";
+	}
+	
 
 }

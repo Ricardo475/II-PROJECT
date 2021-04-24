@@ -13,4 +13,10 @@ public class Unloading extends Order{
 		this.quantity = quantity;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "unloading";
+	}
+	
 }
