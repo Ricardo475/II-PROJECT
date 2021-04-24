@@ -141,7 +141,7 @@ public class PathFinder {
 			
 		}
 		*/
-		result = "TL" + trans.Quant + " [";
+		result = "TL" + trans.quantTotal + " [";
 		//str_tools = str_tools + "]";
 		
 		for(int i = 0; i < res.length;i++)

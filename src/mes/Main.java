@@ -28,7 +28,8 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		//Transformação trans = new Transformação(0, "P1", "P8", 10, 0, 0, 0, 0);
+		//OrdersState OL=new OrdersState();
+		//Transformação trans = new Transformação(45, "P1", "P2", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
@@ -54,11 +55,12 @@ public class Main {
 		tts[7] = new TransformationTable("P6","P7","T3",30);
 		
 		System.out.println("------------------------------------------------------------");
-		/*
-		pr.buildPathTransformation(trans,tts);
 		
+		/*pr.buildPathTransformation(trans,tts);
+		OL.addOrder(trans);
 		
 		System.out.println("------------------------------------------------------------");
+		
 		
 		String storedMessage = "<Current_Stores>";
 		
@@ -77,9 +79,34 @@ public class Main {
 		System.out.println(storedMessage);
 		
 		System.out.println("------------------------------------------------------------");
+		
+		
+		String storedOrders = "<Order_Schedule>\n";
+		
+		for(int i = 0; i<OL.OrdersList.size(); i++) {
+			
+			Order order = new Order();
+			order = OL.OrdersList.get(i);
+			
+			storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
+			
+			if(order.toString().compareTo("transformation")==0) {
+				
+				storedOrders = storedOrders + "Transform From=" + ((Transformação)order).From + " To=" + ((Transformação)order).To + " Quantity=" + ((Transformação)order).quantTotal + " Quantity1=" + ((Transformação)order).quantProcessed + " Quantity2="
+						+ ((Transformação)order).quantExe + "\nQuantity3=" + ((Transformação)order).quantToBe + " Time=" + order.instanteEnviado + " Time1=" + order.instanteChegada + " MaxDelay=" + order.MaxDelay + " Penalty=" + ((Transformação)order).Penalty + " Start=" + ((Transformação)order).exeTime
+						+ "\nEnd=" + ((Transformação)order).finTime + " PenaltyIncurred=" + 0 + "/>\n";
+				
+			}
+			
+			storedOrders = storedOrders + "</Order>\n";
+			
+		}
+		
+		storedOrders = storedOrders + "</Order_Schedule>";
+		System.out.println(storedOrders);
+		
+		System.out.println("------------------------------------------------------------");
 		*/
-		
-		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
 		int start=(int) System.currentTimeMillis(),l=0;
@@ -134,6 +161,7 @@ public class Main {
 			Thread.sleep(1000);
 		
 		}
+	
 	}
 
 }

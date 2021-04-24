@@ -7,7 +7,7 @@ public class OrdersState {
 	//Order order;
 	ArrayList<Order> OrdersList;
 	int DoneOrders;
-	int RunningOrders;    //OrdersAfazer? n seria "porFazer" ? se não só se guarda as que estão feitas + as que estão a correr
+	int RunningOrders;
 
 
 

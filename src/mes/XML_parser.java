@@ -91,23 +91,19 @@ public class XML_parser {
 				for(int i = 0; i<OL.OrdersList.size(); i++) {
 					
 					Order order = new Order();
-					
 					order = OL.OrdersList.get(i);
 					
-					storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + ">\n</Order>\n";
+					storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
 					
-					
-					/*
-					if(order.isTranformation(order.getOrderNumber(), order.type)) {
+					if(order.toString().compareTo("transformation")==0) {
 						
-						Transformação trans = order.getTrans(order.getOrderNumber());
-						
-						storedOrders = storedOrders + "<Transform From:" + trans.From + " To" + trans.To + " Quantity=" + trans.Quant;
+						storedOrders = storedOrders + "Transform From=" + ((Transformação)order).From + " To=" + ((Transformação)order).To + " Quantity=" + ((Transformação)order).quantTotal + " Quantity1=" + ((Transformação)order).quantProcessed + " Quantity2="
+								+ ((Transformação)order).quantExe + "\nQuantity3=" + ((Transformação)order).quantToBe + " Time=" + order.instanteEnviado + " Time1=" + order.instanteChegada + " MaxDelay=" + order.MaxDelay + " Penalty=" + ((Transformação)order).Penalty + " Start=" + ((Transformação)order).exeTime
+								+ "\nEnd=" + ((Transformação)order).finTime + " PenaltyIncurred=" + 0 + "/>\n";
 						
 					}
-					*/
 					
-					
+					storedOrders = storedOrders + "</Order>\n";
 					
 				}
 				
