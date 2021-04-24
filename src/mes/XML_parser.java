@@ -84,6 +84,7 @@ public class XML_parser {
 
 				}
 			}
+	
 			
 			else if(xml.contains("<Request_Orders/>")) {
 				String storedOrders = "<Order_Schedule>\n";
