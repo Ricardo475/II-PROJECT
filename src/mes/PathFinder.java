@@ -1,19 +1,13 @@
 package mes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import dijkstraAlgorithm_Test.Node;
-
 public class PathFinder {
 	
 	int cell, piece, typeBegin, typeEnd;
 	
-	Machine mchs[] = new Machine[4];
+	Machine mchs[] = new Machine[8];
 	SystemState sys;
-	List<List<Node>> adjLeft = new ArrayList<List<Node>>();
+	//List<List<Node>> adjLeft = new ArrayList<List<Node>>();
 	
-	static int[] positionLeft = {0,2};
 	//ArrayList<Machine> machines = new ArrayList<Machine>();
 	
 	/*
@@ -80,7 +74,7 @@ public class PathFinder {
 		for(int k = 0; k < divideTransformation.length-1;k++) {
 				
 			//System.out.println(divideTransformation[k]);
-			int counter_min = Integer.MAX_VALUE;
+		/*	int counter_min = Integer.MAX_VALUE;
 			
 			for(int i = 0; i<counter_time.length;i++) {
 				
@@ -88,7 +82,7 @@ public class PathFinder {
 					counter_min = counter_time[i];
 				
 			}
-			
+			*/
 			for(int n = 0; n < 4; n++) {
 				
 				boolean already_chosen = false;
@@ -228,7 +222,7 @@ public class PathFinder {
 	
 	void initializeMachines() {
 		
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 8; i++) {
 			
 			//mchs = new Machine[i];
 			mchs[i] = new Machine();
@@ -238,8 +232,6 @@ public class PathFinder {
 		}
 		
 	}
-	
-	
 	
 	/*
     void print_fabric() {

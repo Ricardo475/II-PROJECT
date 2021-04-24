@@ -2,13 +2,20 @@ package mes;
 
 public class Statistics {
 	
-	int maxOperationTime;
+	/////////////////////////////////////////////////////////////////////////////////////
+	//Usar as estatisticas já guardadas nas classes dos componentes: machines e pushers//
+	/////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	int totalOperatingTime;
 	int NpiecesOperated;
 	int NpiecesUnloaded;
 	
-	void setOperationTime(int maxOperationTime) {
+	
+	public Statistics() {
 		
-		this.maxOperationTime = maxOperationTime;
+		
+		
 	}
 	
 	
@@ -17,5 +24,5 @@ public class Statistics {
 		
 		return operationTime;
 	}  
-
+*/
 }

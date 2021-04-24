@@ -28,13 +28,15 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		//OrdersState OL=new OrdersState();
-		//Transformação trans = new Transformação(45, "P1", "P2", 10, 0, 0, 0, 0);
+		OrdersState OL=new OrdersState();
+		Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
 		pr.mchs[1].changeTool("T2");
 		pr.mchs[2].changeTool("T3");
+		pr.mchs[5].changeTool("T2");
+		pr.mchs[6].changeTool("T3");
 		
 		System.out.println("------------------------------------------------------------");
 		
@@ -56,11 +58,11 @@ public class Main {
 		
 		System.out.println("------------------------------------------------------------");
 		
-		/*pr.buildPathTransformation(trans,tts);
+		pr.buildPathTransformation(trans,tts);
 		OL.addOrder(trans);
 		
 		System.out.println("------------------------------------------------------------");
-		
+		/*
 		
 		String storedMessage = "<Current_Stores>";
 		
@@ -108,7 +110,7 @@ public class Main {
 		System.out.println("------------------------------------------------------------");
 		*/
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		
+		/*
 		int start=(int) System.currentTimeMillis(),l=0;
 		OrdersState OL=new OrdersState();
 		String ordem="aaa";
@@ -160,7 +162,7 @@ public class Main {
 			}
 			Thread.sleep(1000);
 		
-		}
+		}*/
 	
 	}
 
