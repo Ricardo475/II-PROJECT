@@ -29,7 +29,7 @@ public class Main {
 		//int orderNumber = 1;
 		
 		OrdersState OL=new OrdersState();
-		Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
+		//Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
@@ -58,8 +58,8 @@ public class Main {
 		
 		System.out.println("------------------------------------------------------------");
 		
-		pr.buildPathTransformation(trans,tts);
-		OL.addOrder(trans);
+	//	pr.buildPathTransformation(trans,tts);
+		//OL.addOrder(trans);
 		
 		System.out.println("------------------------------------------------------------");
 		/*
@@ -110,9 +110,8 @@ public class Main {
 		System.out.println("------------------------------------------------------------");
 		*/
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		/*
+		
 		int start=(int) System.currentTimeMillis(),l=0;
-		OrdersState OL=new OrdersState();
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
@@ -162,7 +161,7 @@ public class Main {
 			}
 			Thread.sleep(1000);
 		
-		}*/
+		}
 	
 	}
 

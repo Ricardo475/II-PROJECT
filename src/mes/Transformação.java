@@ -40,16 +40,17 @@ public class Transformação extends Order {
 			Main.opc.Set_value("begin_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
 			Main.opc.Set_value("begin_piece.path", aux);
 			Main.opc.Set_value("begin_piece.currType", Character.getNumericValue(this.From.charAt(1)));
-			while((short)Main.opc.get_Value("ordem_recebida")!=1){};
-			quantTotal--;
-			System.out.println(" qant: "+quantTotal);
-			if(quantTotal==0) {	this.orderDisactivate();this.done=true;System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			try {
-				Thread.sleep(10);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			while((short)Main.opc.get_Value("ordem_recebida")!=1){};
+			quantTotal--;
+			System.out.println(" qant: "+quantTotal);
+			if(quantTotal==0) {	this.orderDisactivate();this.done=true;System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
+			
 		}
 	}
 	
