@@ -29,6 +29,7 @@ public class Main {
 		//int orderNumber = 1;
 		
 		OrdersState OL=new OrdersState();
+		Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
@@ -58,10 +59,17 @@ public class Main {
 		
 		System.out.println("------------------------------------------------------------");
 		
+		pr.initializePushers();
+		
+		System.out.println("------------------------------------------------------------");
 	//	pr.buildPathTransformation(trans,tts);
 		//OL.addOrder(trans);
 		
-		System.out.println("------------------------------------------------------------");
+		//System.out.println("------------------------------------------------------------");
+		
+		//pr.buildPathUnloading(u);
+		
+		//System.out.println("------------------------------------------------------------");
 		/*
 		
 		String storedMessage = "<Current_Stores>";

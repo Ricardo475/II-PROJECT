@@ -78,7 +78,7 @@ public class XML_parser {
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
 						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
 						OL.addOrder(trans);
-						//Main.pr.buildPathTransformation(trans,Main.tts);
+						Main.pr.buildPathTransformation(trans,Main.tts);
 						
 					}
 
@@ -111,6 +111,38 @@ public class XML_parser {
 				storedOrders = storedOrders + "</Order_Schedule>";
 				System.out.println(storedOrders);
 			}
+			
+			else if(xml.contains("Unload")) {
+				
+				
+				NodeList nlist=doc.getElementsByTagName("Order");
+				
+				for(int i=0;i<nlist.getLength();i++)
+				{
+					Node nNode= nlist.item(i);
+					System.out.println("\nCurrent element: "+nNode.getNodeName());
+					
+					if(nNode.getNodeType() == Node.ELEMENT_NODE)
+					{
+						
+						Element eElement= (Element) nNode;
+						System.out.println("Order roll no :"+eElement.getAttribute("Number"));
+						Integer Number=Integer.valueOf(eElement.getAttribute("Number"));
+						String Type = eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Type").getTextContent();
+						String Dest = eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Destination").getTextContent();
+						int Quant = Integer.valueOf(eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Quantity").getTextContent());
+						
+						Unloading u = new Unloading(Number, Type ,Dest,Quant);
+						OL.OrdersList.add(u);
+						Main.pr.buildPathUnloading(u);
+									
+					}		
+				}
+					
+			}
+			
+			
+			
 			
 		}
 		else System.out.println(xml);

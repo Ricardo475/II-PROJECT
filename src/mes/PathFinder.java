@@ -5,6 +5,7 @@ public class PathFinder {
 	int cell, piece, typeBegin, typeEnd;
 	
 	Machine mchs[] = new Machine[8];
+	Pusher pshs[] = new Pusher[3];
 	SystemState sys;
 	
 	
@@ -133,7 +134,37 @@ public class PathFinder {
 		}
 		System.out.println("TRANSFORMATIONS: " + result);
 		return result;
-}
+	}
+	
+	
+	
+	
+	public int buildPathUnloading(Unloading un) {
+		 int i = 0;
+		 String result = "P" + un.quantity + "->";
+		 
+		 if(un.dest == "P1") {
+			 
+			 i = 1;
+			 result = result + "PUSHER NO" + i;
+		 }
+		 
+		 else if(un.dest == "P2") {
+			 
+			 i = 2;
+			 result = result + "PUSHER NO" + i;
+		 }
+		 
+		 else if(un.dest == "P3") {
+			 
+			 i = 3;
+			 result = result + "PUSHER NO" + i;
+		 }
+		 
+		 System.out.println("UNLOADING: " + result);
+		 return i;
+		
+	}
 
 
 	/*
@@ -166,6 +197,18 @@ public class PathFinder {
 			mchs[i].setMachine(i, "T1");
 			
 			mchs[i].print_machine();
+		}
+		
+	}
+	
+	void initializePushers() {
+		
+		for(int i = 0; i < 3; i++) {
+			
+			pshs[i] = new Pusher();
+			pshs[i].setPusher(i);
+			
+			pshs[i].print_Pusher();
 		}
 		
 	}
