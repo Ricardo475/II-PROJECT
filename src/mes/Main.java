@@ -29,6 +29,7 @@ public class Main {
 		//int orderNumber = 1;
 		
 		OrdersState OL=new OrdersState();
+		opc.connect();
 		Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
@@ -128,7 +129,7 @@ public class Main {
 
 		Order prio = new Order(0,0,0,0);
 		
-		opc.connect();
+	
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
