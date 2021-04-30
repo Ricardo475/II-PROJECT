@@ -16,6 +16,7 @@ public class PathFinder {
 		//
 		//TO DO: DECIDE HOW TO CHOOSE LEFT AND RIGHT SIDE
 		//
+		
 		String result = "";
 		int[] res = {0,0,0,0,0,0};
 		String transformation = contructTranformations(trans, tts);
@@ -26,15 +27,153 @@ public class PathFinder {
 		
 		String aux_result = "[";
 		
+		//
+		// SAVE AVAILABLE MACHINES
+		//
+		
+		Machine mchs_available[] = new Machine[4];
+		int counter = 0;
+		
+		for(int i = 0; i < 4; i++) {
+			
+			if(mchs[i].state) {
+				mchs_available[counter] = new Machine();
+				mchs_available[counter] = mchs[i];
+			//	mchs_available[counter].print_machine();
+				
+				counter ++;
+			}
+					
+		}
+		
+		//
+		// SAVE TOOLS TO USE AND IF THERE IS MORE OR LESS THEN 3 TRANSFORMATIONS
+		//		
+		
+		boolean[] toolUsed = {false,false,false};
+ 		int tool_counter = 0;
+ 		
+		for(int i = 0; i < divideTransformation.length-1;i++) {
+			
+			for(int j = 0; j < tts.length; j++) {
+				
+				if(tts[j].existsTranformationInTable(divideTransformation[i],divideTransformation[i+1])) {
+					
+					 if(tts[j].get_toolNeeded(divideTransformation[i], divideTransformation[i+1]) == "T1") {
+						 toolUsed[0] = true;
+						 tool_counter++;
+						 break;
+					 }
+					 else if(tts[j].get_toolNeeded(divideTransformation[i], divideTransformation[i+1]) == "T2") {
+						 toolUsed[1] = true;
+						 tool_counter++;
+						 break;
+					 }
+					
+					 else if(tts[j].get_toolNeeded(divideTransformation[i], divideTransformation[i+1]) == "T3") {
+						 toolUsed[2] = true;
+						 tool_counter++;
+						 break;
+					 }
+					
+					
+				}
+				
+				
+			}
+			
+			if(tool_counter>3) break;
+			
+		}
+		
+		//System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
+		//System.out.println(tool_counter);
+	
+		
+		//
+		// TOOLS CHANGES BEFORE THE PATH
+		//
+		
+		if(tool_counter == 1 && counter>0) {
+			
+			if(toolUsed[0] == true) {
+				
+				for(int i = 0; i < counter; i++)
+					mchs[mchs_available[i].machineID].changeTool("T1");
+			}
+			
+			else if(toolUsed[1] == true) {
+				
+				for(int i = 0; i < counter; i++)
+					mchs[mchs_available[i].machineID].changeTool("T2");
+			}
+			
+			else if(toolUsed[2] == true) {
+				
+				for(int i = 0; i < counter; i++)
+					mchs[mchs_available[i].machineID].changeTool("T3");
+			}
+			
+		}
+		
+		else if(tool_counter == 2 && counter>1) {
+			
+			if(toolUsed[0] == true && toolUsed[1] == true) {
+				
+				for(int i = 0; i < counter; i=i+2) {
+					mchs[mchs_available[i].machineID].changeTool("T1");
+					mchs[mchs_available[i+1].machineID].changeTool("T2");
+				}
+				
+			}
+			
+			else if(toolUsed[1] == true && toolUsed[2] == true) {
+				
+				for(int i = 0; i < counter; i=i+2) {
+					mchs[mchs_available[i].machineID].changeTool("T2");
+					mchs[mchs_available[i+1].machineID].changeTool("T3");
+				}
+			}
+			
+			else if(toolUsed[2] == true && toolUsed[0] == true) {
+				
+				for(int i = 0; i < counter; i++) {
+					mchs[mchs_available[i].machineID].changeTool("T1");
+					mchs[mchs_available[i+1].machineID].changeTool("T3");
+				}
+			}
+			
+			
+		}
+		
+		else if(tool_counter >= 3 && counter>2) {
+			
+				mchs[mchs_available[3].machineID].changeTool("T1");
+				mchs[mchs_available[2].machineID].changeTool("T3");
+				mchs[mchs_available[1].machineID].changeTool("T2");
+				mchs[mchs_available[0].machineID].changeTool("T1");
+			
+		}
+		
+		for(int i= 0; i<4;i++) 
+			mchs[i].print_machine();
+		
+		
+		//
+		// PATHFINDER
+		//
+		
+		//int breaker = 0;
+		
 		for(int k = 0; k < divideTransformation.length-1;k++) {
 
-			for(int n = 0; n < 4; n++) {
+			for(int n = 3; n >= 0; n--) {
 				
 				boolean already_chosen = false;
 				
 				if(mchs[n].state) {
 					
-					if(k>0 && n==0) continue;
+					if(k==0 && n==3 && tool_counter >=3) continue;
 					
 					for(int i = 0; i<tts.length;i++) {
 						
@@ -56,7 +195,20 @@ public class PathFinder {
 					
 				}
 				
-				else if (n==3) System.out.println("NO MACHINES AVAILABLE");
+				else if (n==0) { 
+					System.out.println("NO MACHINES AVAILABLE");
+					n = 4;
+					//breaker++;
+					/*
+					if(breaker == 10) {
+						breaker = 0;
+						mchs[0].state = true;
+						mchs[1].state = true;
+						mchs[2].state = true;
+						mchs[3].state = true;
+					}
+					*/
+				}
 			}
 			
 		}

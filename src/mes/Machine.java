@@ -12,7 +12,7 @@ public class Machine {
 		
 		this.machineID = id;
 		this.tool = tool;
-		System.out.println("tool_maquina"+(this.machineID+1));
+		//System.out.println("tool_maquina"+(this.machineID+1));
 		Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(tool.charAt(1)));
 		this.state = true;
 		this.totalOperatingTime = 0;

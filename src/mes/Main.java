@@ -30,24 +30,23 @@ public class Main {
 		
 		OrdersState OL=new OrdersState();
 		opc.connect();
-		Unloading u = new Unloading(4, "P4","P2",2);
-		//Transformação trans = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
+		//Unloading u = new Unloading(4, "P4","P2",2);
+		//Transformação trans1 = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
+		//Transformação trans2 = new Transformação(45, "P1", "P2", 10, 0, 0, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
-		pr.mchs[1].changeTool("T2");
-		pr.mchs[2].changeTool("T3");
-		pr.mchs[5].changeTool("T2");
-		pr.mchs[6].changeTool("T3");
+		//pr.mchs[1].changeTool("T2");
+		//pr.mchs[2].changeTool("T3");
+		//pr.mchs[5].changeTool("T2");
+		//pr.mchs[6].changeTool("T3");
 		
 		System.out.println("------------------------------------------------------------");
 		
 		pr.initializeSystemState();
 		
-		System.out.println("------------------------------------------------------------");
+		//System.out.println("------------------------------------------------------------");
 		
-		for(int i= 0; i<pr.mchs.length;i++) 
-			pr.mchs[i].print_machine();
 		
 		tts[0] = new TransformationTable("P1","P2","T1",15);
 		tts[1] = new TransformationTable("P4","P5","T1",15);
@@ -63,61 +62,26 @@ public class Main {
 		pr.initializePushers();
 		
 		System.out.println("------------------------------------------------------------");
-	//	pr.buildPathTransformation(trans,tts);
+		
+		//pr.buildPathTransformation(trans1,tts);
 		//OL.addOrder(trans);
+		//pr.mchs[0].state = false;
+		//pr.mchs[1].state = false;
+		//pr.mchs[2].state = false;
+		//pr.mchs[3].state = false;
 		
 		//System.out.println("------------------------------------------------------------");
 		
+		//pr.buildPathTransformation(trans2,tts);
+		
+		//System.out.println("------------------------------------------------------------");
 		//pr.buildPathUnloading(u);
 		
 		//System.out.println("------------------------------------------------------------");
-		/*
-		
-		String storedMessage = "<Current_Stores>";
-		
-		for(int i = 0; i<9;i++) {
-			
-			int pNumber = i+1;
-			siw[i] = new SoredInWarehouse(orderNumber);
-			
-			if( siw[i].sendResponse(orderNumber,"P" + pNumber,pr.sys).compareTo("DOESNT EXIST")!=0)
-				storedMessage = storedMessage + "\n" + siw[i].sendResponse(orderNumber,"P" + pNumber,pr.sys);
-			
-			orderNumber++;	
-			
-		}
-		storedMessage = storedMessage + "\n" + "</Current_Stores>";
-		System.out.println(storedMessage);
-		
-		System.out.println("------------------------------------------------------------");
 		
 		
-		String storedOrders = "<Order_Schedule>\n";
 		
-		for(int i = 0; i<OL.OrdersList.size(); i++) {
-			
-			Order order = new Order();
-			order = OL.OrdersList.get(i);
-			
-			storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
-			
-			if(order.toString().compareTo("transformation")==0) {
-				
-				storedOrders = storedOrders + "Transform From=" + ((Transformação)order).From + " To=" + ((Transformação)order).To + " Quantity=" + ((Transformação)order).quantTotal + " Quantity1=" + ((Transformação)order).quantProcessed + " Quantity2="
-						+ ((Transformação)order).quantExe + "\nQuantity3=" + ((Transformação)order).quantToBe + " Time=" + order.instanteEnviado + " Time1=" + order.instanteChegada + " MaxDelay=" + order.MaxDelay + " Penalty=" + ((Transformação)order).Penalty + " Start=" + ((Transformação)order).exeTime
-						+ "\nEnd=" + ((Transformação)order).finTime + " PenaltyIncurred=" + 0 + "/>\n";
-				
-			}
-			
-			storedOrders = storedOrders + "</Order>\n";
-			
-		}
 		
-		storedOrders = storedOrders + "</Order_Schedule>";
-		System.out.println(storedOrders);
-		
-		System.out.println("------------------------------------------------------------");
-		*/
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
 		int start=(int) System.currentTimeMillis(),l=0;
