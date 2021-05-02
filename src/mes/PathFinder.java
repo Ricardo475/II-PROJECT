@@ -347,7 +347,6 @@ public class PathFinder {
 			//mchs = new Machine[i];
 			mchs[i] = new Machine();
 			mchs[i].setMachine(i, "T1");
-			
 			mchs[i].print_machine();
 		}
 		

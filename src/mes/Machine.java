@@ -45,7 +45,7 @@ public class Machine {
 	
 	public void updateTime(int time) {
 		
-		this.totalOperatingTime = this.totalOperatingTime + time;
+		this.totalOperatingTime =time;
 	}
 
 	public void updateOperatedPieces(String pieceType) {
@@ -58,5 +58,13 @@ public class Machine {
 		else if(pieceType == "P6") nP6++;
 		
 		this.nTotalOperated++;
+	}
+	public void updateOperatedPieces(Short [] piecesOperated) {
+		nP1 = piecesOperated[1];
+		nP2 = piecesOperated[2];
+		nP3 = piecesOperated[3];
+		nP4 = piecesOperated[4];
+		nP5 = piecesOperated[5];
+		nP6 = piecesOperated[6];
 	}
 }

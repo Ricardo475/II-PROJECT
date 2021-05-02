@@ -46,7 +46,7 @@ public class Transformação extends Order {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			while((short)Main.opc.get_Value("ordem_recebida")!=1){};
+			while((short)Main.opc.get_Value("ordem_recebida",1)!=1){};
 			quantTotal--;
 			System.out.println(" qant: "+quantTotal);
 			if(quantTotal==0) {	this.orderDisactivate();this.done=true;System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}

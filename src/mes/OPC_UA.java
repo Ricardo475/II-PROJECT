@@ -30,7 +30,7 @@ public class OPC_UA {
 	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
-
+	int r1=1,r2=1,r3=1,r4=1;
 	public void connect() {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
@@ -52,9 +52,12 @@ public class OPC_UA {
 
 	}
 
-	public Object get_Value(String VarName) {
-		String var;
-		var = path + VarName;
+	public Object get_Value(String VarName,int p) {
+		String var ="";
+		if(p== 1)
+			var = path + VarName;
+		else if(p==2)
+			var= path2+VarName;
 		NodeId nodeidstring = new NodeId(id_node, var);
 		DataValue value;
 
@@ -191,19 +194,86 @@ public class OPC_UA {
 		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
 		if(identifier.contains("CL1T4"))
 		{
-			Main.pr.mchs[0].state=(boolean) value.getValue().getValue();
+			//Main.pr.mchs[0].state=(boolean) value.getValue().getValue();
+			if((boolean) value.getValue().getValue())
+			{
+				r1=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CL1T4.pieces_operated", 2);
+				Main.pr.mchs[0].updateOperatedPieces(aux);
+				System.out.println("Pieces: "+aux[1]);
+			}
+			else if(r1==0 && !(boolean) value.getValue().getValue())
+			{
+				r1=1;
+				long aux;
+				aux= (long) this.get_Value("CL1T4.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[0].updateTime((int) (aux/1000));
+			}
 		}
 		else if(identifier.contains("CL1T3"))
 		{
-			Main.pr.mchs[1].state=(boolean) value.getValue().getValue();
+
+			//Main.pr.mchs[1].state=(boolean) value.getValue().getValue();
+			if((boolean) value.getValue().getValue())
+			{
+				r2=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CL1T3.pieces_operated", 2);
+				Main.pr.mchs[1].updateOperatedPieces(aux);
+				System.out.println("Pieces: "+aux[1]);
+			}
+			else if(r2==0 && !(boolean) value.getValue().getValue())
+			{
+				r2=1;
+				long aux;
+				aux= (long) this.get_Value("CL1T3.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[1].updateTime((int) (aux/1000));
+			}
 		}
 		else if(identifier.contains("CL1T2"))
 		{
-			Main.pr.mchs[2].state=(boolean) value.getValue().getValue();
+
+			//Main.pr.mchs[2].state=(boolean) value.getValue().getValue();
+			if((boolean) value.getValue().getValue())
+			{
+				r3=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CL1T2.pieces_operated", 2);
+				Main.pr.mchs[2].updateOperatedPieces(aux);
+				System.out.println("Pieces: "+aux[1]);
+			}
+			else if(r3==0 && !(boolean) value.getValue().getValue())
+			{
+				r3=1;
+				long aux;
+				aux= (long) this.get_Value("CL1T2.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[2].updateTime((int) (aux/1000));
+			}
 		}
 		else if(identifier.contains("CL1T1"))
 		{
-			Main.pr.mchs[3].state=(boolean) value.getValue().getValue();
+
+			//Main.pr.mchs[3].state=(boolean) value.getValue().getValue();
+			if((boolean) value.getValue().getValue())
+			{
+				r4=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CL1T1.pieces_operated", 2);
+				Main.pr.mchs[3].updateOperatedPieces(aux);
+				System.out.println("Pieces: "+aux[1]);
+			}
+			else if(r4==0 && !(boolean) value.getValue().getValue())
+			{
+				r4=1;
+				long aux;
+				aux= (long) this.get_Value("CL1T1.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[3].updateTime((int) (aux/1000));
+			}
 		}
 	}
 }
