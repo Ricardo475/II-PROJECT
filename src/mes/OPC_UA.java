@@ -27,7 +27,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class OPC_UA {
 	private OpcUaClient client;
-	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.";
+	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
 
@@ -35,7 +35,7 @@ public class OPC_UA {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
 			client.connect().get();
-			//this.createSubscription();
+			this.createSubscription();
 		} catch (UaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,13 +122,20 @@ public class OPC_UA {
 		if (sub != null) {
 			return;
 		}
-		sub = client.getSubscriptionManager().createSubscription(1000.0).get();
+		sub = client.getSubscriptionManager().createSubscription(10.0).get();
 		List<MonitoredItemCreateRequest> lmr= new ArrayList<>();
+		  
 		
-		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path + "int_var"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path2 + "CL1T1.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId2 = new ReadValueId(new NodeId(id_node, path2 + "CL1T2.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId3 = new ReadValueId(new NodeId(id_node, path2 + "CL1T3.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId4 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
-
+		
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
@@ -137,6 +144,39 @@ public class OPC_UA {
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId, MonitoringMode.Reporting,
 				parameters));
+		
+		UInteger clientHandle2 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters2 = new MonitoringParameters(clientHandle2, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId2, MonitoringMode.Reporting,
+				parameters2));
+		
+		UInteger clientHandle3 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters3 = new MonitoringParameters(clientHandle3, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId3, MonitoringMode.Reporting,
+				parameters3));
+		
+		UInteger clientHandle4 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters4 = new MonitoringParameters(clientHandle4, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId4, MonitoringMode.Reporting,
+				parameters4));
 
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
@@ -146,7 +186,24 @@ public class OPC_UA {
 	}
 
 	private void onSubscriptionChangeValue(UaMonitoredItem item, DataValue value) {
-		System.out.println("item: " + item.getReadValueId().getNodeId().getIdentifier().toString() + " value: "
-				+ value.getValue().getValue());
+		String identifier =item.getReadValueId().getNodeId().getIdentifier().toString();
+		
+		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
+		if(identifier.contains("CL1T4"))
+		{
+			Main.pr.mchs[0].state=(boolean) value.getValue().getValue();
+		}
+		else if(identifier.contains("CL1T3"))
+		{
+			Main.pr.mchs[1].state=(boolean) value.getValue().getValue();
+		}
+		else if(identifier.contains("CL1T2"))
+		{
+			Main.pr.mchs[2].state=(boolean) value.getValue().getValue();
+		}
+		else if(identifier.contains("CL1T1"))
+		{
+			Main.pr.mchs[3].state=(boolean) value.getValue().getValue();
+		}
 	}
 }

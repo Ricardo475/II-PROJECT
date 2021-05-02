@@ -78,7 +78,7 @@ public class XML_parser {
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
 						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
 						OL.addOrder(trans);
-						Main.pr.buildPathTransformation(trans,Main.tts);
+						//Main.pr.buildPathTransformation(trans,Main.tts);
 						
 					}
 
