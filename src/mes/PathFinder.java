@@ -27,12 +27,14 @@ public class PathFinder {
 		
 		String aux_result = "[";
 		
+		
 		//
 		// SAVE AVAILABLE MACHINES
 		//
 		
 		Machine mchs_available[] = new Machine[4];
 		int counter = 0;
+		
 		
 		for(int i = 0; i < 4; i++) {
 			
@@ -57,7 +59,9 @@ public class PathFinder {
 			
 			for(int j = 0; j < tts.length; j++) {
 				
-				if(tts[j].existsTranformationInTable(divideTransformation[i],divideTransformation[i+1])) {
+				if(tool_counter>3) break;
+				
+				else if(tts[j].existsTranformationInTable(divideTransformation[i],divideTransformation[i+1])) {
 					
 					 if(tts[j].get_toolNeeded(divideTransformation[i], divideTransformation[i+1]) == "T1") {
 						 toolUsed[0] = true;
@@ -82,7 +86,6 @@ public class PathFinder {
 				
 			}
 			
-			if(tool_counter>3) break;
 			
 		}
 		
@@ -155,9 +158,7 @@ public class PathFinder {
 			
 		}
 		
-		for(int i= 0; i<4;i++) 
-			mchs[i].print_machine();
-		
+
 		
 		//
 		// PATHFINDER
@@ -197,7 +198,14 @@ public class PathFinder {
 				
 				else if (n==0) { 
 					System.out.println("NO MACHINES AVAILABLE");
-					n = 4;
+					res[0] = 0;
+					res[1] = 0;
+					res[2] = 0;
+					res[3] = 0;
+					res[4] = 0;
+					res[5] = 0;
+					break;
+					//n = 4;
 					//breaker++;
 					/*
 					if(breaker == 10) {
@@ -212,6 +220,18 @@ public class PathFinder {
 			}
 			
 		}
+		
+		for(int i = 0; i<res.length;i++) {
+			
+			if(res[i]!=0)
+				mchs[res[i]-1].state = false;
+			
+		}
+		
+		for(int i= 0; i<4;i++) 
+			mchs[i].print_machine();
+		
+		
 		
 		if(aux_result.length()!=7) {
 			
