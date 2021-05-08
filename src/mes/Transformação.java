@@ -26,19 +26,22 @@ public class Transformação extends Order {
 	@Override
 	public String toString()
 	{
-		return "transformation";
+		return "{ORDER Nº" + this.orderNumber + " || Type: Transformation" + " || TIME: " + this.PrazoEntrega() + "}";
 	}
 	
 
 	public void doOrder(PathFinder pr)
 	{
+		
+		
 		if(quantTotal > 0)
 		{
 			//this.SelectPath();
 			System.out.println("Quant: "+quantTotal);
+			int[] aux=pr.buildPathTransformation(this,Main.tts);
 			
-			if(!(pr.buildPathTransformation(this,Main.tts)[0] == 0 && pr.buildPathTransformation(this,Main.tts)[1] == 0 && pr.buildPathTransformation(this,Main.tts)[2] == 0 && pr.buildPathTransformation(this,Main.tts)[3] == 0 && pr.buildPathTransformation(this,Main.tts)[4] == 0 && pr.buildPathTransformation(this,Main.tts)[5] == 0)) {
-				int[] aux=pr.buildPathTransformation(this,Main.tts);
+			if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
+				
 				Main.opc.Set_value("begin_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
 				Main.opc.Set_value("begin_piece.path", aux);
 				Main.opc.Set_value("begin_piece.currType", Character.getNumericValue(this.From.charAt(1)));

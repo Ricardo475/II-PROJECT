@@ -13,7 +13,7 @@ public class Machine {
 		this.machineID = id;
 		this.tool = tool;
 		//System.out.println("tool_maquina"+(this.machineID+1));
-		Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(tool.charAt(1)));
+		//Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(tool.charAt(1)));
 		this.state = true;
 		this.totalOperatingTime = 0;
 		this.nTotalOperated = 0;
@@ -40,7 +40,12 @@ public class Machine {
 	public void changeTool(String toolNeeded) {
 		
 		this.tool = toolNeeded;
-		Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(toolNeeded.charAt(1)));
+	}
+	
+	public void setToolCodesys(int id) {
+		
+		if(this.machineID == id)
+			Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(this.tool.charAt(1)));
 	}
 	
 	public void updateTime(int time) {

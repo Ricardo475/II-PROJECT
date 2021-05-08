@@ -220,18 +220,23 @@ public class PathFinder {
 			}
 			
 		}
-		
+		/*
 		for(int i = 0; i<res.length;i++) {
 			
 			if(res[i]!=0)
 				mchs[res[i]-1].state = false;
 			
 		}
-		
+		*/
 		for(int i= 0; i<4;i++) 
 			mchs[i].print_machine();
+	
 		
-		
+		if(res[0]!=0) {
+			for(int i = 0; i<4;i++) {
+				mchs[i].setToolCodesys(i);
+			}
+		}
 		
 		if(aux_result.length()!=7) {
 			

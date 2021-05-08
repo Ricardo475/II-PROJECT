@@ -1,6 +1,8 @@
 package mes;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+
 
 public class OrdersState {
 
@@ -21,7 +23,25 @@ public class OrdersState {
 
 
 	public void addOrder(Order order) {
-		OrdersList.add(order);
+		
+		PriorityQueue<Order> pqOrdem = new PriorityQueue<Order>();
+		ArrayList<Order> aux = new ArrayList<Order>();
+		
+		pqOrdem.add(order);
+		for(int i=0; i < OrdersList.size(); i++) {
+			
+			Order o_aux = new Order();
+			o_aux = OrdersList.get(i);
+			pqOrdem.add(o_aux);
+		}
+		
+		while(!pqOrdem.isEmpty()) {
+			
+			Order o_aux = pqOrdem.poll();
+			aux.add(o_aux);
+		}
+		
+		OrdersList = aux;
 		//this.RunningOrders = OrdersList.size();
 	}
 
@@ -60,6 +80,12 @@ public class OrdersState {
 			else
 				return null;
 
+	}
+
+
+	public void printOrders() {
+		System.out.println(OrdersList);
+		
 	}
 
 

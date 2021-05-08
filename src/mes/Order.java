@@ -1,6 +1,6 @@
 package mes;
 
-public class Order {
+public class Order implements Comparable<Order>{
 	
 	int orderNumber,MaxDelay,instanteEnviado,instanteChegada;
 	boolean activeOrder;
@@ -34,25 +34,46 @@ public class Order {
 	}
 	
 	
-	@Override
-	public String toString()
-	{
-		
-		return "ola";
-		
-	}
-	
+
 	public int PrazoEntrega()
 	{
-		return this.instanteChegada+this.MaxDelay;
+		return (this.instanteChegada+this.MaxDelay);
 		
 	}
 
 	public void doOrder(PathFinder pr)
 	{
-		System.out.println("nada");
+		System.out.println("ORDER-" + this.orderNumber + " DONE!");
 		this.orderDisactivate();
 		this.done=true;
 	}
+	
+	
+	
+	public boolean equals(Order o) {
+		
+		return this.PrazoEntrega() == o.PrazoEntrega();
+	}
+	
+	@Override
+	public int compareTo(Order o) {
+		
+		if(this.equals(o))
+			return 0;
+		else if (this.PrazoEntrega() > o.PrazoEntrega())
+			return 1;
+		else
+			return -1;
+	}
+	
+	/*
+	@Override
+	public String toString()
+	{
+		
+		return "ORDER Nº" + this.orderNumber + " || TIME: " + this.PrazoEntrega();
+		
+	}
+	*/
 	
 }
