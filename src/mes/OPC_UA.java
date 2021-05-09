@@ -194,7 +194,7 @@ public class OPC_UA {
 		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
 		if(identifier.contains("CL1T4"))
 		{
-			//Main.pr.mchs[0].state=(boolean) value.getValue().getValue();
+			Main.pr.mchs[0].state=!(boolean) value.getValue().getValue();
 			if((boolean) value.getValue().getValue())
 			{
 				r1=0;
@@ -215,7 +215,7 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T3"))
 		{
 
-			//Main.pr.mchs[1].state=(boolean) value.getValue().getValue();
+			Main.pr.mchs[1].state=!(boolean) value.getValue().getValue();
 			if((boolean) value.getValue().getValue())
 			{
 				r2=0;
@@ -236,7 +236,7 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T2"))
 		{
 
-			//Main.pr.mchs[2].state=(boolean) value.getValue().getValue();
+			Main.pr.mchs[2].state=!(boolean) value.getValue().getValue();
 			if((boolean) value.getValue().getValue())
 			{
 				r3=0;
@@ -257,7 +257,7 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T1"))
 		{
 
-			//Main.pr.mchs[3].state=(boolean) value.getValue().getValue();
+			Main.pr.mchs[3].state= !(boolean) value.getValue().getValue();
 			if((boolean) value.getValue().getValue())
 			{
 				r4=0;
