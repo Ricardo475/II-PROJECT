@@ -129,13 +129,13 @@ public class OPC_UA {
 		List<MonitoredItemCreateRequest> lmr= new ArrayList<>();
 		  
 		
-		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path2 + "CL1T1.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path2 + "CL1T1.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId2 = new ReadValueId(new NodeId(id_node, path2 + "CL1T2.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId2 = new ReadValueId(new NodeId(id_node, path2 + "CL1T2.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId3 = new ReadValueId(new NodeId(id_node, path2 + "CL1T3.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId3 = new ReadValueId(new NodeId(id_node, path2 + "CL1T3.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId4 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId4 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
