@@ -36,7 +36,7 @@ public class XML_parser {
 			if(xml.contains("<Request_Stores/>"))
 			{
 				SoredInWarehouse[] siw = new SoredInWarehouse[9];
-				System.out.println(xml);
+				//System.out.println(xml);
 				Order n= new Order(0,0,0,0);
 				OL.addOrder(n);
 				String storedMessage = "<Current_Stores>";

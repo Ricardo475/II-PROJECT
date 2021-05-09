@@ -3,6 +3,7 @@ package mes;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -16,6 +17,7 @@ public class Main {
 	static PathFinder pr = new PathFinder();
 	static TransformationTable[] tts = new TransformationTable[8];
 	static OPC_UA opc=new OPC_UA();
+	static SwingApp sw = new SwingApp();
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
@@ -27,12 +29,12 @@ public class Main {
 		*/
 		
 		//int orderNumber = 1;
-		
 		OrdersState OL=new OrdersState();
 		opc.connect();
 		//Unloading u = new Unloading(4, "P4","P2",2);
-		//Transformação trans1 = new Transformação(45, "P1", "P8", 10, 0, 0, 0, 0);
-		//Transformação trans2 = new Transformação(45, "P1", "P2", 10, 0, 0, 0, 0);
+		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
+		//Transformação trans2 = new Transformação(101, "P2", "P3", 5, 2, 100, 0, 0);
+		//Transformação trans3 = new Transformação(102, "P4", "P5", 20, 0, 10, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
@@ -56,15 +58,40 @@ public class Main {
 		tts[5] = new TransformationTable("P3","P4","T3",15);
 		tts[6] = new TransformationTable("P5","P9","T3",30);
 		tts[7] = new TransformationTable("P6","P7","T3",30);
-		
+			
 		System.out.println("------------------------------------------------------------");
 		
 		pr.initializePushers();
 		
 		System.out.println("------------------------------------------------------------");
+		/*
+		OL.printOrders();
+		
+		System.out.println("------------------------------------------------------------");
+		
+		OL.addOrder(trans1);
+		OL.printOrders();
+		
+		System.out.println("------------------------------------------------------------");
+		pr.buildPathTransformation(trans1,tts);
+		
+		System.out.println("------------------------------------------------------------");
+		
+		TimeUnit.SECONDS.sleep(2);
+		
+		OL.addOrder(trans2);
+		OL.printOrders();
+		
+		System.out.println("------------------------------------------------------------");
+		
+		TimeUnit.SECONDS.sleep(2);
+		
+		OL.addOrder(trans3);
+		OL.printOrders();
+		System.out.println("------------------------------------------------------------");
 		
 		//pr.buildPathTransformation(trans1,tts);
-		//OL.addOrder(trans);
+		
 		//pr.mchs[0].state = false;
 		//pr.mchs[1].state = false;
 		//pr.mchs[2].state = false;
@@ -79,16 +106,19 @@ public class Main {
 		
 		//System.out.println("------------------------------------------------------------");
 		
-		
+		*/
 		
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
+		
 		
 		int start=(int) System.currentTimeMillis(),l=0;
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
+		
 		Erp.start();
+		sw.initApp();
 		//OPC_UA opc=new OPC_UA();
 
 		Order prio = new Order(0,0,0,0);
