@@ -1,5 +1,7 @@
 package mes;
 
+import java.util.ArrayList;
+
 public class PathFinder {
 	
 	int cell, piece, typeBegin, typeEnd;
@@ -32,18 +34,15 @@ public class PathFinder {
 		// SAVE AVAILABLE MACHINES
 		//
 		
-		Machine mchs_available[] = new Machine[4];
-		int counter = 0;
+		ArrayList<Machine> mchs_available = new ArrayList<Machine>();
+		//int counter_mch = 0;
 		
 		
 		for(int i = 0; i < 4; i++) {
 			
 			if(mchs[i].state) {
-				mchs_available[counter] = new Machine();
-				mchs_available[counter] = mchs[i];
-			//	mchs_available[counter].print_machine();
-				
-				counter ++;
+				mchs_available.add(mchs[i]);	
+				//counter_mch++;
 			}
 					
 		}
@@ -94,70 +93,10 @@ public class PathFinder {
 	
 		
 		//
-		// TOOLS CHANGES BEFORE THE PATH
+		// TOOLS CHANGES BEFORE THE PATH (mes only)
 		//
 		
-		if(tool_counter == 1 && counter>0) {
-			
-			if(toolUsed[0] == true) {
-				
-				for(int i = 0; i < counter; i++)
-					mchs[mchs_available[i].machineID].changeTool("T1");
-			}
-			
-			else if(toolUsed[1] == true) {
-				
-				for(int i = 0; i < counter; i++)
-					mchs[mchs_available[i].machineID].changeTool("T2");
-			}
-			
-			else if(toolUsed[2] == true) {
-				
-				for(int i = 0; i < counter; i++)
-					mchs[mchs_available[i].machineID].changeTool("T3");
-			}
-			
-		}
-		
-		else if(tool_counter == 2 && counter>1) {
-			
-			if(toolUsed[0] == true && toolUsed[1] == true) {
-				
-				for(int i = 0; i < counter; i=i+2) {
-					mchs[mchs_available[i].machineID].changeTool("T1");
-					mchs[mchs_available[i+1].machineID].changeTool("T2");
-				}
-				
-			}
-			
-			else if(toolUsed[1] == true && toolUsed[2] == true) {
-				
-				for(int i = 0; i < counter; i=i+2) {
-					mchs[mchs_available[i].machineID].changeTool("T2");
-					mchs[mchs_available[i+1].machineID].changeTool("T3");
-				}
-			}
-			
-			else if(toolUsed[2] == true && toolUsed[0] == true) {
-				
-				for(int i = 0; i < counter; i++) {
-					mchs[mchs_available[i].machineID].changeTool("T1");
-					mchs[mchs_available[i+1].machineID].changeTool("T3");
-				}
-			}
-			
-			
-		}
-		
-		else if(tool_counter >= 3 && counter>2) {
-			
-				mchs[mchs_available[3].machineID].changeTool("T1");
-				mchs[mchs_available[2].machineID].changeTool("T3");
-				mchs[mchs_available[1].machineID].changeTool("T2");
-				mchs[mchs_available[0].machineID].changeTool("T1");
-			
-		}
-		
+		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
 
 		
 		//
@@ -166,6 +105,7 @@ public class PathFinder {
 		
 		//int breaker = 0;
 		
+		/*
 		for(int k = 0; k < divideTransformation.length-1;k++) {
 
 			for(int n = 3; n >= 0; n--) {
@@ -215,10 +155,60 @@ public class PathFinder {
 						mchs[2].state = true;
 						mchs[3].state = true;
 					}
-					*/
+					
 				}
 			}
 			
+		}*/
+		
+		
+		
+		
+		for(int i = 0; i < (divideTransformation.length-1);i++) {
+			
+			boolean already_chosen = false;
+			
+			for(int n = mchs_available.size()-1; n >=0; n--) {
+				
+				
+				
+				if(i==0 && n==mchs_available.size()-1 && tool_counter >=3 && mchs[3].state && mchs[0].state) 
+					continue;
+				
+				else {
+					
+					for(int k = 0; k < tts.length; k++) {
+						
+						//System.out.println(i);
+						if(tts[k].existsTranformationInTable(divideTransformation[i], divideTransformation[i+1])) {
+							
+							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
+								
+								aux_result = aux_result + (n+1);
+								res[i] = (n+1);
+								counter_time[n] = counter_time[n] + tts[k].processTimeSeconds;
+								already_chosen  = true;
+								break;
+								
+								
+							}
+						}
+					}
+					
+				}
+				
+				if (already_chosen) break;	
+			}
+			if (!already_chosen) {
+				System.out.println("NO MACHINES AVAILABLE");
+				res[0] = 0;
+				res[1] = 0;
+				res[2] = 0;
+				res[3] = 0;
+				res[4] = 0;
+				res[5] = 0;
+				break;
+			}
 		}
 		/*
 		for(int i = 0; i<res.length;i++) {
@@ -264,7 +254,78 @@ public class PathFinder {
 	}
 	
 	
-	
+	private void pathing_changeToolsMES(int tool_counter, ArrayList<Machine> mchs_available, boolean[] toolUsed) {
+		
+		if(tool_counter == 1 && mchs_available.size()>0) {
+			
+			if(toolUsed[0] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i++)
+					mchs[mchs_available.get(i).machineID].changeTool("T1");
+			}
+			
+			else if(toolUsed[1] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i++)
+					mchs[mchs_available.get(i).machineID].changeTool("T2");
+			}
+			
+			else if(toolUsed[2] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i++)
+					mchs[mchs_available.get(i).machineID].changeTool("T3");
+			}
+			
+		}
+		
+		else if(tool_counter == 2 && mchs_available.size()>1) {
+			
+			if(toolUsed[0] == true && toolUsed[1] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i=i+2) {
+					mchs[mchs_available.get(i).machineID].changeTool("T1");
+					mchs[mchs_available.get(i).machineID].changeTool("T2");
+				}
+				
+			}
+			
+			else if(toolUsed[1] == true && toolUsed[2] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i=i+2) {
+					mchs[mchs_available.get(i).machineID].changeTool("T2");
+					mchs[mchs_available.get(i).machineID].changeTool("T3");
+				}
+			}
+			
+			else if(toolUsed[2] == true && toolUsed[0] == true) {
+				
+				for(int i = 0; i < mchs_available.size(); i++) {
+					mchs[mchs_available.get(i).machineID].changeTool("T1");
+					mchs[mchs_available.get(i).machineID].changeTool("T3");
+				}
+			}
+			
+			
+		}
+		
+		else if(tool_counter >= 3 && mchs_available.size()>2) {
+			
+			if(tool_counter > 3)
+				mchs[mchs_available.get(3).machineID].changeTool("T1");
+			
+			mchs[mchs_available.get(2).machineID].changeTool("T3");
+			mchs[mchs_available.get(1).machineID].changeTool("T2");
+			mchs[mchs_available.get(0).machineID].changeTool("T1");
+			
+		}
+		
+		
+	}
+
+
+
+
+
 	private String contructTranformations(Transformação trans, TransformationTable[] tts) {
 		
 		String result = trans.From;
