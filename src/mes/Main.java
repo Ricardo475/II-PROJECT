@@ -30,7 +30,7 @@ public class Main {
 		
 		//int orderNumber = 1;
 		OrdersState OL=new OrdersState();
-		//opc.connect();
+		opc.connect();
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
 		//Transformação trans2 = new Transformação(101, "P2", "P3", 5, 2, 100, 0, 0);
@@ -112,7 +112,7 @@ public class Main {
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
 		sw.initApp();
-		/*
+		
 		int start=(int) System.currentTimeMillis(),l=0;
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
@@ -166,7 +166,7 @@ public class Main {
 			Thread.sleep(1000);
 		
 		}
-		*/
+		
 	
 	}
 

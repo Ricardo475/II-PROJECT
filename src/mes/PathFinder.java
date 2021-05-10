@@ -18,6 +18,8 @@ public class PathFinder {
 		//
 		//TO DO: DECIDE HOW TO CHOOSE LEFT AND RIGHT SIDE
 		//
+		if(trans.path[0]!=0)
+			return trans.path;
 		
 		String result = "";
 		int[] res = {0,0,0,0,0,0};
@@ -29,6 +31,7 @@ public class PathFinder {
 		String tools_before[] = { mchs[0].tool,mchs[1].tool,mchs[2].tool,mchs[3].tool };
 		String aux_result = "[";
 		
+	
 		
 		//
 		// SAVE AVAILABLE MACHINES
@@ -213,8 +216,10 @@ public class PathFinder {
 		
 		for(int i = 0; i<res.length;i++) {
 			
-			if(res[i]!=0)
+			if(res[i]!=0) {
 				mchs[res[i]-1].state = false;
+				trans.set_Path(res);
+			}
 			
 		}
 		
