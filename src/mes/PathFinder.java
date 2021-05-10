@@ -175,9 +175,11 @@ public class PathFinder {
 							
 							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
 								
-								aux_result = aux_result + (n+1);
-								res[i] = (n+1);
-								counter_time[n] = counter_time[n] + tts[k].processTimeSeconds;
+								//System.out.println("\nMACHINE TO GO: " + mchs_available.get(n).machineID + "\n");
+								
+								aux_result = aux_result + (mchs_available.get(n).machineID+1);
+								res[i] = (mchs_available.get(n).machineID+1);
+								counter_time[mchs_available.get(n).machineID] = counter_time[mchs_available.get(n).machineID] + tts[k].processTimeSeconds;
 								already_chosen  = true;
 								break;
 								
@@ -308,12 +310,17 @@ public class PathFinder {
 		
 		else if(tool_counter >= 3 && mchs_available.size()>2) {
 			
-			if(tool_counter > 3)
+			if(tool_counter > 3 && mchs_available.size()>3) {
 				mchs[mchs_available.get(3).machineID].changeTool("T1");
-			
-			mchs[mchs_available.get(2).machineID].changeTool("T3");
-			mchs[mchs_available.get(1).machineID].changeTool("T2");
-			mchs[mchs_available.get(0).machineID].changeTool("T1");
+				mchs[mchs_available.get(2).machineID].changeTool("T3");
+				mchs[mchs_available.get(1).machineID].changeTool("T2");
+				mchs[mchs_available.get(0).machineID].changeTool("T1");
+			}
+			else if(tool_counter == 3) {
+				mchs[mchs_available.get(2).machineID].changeTool("T3");
+				mchs[mchs_available.get(1).machineID].changeTool("T2");
+				mchs[mchs_available.get(0).machineID].changeTool("T1");
+			}
 			
 		}
 		
