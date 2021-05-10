@@ -26,7 +26,7 @@ public class PathFinder {
 		divideTransformation = transformation.split("/");
 		
 		int[] counter_time = {0,0,0,0};
-		
+		String tools_before[] = { mchs[0].tool,mchs[1].tool,mchs[2].tool,mchs[3].tool };
 		String aux_result = "[";
 		
 		
@@ -145,22 +145,13 @@ public class PathFinder {
 					res[4] = 0;
 					res[5] = 0;
 					break;
-					//n = 4;
-					//breaker++;
-					/*
-					if(breaker == 10) {
-						breaker = 0;
-						mchs[0].state = true;
-						mchs[1].state = true;
-						mchs[2].state = true;
-						mchs[3].state = true;
-					}
 					
 				}
 			}
 			
-		}*/
+		}
 		
+		*/
 		
 		
 		
@@ -207,17 +198,24 @@ public class PathFinder {
 				res[3] = 0;
 				res[4] = 0;
 				res[5] = 0;
+				
+				for(int n = 0; n < 4; n++) {
+					
+					mchs[n].changeTool(	tools_before[n]);
+					
+				}
 				break;
 			}
 		}
-		/*
+	
+		
 		for(int i = 0; i<res.length;i++) {
 			
 			if(res[i]!=0)
 				mchs[res[i]-1].state = false;
 			
 		}
-		*/
+		
 		for(int i= 0; i<4;i++) 
 			mchs[i].print_machine();
 	

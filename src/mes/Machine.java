@@ -46,7 +46,7 @@ public class Machine {
 		
 		if(this.machineID == id)
 			Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(this.tool.charAt(1)));
-	}
+	}	
 	
 	public void updateTime(int time) {
 		

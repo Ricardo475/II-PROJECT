@@ -194,8 +194,22 @@ public class OPC_UA {
 		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
 		if(identifier.contains("CL1T4"))
 		{
-			//Main.pr.mchs[0].state=!(boolean) value.getValue().getValue();
-			if((boolean) value.getValue().getValue())
+			
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T4: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[0].state = state;
+				
+			if(state)
 			{
 				r1=0;
 				Short[] aux;
@@ -215,8 +229,21 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T3"))
 		{
 
-			//Main.pr.mchs[1].state=!(boolean) value.getValue().getValue();
-			if((boolean) value.getValue().getValue())
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T3: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[1].state = state;
+			
+			if(state)
 			{
 				r2=0;
 				Short[] aux;
@@ -236,8 +263,21 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T2"))
 		{
 
-			//Main.pr.mchs[2].state=!(boolean) value.getValue().getValue();
-			if((boolean) value.getValue().getValue())
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T2: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[2].state = state;
+			
+			if(state)
 			{
 				r3=0;
 				Short[] aux;
@@ -257,8 +297,21 @@ public class OPC_UA {
 		else if(identifier.contains("CL1T1"))
 		{
 
-			//Main.pr.mchs[3].state= !(boolean) value.getValue().getValue();
-			if((boolean) value.getValue().getValue())
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T1: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[3].state = state;
+			
+			if(state)
 			{
 				r4=0;
 				Short[] aux;
