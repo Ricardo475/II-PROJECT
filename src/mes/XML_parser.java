@@ -96,7 +96,7 @@ public class XML_parser {
 					
 					storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
 					
-					if(order.toString().compareTo("transformation")==0) {
+					if(order.toString().contains("Transformation")) {
 						
 						storedOrders = storedOrders + "Transform From=" + ((Transformação)order).From + " To=" + ((Transformação)order).To + " Quantity=" + ((Transformação)order).quantTotal + " Quantity1=" + ((Transformação)order).quantProcessed + " Quantity2="
 								+ ((Transformação)order).quantExe + "\nQuantity3=" + ((Transformação)order).quantToBe + " Time=" + order.instanteEnviado + " Time1=" + order.instanteChegada + " MaxDelay=" + order.MaxDelay + " Penalty=" + ((Transformação)order).Penalty + " Start=" + ((Transformação)order).exeTime
