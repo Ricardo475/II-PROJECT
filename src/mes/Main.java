@@ -18,6 +18,7 @@ public class Main {
 	static TransformationTable[] tts = new TransformationTable[8];
 	static OPC_UA opc=new OPC_UA();
 	static SwingApp sw = new SwingApp();
+	static OrdersState OL=new OrdersState();
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
@@ -29,7 +30,7 @@ public class Main {
 		*/
 		
 		//int orderNumber = 1;
-		OrdersState OL=new OrdersState();
+		
 		opc.connect();
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
@@ -112,11 +113,16 @@ public class Main {
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
 		sw.initApp();
+		//sw.run();
+		
+		//System.out.println("OK");
+		//OL.addOrder(trans1);
 		
 		int start=(int) System.currentTimeMillis(),l=0;
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);
+		
 		
 		Erp.start();
 		

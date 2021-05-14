@@ -3,6 +3,7 @@ package mes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,13 +31,14 @@ public class SwingApp implements Runnable{
 	JScrollPane scrollerLdr;
 	JScrollPane scrollerTrans;
 	
+	int ol_length;
 	
 	
 	
 	public void initApp() {
 		
 		th = new Thread(this);
-		
+		ol_length = 0;
 		frame_mesStats = new JFrame();
 		frame_mesStats.setTitle("FabricUI");
 		frame_mesStats.setSize(1200,1000);
@@ -44,6 +46,7 @@ public class SwingApp implements Runnable{
 		frame_mesStats.setVisible(true);
 		frame_mesStats.getContentPane().setLayout(null);
 		MainFrame(frame_mesStats);
+		th.start();
 	}
 
 
@@ -200,7 +203,7 @@ public class SwingApp implements Runnable{
 		tableLdr.setModel(new DefaultTableModel(
 				new Object[][] {
 					}, 
-				new String [] {"Loader ID", "Time", "Piece Type"} 
+				new String [] {"Order ID", "Time", "Piece Type"} 
 	));
 		
 		
@@ -219,7 +222,7 @@ public class SwingApp implements Runnable{
 		tableTrans.setModel(new DefaultTableModel(
 				new Object[][] {
 					}, 
-				new String [] {"ID", "Status", "Entry Time", "Start Time", "Initial Piece", "Final Piece", "End Time", "Deadline", "Processed", "Processing", "To be Processed", "Total"} 
+				new String [] {"Order ID", "Status", "Entry Time", "Start Time", "Initial Piece", "Final Piece", "End Time", "Deadline", "Processed", "Processing", "To be Processed", "Total"} 
 	));
 		
 		tableTrans.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -249,6 +252,16 @@ public class SwingApp implements Runnable{
 			Thread.sleep(2000);
 			while(true) {
 				
+				//
+				// MISSING DATABASE CONNECTION (YET)
+				//
+				
+				UpdateMachsStats();
+				UpdateStkStats();
+				UpdateUnlStats();
+				UpdateOrders();
+				AddOrders();
+				Thread.sleep(500);
 				
 			}
 		} catch (InterruptedException e) {
@@ -257,5 +270,179 @@ public class SwingApp implements Runnable{
 		}
 		
 	}
+
+
+
+
+	private void UpdateMachsStats() {
+		
+		for(int i = 0; i < 8;i++) {				
+			tableMch.setValueAt( Main.pr.mchs[i].totalOperatingTime, i, 1);
+			tableMch.setValueAt( Main.pr.mchs[i].nP1, i, 2);
+			tableMch.setValueAt(Main.pr.mchs[i].nP2, i, 3);
+			tableMch.setValueAt(Main.pr.mchs[i].nP3, i, 4);
+			tableMch.setValueAt(Main.pr.mchs[i].nP4, i, 5);
+			tableMch.setValueAt(Main.pr.mchs[i].nP5, i, 6);
+			tableMch.setValueAt(Main.pr.mchs[i].nP6, i, 7);
+			tableMch.setValueAt(Main.pr.mchs[i].nTotalOperated, i, 8);
+			//Main.pr.mchs[i].print_machine();
+		}
+	}
+	
+
+	private void UpdateStkStats() {
+		
+		tableStocks.setValueAt(Main.pr.sys.nP2Warehouse, 0, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP2Warehouse, 1, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP3Warehouse, 2, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP4Warehouse, 3, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP5Warehouse, 4, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP6Warehouse, 5, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP7Warehouse, 6, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP8Warehouse, 7, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP9Warehouse, 8, 1);
+		
+	}
+	
+	private void UpdateUnlStats() {
+		
+		for(int i = 0; i < 3; i++){
+			tableUnl.setValueAt(Main.pr.pshs[i].p1Pieces_unloaded, i, 1);
+			tableUnl.setValueAt(Main.pr.pshs[i].p2Pieces_unloaded, i, 2);
+			tableUnl.setValueAt(Main.pr.pshs[i].p3Pieces_unloaded, i, 3);
+			tableUnl.setValueAt(Main.pr.pshs[i].p4Pieces_unloaded, i, 4);
+			tableUnl.setValueAt(Main.pr.pshs[i].p5Pieces_unloaded, i, 5);
+			tableUnl.setValueAt(Main.pr.pshs[i].p6Pieces_unloaded, i, 6);
+			tableUnl.setValueAt(Main.pr.pshs[i].p7Pieces_unloaded, i, 7);
+			tableUnl.setValueAt(Main.pr.pshs[i].p8Pieces_unloaded, i, 8);
+			tableUnl.setValueAt(Main.pr.pshs[i].p9Pieces_unloaded, i, 9);
+			tableUnl.setValueAt(Main.pr.pshs[i].totalPieces_unloaded, i, 10);
+		}
+		
+		
+	}
+	
+	private void AddOrders() {
+		
+		//System.out.println(Main.OL.LengthOrderList());
+		
+		if(ol_length < Main.OL.LengthOrderList()) {
+			ol_length = Main.OL.LengthOrderList();
+			int rows = tableTrans.getRowCount();
+			//System.out.println(rows);
+			for(int i = 0; i <  Main.OL.LengthOrderList(); i++) {
+				
+				Order o = new Order();
+				o = Main.OL.OrdersList.get(i);
+				
+				if(o.toString().contains("Transformation")) {
+
+					boolean add = true;
+					//tableTrans.setValueAt(aValue, row, column);
+					for(int j = 0; j < rows; j++) {
+						int id_table = (int) tableTrans.getValueAt(j, 0);
+						//System.out.println("ID_GET: " + id_table);
+						
+						if (id_table == o.getOrderNumber()) {
+							add = false;
+						/*	
+							if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
+								System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
+								tableTrans.setValueAt("Running", j, 1);
+							}
+							else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.activeOrder && o.done){
+								System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
+								tableTrans.setValueAt("Done", j, 1);
+							}*/
+						}
+					}
+					
+					if(add) {
+						Vector v = new Vector();
+						
+						v.add(o.getOrderNumber());
+						
+						if(o.activeOrder && o.done)v.add("Done");
+						else if(o.activeOrder && !o.done) v.add("Running");
+						else v.add("Waiting");
+						
+						v.add(o.instanteChegada);
+						v.add(o.instanteEnviado);
+						v.add(((Transformação)o).From);
+						v.add(((Transformação)o).To);
+						v.add(((Transformação)o).finTime);
+						v.add(((Transformação)o).MaxDelay);
+						v.add(((Transformação)o).quantProcessed);
+						v.add(((Transformação)o).quantExe);
+						v.add(((Transformação)o).quantToBe);
+						v.add(((Transformação)o).quantTotal);
+						
+						DefaultTableModel model = (DefaultTableModel) tableTrans.getModel();
+						model.addRow(v);
+						scrollerTrans.setViewportView(tableTrans);
+						
+					}
+					
+				}
+				
+				else if(o.toString().contains("Loading")) {
+					
+					boolean add = true;
+					//tableTrans.setValueAt(aValue, row, column);
+					for(int j = 0; i < rows; j++) {
+						int id_table = (int) tableLdr.getValueAt(j, 0);
+						
+						if (id_table == o.getOrderNumber()) add = false;
+					}
+					
+					if(add) {
+						Vector v = new Vector();
+
+						v.add(o.getOrderNumber());
+						v.add(o.instanteChegada);
+						v.add(((Loading)o).pieceType);
+						
+						DefaultTableModel model = (DefaultTableModel) tableTrans.getModel();
+						model.addRow(v);
+						scrollerTrans.setViewportView(tableTrans);						
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+	}
+	
+
+		private void UpdateOrders() {
+
+			for(int i = 0; i <  Main.OL.LengthOrderList(); i++) {
+				
+				Order o = new Order();
+				o = Main.OL.OrdersList.get(i);
+				
+				for(int j = 0; j < tableTrans.getRowCount();j++) {
+					
+					if(o.getOrderNumber() == (int) tableTrans.getValueAt(j, 0)) {
+						
+						System.out.println("Nº "+ j + ":" + tableTrans.getValueAt(j, 1));
+						
+						if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
+							//System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
+							tableTrans.setValueAt("Running", j, 1);
+						}
+						else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.done){
+							//System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
+							tableTrans.setValueAt("Done", j, 1);		
+						}
+						scrollerTrans.setViewportView(tableTrans);	
+					}
+				}	
+			}
+			
+		}
+
 
 }
