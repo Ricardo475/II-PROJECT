@@ -18,8 +18,7 @@ public class PathFinder {
 		//
 		//TO DO: DECIDE HOW TO CHOOSE LEFT AND RIGHT SIDE
 		//
-		if(trans.path[0]!=0)
-			return trans.path;
+		
 		
 		String result = "";
 		int[] res = {0,0,0,0,0,0};
@@ -90,6 +89,8 @@ public class PathFinder {
 			
 			
 		}
+		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2])
+			return trans.path;
 		
 		//System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
 		//System.out.println(tool_counter);
