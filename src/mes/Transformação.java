@@ -45,11 +45,20 @@ public class Transformação extends Order {
 			//this.SelectPath();
 			
 			System.out.println("Quant: "+quantToBe);
-			
+			System.out.println("Quant: "+quantTotal);
+			String Side= "";
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
 			
 			if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
-				Main.opc.Set_value("atual_piece.tipo", "L");
+				if(aux.toString().contains("1") || aux.toString().contains("2") || aux.toString().contains("3") || aux.toString().contains("4"))
+				{
+					Side = "L";
+				}
+				else if(aux.toString().contains("5") || aux.toString().contains("6") || aux.toString().contains("7") || aux.toString().contains("8"))
+				{
+					Side = "R";
+				}
+				Main.opc.Set_value("atual_piece.tipo", Side);
 				Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
 				Main.opc.Set_value("atual_piece.path", aux);
 				Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)));
@@ -78,7 +87,7 @@ public class Transformação extends Order {
 				if(quantToBe==0) 
 				{	
 					this.orderDisactivate();
-					pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
+					//pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
 					this.done=true;
 					quantProcessed = quantExe;
 					quantExe = 0;

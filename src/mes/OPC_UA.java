@@ -137,6 +137,10 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId4 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId5 = new ReadValueId(new NodeId(id_node, path2 + "ALT5.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId6 = new ReadValueId(new NodeId(id_node, path2 + "ALT6.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
@@ -180,7 +184,27 @@ public class OPC_UA {
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId4, MonitoringMode.Reporting,
 				parameters4));
+		UInteger clientHandle5 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters5 = new MonitoringParameters(clientHandle5, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
 
+		lmr.add(new MonitoredItemCreateRequest(readValueId5, MonitoringMode.Reporting,
+				parameters5));
+		
+		UInteger clientHandle6 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters6 = new MonitoringParameters(clientHandle6,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId6, MonitoringMode.Reporting,
+				parameters6));
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
@@ -326,6 +350,28 @@ public class OPC_UA {
 				aux= (long) this.get_Value("CL1T1.OperatedTime", 2);
 				System.out.println("OP: " + aux);
 				Main.pr.mchs[3].updateTime((int) (aux/1000));
+			}
+		}
+		else if(identifier.contains("ALT5"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(!state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
+				Main.pr.sys.setPieces(aux);
+				Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("ALT6"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
+				Main.pr.sys.setPieces(aux);
+				Main.pr.sys.print_quantityPieces();
 			}
 		}
 	}

@@ -89,7 +89,7 @@ public class PathFinder {
 			
 			
 		}
-
+		
 		//System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
 		//System.out.println(tool_counter);
 	
@@ -99,6 +99,7 @@ public class PathFinder {
 		//
 		
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
+
 
 		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
@@ -112,9 +113,7 @@ public class PathFinder {
 		//
 		// PATHFINDER
 		//
-		
-		
-		
+
 		for(int i = 0; i < (divideTransformation.length-1);i++) {
 			
 			boolean already_chosen = false;
@@ -213,7 +212,8 @@ public class PathFinder {
 	
 	private int[] buildPathOnRight(Transformação trans, TransformationTable[] tts) {
 	
-		return null;
+		int[] res =  {0,0,0,0,0,0};
+		return res;
 	}
 
 
