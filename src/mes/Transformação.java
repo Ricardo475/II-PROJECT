@@ -40,11 +40,11 @@ public class Transformação extends Order {
 	public void doOrder(PathFinder pr)
 	{
 		
-		if(quantTotal > 0)
+		if(quantToBe > 0)
 		{
 			//this.SelectPath();
 			
-			System.out.println("Quant: "+quantTotal);
+			System.out.println("Quant: "+quantToBe);
 			
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
 			
@@ -67,16 +67,21 @@ public class Transformação extends Order {
 					e.printStackTrace();
 				}
 				if(flag) {
-					quantTotal--;
-					pr.sys.decreasePieces(this.To);
+					//quantTotal--;
+					quantToBe--;
+					quantExe++;
+					//System.out.println(this.From);
+					pr.sys.decreasePieces(this.From);
 					flag = false;
 				}
-				System.out.println(" qant: "+quantTotal);
-				if(quantTotal==0) 
+				System.out.println(" qant: "+quantToBe);
+				if(quantToBe==0) 
 				{	
 					this.orderDisactivate();
-					pr.sys.increasePieces(this.From,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
+					pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
 					this.done=true;
+					quantProcessed = quantExe;
+					quantExe = 0;
 					System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			}
 		}

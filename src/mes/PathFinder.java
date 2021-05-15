@@ -101,9 +101,9 @@ public class PathFinder {
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
 
 		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
-			System.out.println("Hello!");
+			//System.out.println("Hello!");
 			for(int i = 0; i<4;i++) {
-				while(!mchs[i].state) {System.out.println("STUCK!!!");}
+				while(!mchs[i].state) { System.out.println(i);}
 				mchs[i].setToolCodesys(i);
 			}
 			return trans.path;
@@ -120,9 +120,7 @@ public class PathFinder {
 			boolean already_chosen = false;
 			
 			for(int n = mchs_available.size()-1; n >=0; n--) {
-				
-				
-				
+					
 				if(i==0 && n==mchs_available.size()-1 && tool_counter >=3 && mchs[3].state && mchs[0].state) 
 					continue;
 				
@@ -153,19 +151,16 @@ public class PathFinder {
 				if (already_chosen) break;	
 			}
 			if (!already_chosen) {
-				System.out.println("NO MACHINES AVAILABLE");
-				res[0] = 0;
-				res[1] = 0;
-				res[2] = 0;
-				res[3] = 0;
-				res[4] = 0;
-				res[5] = 0;
-				
+				System.out.println("NO MACHINES AVAILABLE IN LEFT SIDE");
 				for(int n = 0; n < 4; n++) {
 					
 					mchs[n].changeTool(	tools_before[n]);
 					
 				}
+				
+				res = buildPathOnRight(trans,tts);
+				
+
 				break;
 			}
 		}
@@ -216,6 +211,12 @@ public class PathFinder {
 	}
 	
 	
+	private int[] buildPathOnRight(Transformação trans, TransformationTable[] tts) {
+	
+		return null;
+	}
+
+
 	private void pathing_changeToolsMES(int tool_counter, ArrayList<Machine> mchs_available, boolean[] toolUsed) {
 		
 		if(tool_counter == 1 && mchs_available.size()>0) {
