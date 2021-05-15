@@ -34,8 +34,8 @@ public class Main {
 		opc.connect();
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
-		//Transformação trans2 = new Transformação(101, "P2", "P3", 5, 2, 100, 0, 0);
-		//Transformação trans3 = new Transformação(102, "P4", "P5", 20, 0, 10, 0, 0);
+		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
+		//Transformação trans3 = new Transformação(102, "P4", "P6", 20, 0, 10, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
 		
 		pr.initializeMachines();
@@ -66,7 +66,7 @@ public class Main {
 		
 		System.out.println("------------------------------------------------------------");
 		/*
-		OL.printOrders();
+		//OL.printOrders();
 		
 		System.out.println("------------------------------------------------------------");
 		
@@ -86,12 +86,14 @@ public class Main {
 		System.out.println("------------------------------------------------------------");
 		
 		TimeUnit.SECONDS.sleep(2);
+		pr.buildPathTransformation(trans2,tts);
+		
 		
 		OL.addOrder(trans3);
 		OL.printOrders();
 		System.out.println("------------------------------------------------------------");
 		
-		//pr.buildPathTransformation(trans1,tts);
+		pr.buildPathTransformation(trans3,tts);
 		
 		//pr.mchs[0].state = false;
 		//pr.mchs[1].state = false;
@@ -112,7 +114,7 @@ public class Main {
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
-		//sw.initApp();
+	//	sw.initApp();
 		//sw.run();
 		
 		//System.out.println("OK");
