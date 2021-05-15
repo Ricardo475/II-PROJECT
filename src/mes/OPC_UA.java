@@ -27,7 +27,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class OPC_UA {
 	private OpcUaClient client;
-	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.";
+	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.",path3="|var|CODESYS Control Win V3 x64.Application.POU_2.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
 	int r1=1,r2=1,r3=1,r4=1;
@@ -114,7 +114,7 @@ public class OPC_UA {
 	}
 	
 	public void Set_value(String VarName, int[] value) {
-		for(int i:value)
+		for(int i=0; i<value.length;i++)
 		{
 			this.Set_value(VarName+"["+i+"]", value[i]);
 		}
@@ -140,6 +140,18 @@ public class OPC_UA {
 		ReadValueId readValueId5 = new ReadValueId(new NodeId(id_node, path2 + "ALT5.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId6 = new ReadValueId(new NodeId(id_node, path2 + "ALT6.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId7 = new ReadValueId(new NodeId(id_node, path3 + "CR1T1.Disponivel"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId8 = new ReadValueId(new NodeId(id_node, path3 + "CR1T2.Disponivel"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId9 = new ReadValueId(new NodeId(id_node, path2 + "CR1T3.Disponivel"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId10 = new ReadValueId(new NodeId(id_node, path2 + "CR1T4.Disponivel"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId11 = new ReadValueId(new NodeId(id_node, path2 + "ART2.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId12 = new ReadValueId(new NodeId(id_node, path2 + "ART1.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
@@ -205,6 +217,64 @@ public class OPC_UA {
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId6, MonitoringMode.Reporting,
 				parameters6));
+		
+		UInteger clientHandle7 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters7 = new MonitoringParameters(clientHandle7,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId7, MonitoringMode.Reporting,
+				parameters7));
+		
+		UInteger clientHandle8 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters8 = new MonitoringParameters(clientHandle8,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId8, MonitoringMode.Reporting,
+				parameters8));
+		
+		
+		UInteger clientHandle9 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters9 = new MonitoringParameters(clientHandle9,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId9, MonitoringMode.Reporting,
+				parameters9));
+		
+		UInteger clientHandle10 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters10 = new MonitoringParameters(clientHandle10,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId10, MonitoringMode.Reporting,
+				parameters10));
+		
+		UInteger clientHandle11 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters11 = new MonitoringParameters(clientHandle11,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId11, MonitoringMode.Reporting,
+				parameters11));
+		
+		
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
@@ -364,6 +434,165 @@ public class OPC_UA {
 			}
 		}
 		else if(identifier.contains("ALT6"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
+				Main.pr.sys.setPieces(aux);
+				Main.pr.sys.print_quantityPieces();
+			}
+		}
+		///////////////// CELULA DIREITA DAQUI PARA BAIXO //////////////////////////////////
+		if(identifier.contains("CR1T4"))
+		{
+			
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T4: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[4].state = state;
+				
+			if(state)
+			{
+				r1=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR1T4.pieces_operated", 2);
+				Main.pr.mchs[4].updateOperatedPieces(aux);
+				System.out.println("Pieces " + aux[0] +": "+aux[1]);
+			}
+			else if(r1==0 && !(boolean) value.getValue().getValue())
+			{
+				r1=1;
+				long aux;
+				aux= (long) this.get_Value("CR1T4.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[4].updateTime((int) (aux/1000));
+			}
+		}
+		else if(identifier.contains("CR1T3"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T3: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[5].state = state;
+			
+			if(state)
+			{
+				r2=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR1T3.pieces_operated", 2);
+				Main.pr.mchs[5].updateOperatedPieces(aux);
+				System.out.println("Pieces " + aux[0] +": " + aux[1]);
+			}
+			else if(r2==0 && !(boolean) value.getValue().getValue())
+			{
+				r2=1;
+				long aux;
+				aux= (long) this.get_Value("CR1T3.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[5].updateTime((int) (aux/1000));
+			}
+		}
+		else if(identifier.contains("CR1T2"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T2: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[6].state = state;
+			
+			if(state)
+			{
+				r3=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CL1R2.pieces_operated", 2);
+				Main.pr.mchs[6].updateOperatedPieces(aux);
+				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
+			}
+			else if(r3==0 && !(boolean) value.getValue().getValue())
+			{
+				r3=1;
+				long aux;
+				aux= (long) this.get_Value("CR1T2.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[6].updateTime((int) (aux/1000));
+			}
+		}
+		else if(identifier.contains("CR1T1"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T1: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[7].state = state;
+			
+			if(state)
+			{
+				r4=0;
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR1T1.pieces_operated", 2);
+				Main.pr.mchs[7].updateOperatedPieces(aux);
+				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
+			}
+			else if(r4==0 && !(boolean) value.getValue().getValue())
+			{
+				r4=1;
+				long aux;
+				aux= (long) this.get_Value("CR1T1.OperatedTime", 2);
+				System.out.println("OP: " + aux);
+				Main.pr.mchs[7].updateTime((int) (aux/1000));
+			}
+		}
+		else if(identifier.contains("ART1"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(!state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
+				Main.pr.sys.setPieces(aux);
+				Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("ART2"))
 		{
 			boolean state = (boolean) value.getValue().getValue();
 			if(state)

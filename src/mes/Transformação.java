@@ -48,13 +48,14 @@ public class Transformação extends Order {
 			System.out.println("Quant: "+quantTotal);
 			String Side= "";
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
-			
+			System.out.println(aux.length);
+			String aux2 =this.convert(aux);
 			if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
-				if(aux.toString().contains("1") || aux.toString().contains("2") || aux.toString().contains("3") || aux.toString().contains("4"))
+				if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 				{
 					Side = "L";
 				}
-				else if(aux.toString().contains("5") || aux.toString().contains("6") || aux.toString().contains("7") || aux.toString().contains("8"))
+				else if(aux2.contains("5") || aux2.contains("6") || aux2.contains("7") || aux2.contains("8"))
 				{
 					Side = "R";
 				}
@@ -80,7 +81,7 @@ public class Transformação extends Order {
 					quantToBe--;
 					quantExe++;
 					//System.out.println(this.From);
-					pr.sys.decreasePieces(this.From);
+					//pr.sys.decreasePieces(this.From);
 					flag = false;
 				}
 				System.out.println(" qant: "+quantToBe);
@@ -94,6 +95,15 @@ public class Transformação extends Order {
 					System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			}
 		}
+	}
+	public String convert(int[] ara)
+	{
+		String a="";
+		for(int i=0; i < ara.length ; i++)
+		{
+			a=a+ara[i];
+		}
+		return a;
 	}
 	
 }
