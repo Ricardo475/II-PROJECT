@@ -112,7 +112,7 @@ public class Main {
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
-		sw.initApp();
+		//sw.initApp();
 		//sw.run();
 		
 		//System.out.println("OK");
@@ -126,7 +126,6 @@ public class Main {
 		
 		Erp.start();
 		
-		//OPC_UA opc=new OPC_UA();
 
 		Order prio = new Order(0,0,0,0);
 		

@@ -49,7 +49,7 @@ public class Transformação extends Order {
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
 			
 			if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
-					
+				Main.opc.Set_value("atual_piece.tipo", "L");
 				Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
 				Main.opc.Set_value("atual_piece.path", aux);
 				Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)));
