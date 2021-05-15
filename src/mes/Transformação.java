@@ -5,6 +5,7 @@ public class Transformação extends Order {
 	int quantTotal,Penalty,exeTime,finTime,quantProcessed,quantExe,quantToBe;
 	String From,To;
 	int[] path = {0,0,0,0,0,0};
+	boolean[] toolUsing = {false,false,false};
 	boolean flag;
 	
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
@@ -39,7 +40,6 @@ public class Transformação extends Order {
 	public void doOrder(PathFinder pr)
 	{
 		
-		
 		if(quantTotal > 0)
 		{
 			//this.SelectPath();
@@ -68,12 +68,14 @@ public class Transformação extends Order {
 				}
 				if(flag) {
 					quantTotal--;
+					pr.sys.decreasePieces(this.To);
 					flag = false;
 				}
 				System.out.println(" qant: "+quantTotal);
 				if(quantTotal==0) 
 				{	
 					this.orderDisactivate();
+					pr.sys.increasePieces(this.From,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
 					this.done=true;
 					System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			}

@@ -215,7 +215,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T4.pieces_operated", 2);
 				Main.pr.mchs[0].updateOperatedPieces(aux);
-				System.out.println("Pieces: "+aux[1]);
+				System.out.println("Pieces " + aux[0] +": "+aux[1]);
 			}
 			else if(r1==0 && !(boolean) value.getValue().getValue())
 			{
@@ -249,7 +249,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T3.pieces_operated", 2);
 				Main.pr.mchs[1].updateOperatedPieces(aux);
-				System.out.println("Pieces: "+aux[1]);
+				System.out.println("Pieces " + aux[0] +": " + aux[1]);
 			}
 			else if(r2==0 && !(boolean) value.getValue().getValue())
 			{
@@ -283,7 +283,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T2.pieces_operated", 2);
 				Main.pr.mchs[2].updateOperatedPieces(aux);
-				System.out.println("Pieces: "+aux[1]);
+				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
 			}
 			else if(r3==0 && !(boolean) value.getValue().getValue())
 			{
@@ -317,7 +317,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T1.pieces_operated", 2);
 				Main.pr.mchs[3].updateOperatedPieces(aux);
-				System.out.println("Pieces: "+aux[1]);
+				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
 			}
 			else if(r4==0 && !(boolean) value.getValue().getValue())
 			{

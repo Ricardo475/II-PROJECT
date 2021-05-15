@@ -60,5 +60,14 @@ public class Machine {
 		nP4 = piecesOperated[4];
 		nP5 = piecesOperated[5];
 		nP6 = piecesOperated[6];
+		
+		nTotalOperated = nP1 + nP2 + nP3 + nP4 + nP5 + nP6;
+		//print_operatedPieces();
+	}
+
+	private void print_operatedPieces() {
+		
+		System.out.println("MACHINE NO" + this.machineID + ": " + "P1-" + this.nP1 + "||P2-" + this.nP2 + "||P3-" + this.nP3 + "||P4-" + this.nP4 + "||P5-" + this.nP5 + "||P6-" + this.nP6);
+		
 	}
 }

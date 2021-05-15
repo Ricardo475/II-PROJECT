@@ -287,12 +287,14 @@ public class SwingApp implements Runnable{
 			tableMch.setValueAt(Main.pr.mchs[i].nTotalOperated, i, 8);
 			//Main.pr.mchs[i].print_machine();
 		}
+		
+		scrollerMch.setViewportView(tableMch);
 	}
 	
 
 	private void UpdateStkStats() {
 		
-		tableStocks.setValueAt(Main.pr.sys.nP2Warehouse, 0, 1);
+		tableStocks.setValueAt(Main.pr.sys.nP1Warehouse, 0, 1);
 		tableStocks.setValueAt(Main.pr.sys.nP2Warehouse, 1, 1);
 		tableStocks.setValueAt(Main.pr.sys.nP3Warehouse, 2, 1);
 		tableStocks.setValueAt(Main.pr.sys.nP4Warehouse, 3, 1);
@@ -302,6 +304,7 @@ public class SwingApp implements Runnable{
 		tableStocks.setValueAt(Main.pr.sys.nP8Warehouse, 7, 1);
 		tableStocks.setValueAt(Main.pr.sys.nP9Warehouse, 8, 1);
 		
+		scrollerStk.setViewportView(tableStocks);
 	}
 	
 	private void UpdateUnlStats() {
@@ -318,7 +321,7 @@ public class SwingApp implements Runnable{
 			tableUnl.setValueAt(Main.pr.pshs[i].p9Pieces_unloaded, i, 9);
 			tableUnl.setValueAt(Main.pr.pshs[i].totalPieces_unloaded, i, 10);
 		}
-		
+		scrollerUnl.setViewportView(tableUnl);
 		
 	}
 	
@@ -427,7 +430,7 @@ public class SwingApp implements Runnable{
 					
 					if(o.getOrderNumber() == (int) tableTrans.getValueAt(j, 0)) {
 						
-						System.out.println("Nº "+ j + ":" + tableTrans.getValueAt(j, 1));
+						//System.out.println("Nº "+ j + ":" + tableTrans.getValueAt(j, 1));
 						
 						if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
 							//System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
