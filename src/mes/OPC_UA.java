@@ -58,6 +58,8 @@ public class OPC_UA {
 			var = path + VarName;
 		else if(p==2)
 			var= path2+VarName;
+		else if(p==3)
+			var= path3+VarName;
 		NodeId nodeidstring = new NodeId(id_node, var);
 		DataValue value;
 
@@ -146,13 +148,13 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId8 = new ReadValueId(new NodeId(id_node, path3 + "CR1T2.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId9 = new ReadValueId(new NodeId(id_node, path2 + "CR1T3.Disponivel"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId9 = new ReadValueId(new NodeId(id_node, path3 + "CR1T3.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId10 = new ReadValueId(new NodeId(id_node, path2 + "CR1T4.Disponivel"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId10 = new ReadValueId(new NodeId(id_node, path3 + "CR1T4.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId11 = new ReadValueId(new NodeId(id_node, path2 + "ART2.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId11 = new ReadValueId(new NodeId(id_node, path3 + "ART2.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		ReadValueId readValueId12 = new ReadValueId(new NodeId(id_node, path2 + "ART1.Sensor"), AttributeId.Value.uid(), null,
+		ReadValueId readValueId12 = new ReadValueId(new NodeId(id_node, path3 + "ART1.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
@@ -275,6 +277,16 @@ public class OPC_UA {
 		lmr.add(new MonitoredItemCreateRequest(readValueId11, MonitoringMode.Reporting,
 				parameters11));
 		
+		UInteger clientHandle12 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters12 = new MonitoringParameters(clientHandle12,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId12, MonitoringMode.Reporting,
+				parameters12));
 		
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
@@ -446,9 +458,9 @@ public class OPC_UA {
 			}
 		}
 		///////////////// CELULA DIREITA DAQUI PARA BAIXO //////////////////////////////////
-		if(identifier.contains("CR1T4"))
+		else if(identifier.contains("CR1T4"))
 		{
-			
+
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T4: " + (boolean) value.getValue().getValue());
 			
@@ -462,20 +474,20 @@ public class OPC_UA {
 			}
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[4].state = state;
-				
+			
 			if(state)
 			{
-				r1=0;
+				r3=0;
 				Short[] aux;
-				aux= (Short[]) this.get_Value("CR1T4.pieces_operated", 2);
+				aux= (Short[]) this.get_Value("CR1T4.pieces_operated", 3);
 				Main.pr.mchs[4].updateOperatedPieces(aux);
-				System.out.println("Pieces " + aux[0] +": "+aux[1]);
+				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
 			}
-			else if(r1==0 && !(boolean) value.getValue().getValue())
+			else if(r3==0 && !(boolean) value.getValue().getValue())
 			{
-				r1=1;
+				r3=1;
 				long aux;
-				aux= (long) this.get_Value("CR1T4.OperatedTime", 2);
+				aux= (long) this.get_Value("CR1T4.OperatedTime", 3);
 				System.out.println("OP: " + aux);
 				Main.pr.mchs[4].updateTime((int) (aux/1000));
 			}
@@ -501,7 +513,7 @@ public class OPC_UA {
 			{
 				r2=0;
 				Short[] aux;
-				aux= (Short[]) this.get_Value("CR1T3.pieces_operated", 2);
+				aux= (Short[]) this.get_Value("CR1T3.pieces_operated", 3);
 				Main.pr.mchs[5].updateOperatedPieces(aux);
 				System.out.println("Pieces " + aux[0] +": " + aux[1]);
 			}
@@ -509,7 +521,7 @@ public class OPC_UA {
 			{
 				r2=1;
 				long aux;
-				aux= (long) this.get_Value("CR1T3.OperatedTime", 2);
+				aux= (long) this.get_Value("CR1T3.OperatedTime", 3);
 				System.out.println("OP: " + aux);
 				Main.pr.mchs[5].updateTime((int) (aux/1000));
 			}
@@ -535,7 +547,7 @@ public class OPC_UA {
 			{
 				r3=0;
 				Short[] aux;
-				aux= (Short[]) this.get_Value("CL1R2.pieces_operated", 2);
+				aux= (Short[]) this.get_Value("CR1T2.pieces_operated", 3);
 				Main.pr.mchs[6].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
 			}
@@ -543,7 +555,7 @@ public class OPC_UA {
 			{
 				r3=1;
 				long aux;
-				aux= (long) this.get_Value("CR1T2.OperatedTime", 2);
+				aux= (long) this.get_Value("CR1T2.OperatedTime", 3);
 				System.out.println("OP: " + aux);
 				Main.pr.mchs[6].updateTime((int) (aux/1000));
 			}
@@ -569,7 +581,7 @@ public class OPC_UA {
 			{
 				r4=0;
 				Short[] aux;
-				aux= (Short[]) this.get_Value("CR1T1.pieces_operated", 2);
+				aux= (Short[]) this.get_Value("CR1T1.pieces_operated", 3);
 				Main.pr.mchs[7].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
 			}
@@ -577,7 +589,7 @@ public class OPC_UA {
 			{
 				r4=1;
 				long aux;
-				aux= (long) this.get_Value("CR1T1.OperatedTime", 2);
+				aux= (long) this.get_Value("CR1T1.OperatedTime", 3);
 				System.out.println("OP: " + aux);
 				Main.pr.mchs[7].updateTime((int) (aux/1000));
 			}
