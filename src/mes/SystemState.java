@@ -104,6 +104,18 @@ public class SystemState {
 		this.nTotalPiecesWarehouse = this.nP1Warehouse + this.nP2Warehouse + this.nP3Warehouse + this.nP4Warehouse + this.nP5Warehouse + this.nP6Warehouse + this.nP7Warehouse + this.nP8Warehouse + this.nP9Warehouse;
 		
 	}
+	public void setPieces(Short[] pieces)
+	{
+		this.nP1Warehouse = pieces[1];
+		this.nP2Warehouse = pieces[2];
+		this.nP3Warehouse = pieces[3];
+		this.nP4Warehouse = pieces[4];
+		this.nP5Warehouse = pieces[5];
+		this.nP6Warehouse = pieces[6];
+		this.nP7Warehouse = pieces[7];
+		this.nP8Warehouse = pieces[8];
+		this.nP9Warehouse = pieces[9];
+	}
 	
 
 }

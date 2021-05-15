@@ -89,7 +89,9 @@ public class PathFinder {
 			
 			
 		}
-
+		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2])
+			return trans.path;
+		
 		//System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
 		//System.out.println(tool_counter);
 	
@@ -100,18 +102,60 @@ public class PathFinder {
 		
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
 
-		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
-			System.out.println("Hello!");
-			for(int i = 0; i<4;i++) {
-				while(!mchs[i].state) {System.out.println("STUCK!!!");}
-				mchs[i].setToolCodesys(i);
-			}
-			return trans.path;
-		}
 		
 		//
 		// PATHFINDER
 		//
+		
+		//int breaker = 0;
+		
+		/*
+		for(int k = 0; k < divideTransformation.length-1;k++) {
+
+			for(int n = 3; n >= 0; n--) {
+				
+				boolean already_chosen = false;
+				
+				if(mchs[n].state) {
+					
+					if(k==0 && n==3 && tool_counter >=3) continue;
+					
+					for(int i = 0; i<tts.length;i++) {
+						
+						if(tts[i].existsTranformationInTable(divideTransformation[k], divideTransformation[k+1])) {
+							
+							if(mchs[n].tool == tts[i].get_toolNeeded(divideTransformation[k], divideTransformation[k+1])) {
+								
+								aux_result = aux_result + (n+1);
+								res[k] = (n+1);
+								counter_time[n] = counter_time[n] + tts[i].processTimeSeconds;
+								already_chosen  = true;
+								break;
+							}
+							
+						}
+						
+					}
+					if(already_chosen) break;	
+					
+				}
+				
+				else if (n==0) { 
+					System.out.println("NO MACHINES AVAILABLE");
+					res[0] = 0;
+					res[1] = 0;
+					res[2] = 0;
+					res[3] = 0;
+					res[4] = 0;
+					res[5] = 0;
+					break;
+					
+				}
+			}
+			
+		}
+		
+		*/
 		
 		
 		
