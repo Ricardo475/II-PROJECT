@@ -156,6 +156,10 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId12 = new ReadValueId(new NodeId(id_node, path3 + "ART1.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId13 = new ReadValueId(new NodeId(id_node, path3 + "CR2T1b.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId14 = new ReadValueId(new NodeId(id_node, path3 + "CR2T7b.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
@@ -287,6 +291,28 @@ public class OPC_UA {
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId12, MonitoringMode.Reporting,
 				parameters12));
+		
+		UInteger clientHandle13 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters13 = new MonitoringParameters(clientHandle13,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId13, MonitoringMode.Reporting,
+				parameters13));
+		
+		UInteger clientHandle14 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters14 = new MonitoringParameters(clientHandle14,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId14, MonitoringMode.Reporting,
+				parameters14));
 		
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
@@ -443,7 +469,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
-				Main.pr.sys.print_quantityPieces();
+				//Main.pr.sys.print_quantityPieces();
 			}
 		}
 		else if(identifier.contains("ALT6"))
@@ -454,7 +480,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
-				Main.pr.sys.print_quantityPieces();
+				//Main.pr.sys.print_quantityPieces();
 			}
 		}
 		///////////////// CELULA DIREITA DAQUI PARA BAIXO //////////////////////////////////
@@ -602,7 +628,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
-				Main.pr.sys.print_quantityPieces();
+				//Main.pr.sys.print_quantityPieces();
 			}
 		}
 		else if(identifier.contains("ART2"))
@@ -613,8 +639,12 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
-				Main.pr.sys.print_quantityPieces();
+				//Main.pr.sys.print_quantityPieces();
 			}
+		}
+		else if(identifier.contains("CR2T1b") || identifier.contains("CR2T7b"))
+		{
+			// TO DO DESCARGA
 		}
 	}
 }

@@ -66,10 +66,18 @@ public class Transformação extends Order {
 				
 				
 				//boolean before_flag = flag;
-				
-				while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
-					flag = true;
-				};	
+				if(Side.equals("L"))
+				{
+					while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
+						flag = true;
+					};
+				}
+				else if(Side.equals("R"))
+				{
+					while((short)Main.opc.get_Value("ordem_recebida2",1)!=1){
+						flag = true;
+					};
+				}
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
