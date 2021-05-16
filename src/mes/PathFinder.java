@@ -9,7 +9,7 @@ public class PathFinder {
 	Machine mchs[] = new Machine[8];
 	Pusher pshs[] = new Pusher[3];
 	SystemState sys;
-	
+	Transformação trans_before;
 	
 	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
@@ -176,7 +176,6 @@ public class PathFinder {
 				res[4] = 0;
 				res[5] = 0;
 				*/
-
 				res = buildPathOnRight(trans,tts,divideTransformation);
 				return res;
 			}
@@ -222,6 +221,8 @@ public class PathFinder {
 		result = result + "]";
 		System.out.println("PATHING:" + result);
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
+		
+		trans_before = trans;
 		
 		return res;
 		
@@ -315,7 +316,7 @@ public class PathFinder {
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
 
 
-		if(trans.path[0]!=0 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
+		if(trans.path[0]!=0 && trans.path[0]>=4 &&toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
 			for(int i = 4; i<8;i++) {
 				while(!mchs[i].state) {
@@ -428,7 +429,8 @@ public class PathFinder {
 		System.out.println("PATHING:" + result);
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
 	
-	
+		trans_before = trans;
+		
 		return res;
 	}
 
