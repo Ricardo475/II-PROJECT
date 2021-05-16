@@ -272,7 +272,7 @@ public class PathFinder {
  		int tool_counter = 0;
  		
 		int[] counter_time = {0,0,0,0};
-		String tools_before[] = { mchs[0].tool,mchs[1].tool,mchs[2].tool,mchs[3].tool };
+		String tools_before[] = { mchs[4].tool,mchs[5].tool,mchs[6].tool,mchs[7].tool };
 		String aux_result = "[";
  		
 		for(int i = 0; i < divideTransformation.length-1;i++) {
@@ -313,6 +313,9 @@ public class PathFinder {
 		// TOOLS CHANGES BEFORE THE PATH (mes only)
 		//
 		
+		for(int i= 4; i<8;i++) 
+			mchs[i].print_machine();
+		System.out.println("------------------------------------------------------------");
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed);
 
 
@@ -596,27 +599,27 @@ public class PathFinder {
 	
 	public int buildPathUnloading(Unloading un) {
 		 int i = 0;
-		 String result = "P" + un.quantity + "->";
+		 String result = "D" + un.quantity + "->";
 		 
-		 if(un.dest == "P1") {
+		 if(un.dest.contains("D1")) {
 			 
 			 i = 1;
 			 result = result + "PUSHER NO" + i;
 		 }
 		 
-		 else if(un.dest == "P2") {
+		 else if(un.dest.contains("D2")) {
 			 
 			 i = 2;
 			 result = result + "PUSHER NO" + i;
 		 }
 		 
-		 else if(un.dest == "P3") {
+		 else if(un.dest.contains("D3")) {
 			 
 			 i = 3;
 			 result = result + "PUSHER NO" + i;
 		 }
 		 
-		 System.out.println("UNLOADING: " + result);
+		 System.out.println("UNLOADING " + result + ": " + i);
 		 return i;
 		
 	}

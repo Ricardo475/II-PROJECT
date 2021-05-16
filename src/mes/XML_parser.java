@@ -23,7 +23,7 @@ public class XML_parser {
 	public void parse(String xml,OrdersState OL,int timeE) throws ParserConfigurationException, IOException, SAXException {
 		
 		//System.out.println("Estou aqui fora");
-		if(xml.contains("ORDERS"))
+		if(xml.contains("<ORDERS>"))
 		{
 			//System.out.println("Estou aqui dentro");
 			//File inputFile = new File("C:\\4ano\\2_semestre\\II\\II_comands_A_v1\\command1.xml");
@@ -54,7 +54,7 @@ public class XML_parser {
 				System.out.println(storedMessage);
 				
 			}
-			else if(xml.contains("Transform"))
+			else if(xml.contains("<Transform"))
 			{
 				NodeList nlist=doc.getElementsByTagName("Order");
 				
@@ -112,7 +112,7 @@ public class XML_parser {
 				System.out.println(storedOrders);
 			}
 			
-			else if(xml.contains("Unload")) {
+			else if(xml.contains("<Unload")) {
 				
 				
 				NodeList nlist=doc.getElementsByTagName("Order");
@@ -131,10 +131,10 @@ public class XML_parser {
 						String Type = eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Type").getTextContent();
 						String Dest = eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Destination").getTextContent();
 						int Quant = Integer.valueOf(eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Quantity").getTextContent());
-						
+						System.out.println(Number + " " + Type + " " + Dest + " " + Quant);
 						Unloading u = new Unloading(Number, Type ,Dest,Quant);
 						OL.OrdersList.add(u);
-						Main.pr.buildPathUnloading(u);
+						//Main.pr.buildPathUnloading(u);
 									
 					}		
 				}

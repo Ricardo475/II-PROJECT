@@ -44,11 +44,11 @@ public class Transformação extends Order {
 		{
 			//this.SelectPath();
 			
-			System.out.println("Quant: "+quantToBe);
+			//System.out.println("Quant: "+quantToBe);
 			//System.out.println("Quant: "+quantTotal);
 			String Side= "";
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
-			System.out.println(aux.length);
+			//System.out.println(aux.length);
 			String aux2 =this.convert(aux);
 			if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
 				if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))

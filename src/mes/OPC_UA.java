@@ -118,7 +118,7 @@ public class OPC_UA {
 	public void Set_value(String VarName, int[] value) {
 		for(int i=0; i<value.length;i++)
 		{
-			System.out.println(i);
+			//System.out.println(i);
 			this.Set_value(VarName+"["+i+"]", value[i]);
 		}
 	}
