@@ -45,7 +45,7 @@ public class SystemState {
 		if(piece.contains("P1")) {
 			
 			this.nP1Warehouse--;
-			System.out.println("P1: " + nP1Warehouse);
+			//System.out.println("P1: " + nP1Warehouse);
 		}
 		else if(piece.contains("P2")) {
 			this.nP2Warehouse--;
