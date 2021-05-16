@@ -106,7 +106,8 @@ public class PathFinder {
 			for(int i = 0; i<4;i++) {
 				while(!mchs[i].state) {
 					if(trans_before.getOrderNumber()==trans.getOrderNumber()) {
-						return buildPathOnRight(trans,tts,divideTransformation);
+						//return buildPathOnRight(trans,tts,divideTransformation);
+						break;
 						}
 					}
 				mchs[i].setToolCodesys(i);
@@ -167,15 +168,16 @@ public class PathFinder {
 					
 				}
 				
+				/*
 				res[0] = 0;
 				res[1] = 0;
 				res[2] = 0;
 				res[3] = 0;
 				res[4] = 0;
 				res[5] = 0;
-				
-				//res = buildPathOnRight(trans,tts,divideTransformation);
-				//return res;
+				*/
+				res = buildPathOnRight(trans,tts,divideTransformation);
+				return res;
 			}
 		}
 	
@@ -319,7 +321,6 @@ public class PathFinder {
 			for(int i = 4; i<8;i++) {
 				while(!mchs[i].state) {
 					if(trans_before.getOrderNumber()==trans.getOrderNumber()) {
-						
 						res[0] = 0;
 						res[1] = 0;
 						res[2] = 0;
@@ -327,8 +328,8 @@ public class PathFinder {
 						res[4] = 0;
 						res[5] = 0;
 						break;
-						}
 					}
+				}
 				mchs[i].setToolCodesys(i);
 			}
 			return trans.path;

@@ -45,7 +45,7 @@ public class Transformação extends Order {
 			//this.SelectPath();
 			
 			System.out.println("Quant: "+quantToBe);
-			System.out.println("Quant: "+quantTotal);
+			//System.out.println("Quant: "+quantTotal);
 			String Side= "";
 			int[] aux=pr.buildPathTransformation(this,Main.tts);
 			System.out.println(aux.length);
