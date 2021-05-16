@@ -467,9 +467,13 @@ public class OPC_UA {
 			if(!state)
 			{
 				Short[] aux;
-				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
+				aux= (Short[]) this.get_Value("Pecas_armazem", 1); 
 				Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
+			}
+			if(state)
+			{
+				Main.OL.pecaProc((short) this.get_Value("ALT5.curr_piece.ordem", 2));
 			}
 		}
 		else if(identifier.contains("ALT6"))
@@ -629,6 +633,10 @@ public class OPC_UA {
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
+			}
+			if(state)
+			{
+				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));
 			}
 		}
 		else if(identifier.contains("ART2"))

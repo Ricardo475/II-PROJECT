@@ -2,7 +2,7 @@ package mes;
 
 public class Transformação extends Order {
 	
-	int quantTotal,Penalty,exeTime,finTime,quantProcessed,quantExe,quantToBe;
+	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe;
 	String From,To;
 	int[] path = {0,0,0,0,0,0};
 	boolean[] toolUsing = {false,false,false};
@@ -14,7 +14,7 @@ public class Transformação extends Order {
 		this.To=to;
 		this.Penalty=Penalty;
 		this.exeTime = 0;
-		this.finTime = 0;
+		this.finTime = exeTime*quantTotal;
 		this.quantProcessed = 0;
 		this.quantExe = 0;
 		this.quantToBe = Quantity;
@@ -29,14 +29,25 @@ public class Transformação extends Order {
 	public void set_Path(int[] result) {
 		this.path = result;
 	}
-	
+	void orderDisactivate() {
+		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000);
+		this.activeOrder=false;
+		if(finTime > this.MaxDelay)
+		{
+			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-MaxDelay)/50);
+		}
+	}
 	@Override
 	public String toString()
 	{
 		return "{ORDER Nº" + this.orderNumber + " || Type: Transformation" + " || TIME: " + this.PrazoEntrega() + "}";
 	}
 	
-
+	public void pecaProcessada()
+	{
+		this.quantProcessed++;
+		System.out.println(this.orderNumber +" : "+this.quantProcessed);
+	}
 	public void doOrder(PathFinder pr)
 	{
 		
@@ -59,6 +70,7 @@ public class Transformação extends Order {
 				{
 					Side = "R";
 				}
+				Main.opc.Set_value("atual_piece.ordem", this.orderNumber);
 				Main.opc.Set_value("atual_piece.tipo", Side);
 				Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
 				Main.opc.Set_value("atual_piece.path", aux);
@@ -69,12 +81,22 @@ public class Transformação extends Order {
 				if(Side.equals("L"))
 				{
 					while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
+						if((short)Main.opc.get_Value("devia_esperar",1)== 1)
+						{
+							flag= false;
+							return;
+						}
 						flag = true;
 					};
 				}
 				else if(Side.equals("R"))
 				{
 					while((short)Main.opc.get_Value("ordem_recebida2",1)!=1){
+						if((short)Main.opc.get_Value("devia_esperar2",1)== 1)
+						{
+							flag= false;
+							return;
+						}
 						flag = true;
 					};
 				}

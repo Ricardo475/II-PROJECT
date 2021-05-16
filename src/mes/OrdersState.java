@@ -82,7 +82,17 @@ public class OrdersState {
 
 	}
 
-
+	public void pecaProc(int ID)
+	{
+		
+		for(int i=0;i < this.OrdersList.size() ; i++)
+		{
+			if(this.OrdersList.get(i).orderNumber == ID)
+			{
+				 this.OrdersList.get(i).pecaProcessada();
+			}
+		}
+	}
 	public void printOrders() {
 		System.out.println(OrdersList);
 		

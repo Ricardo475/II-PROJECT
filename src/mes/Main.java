@@ -19,7 +19,7 @@ public class Main {
 	static OPC_UA opc=new OPC_UA();
 	static SwingApp sw = new SwingApp();
 	static OrdersState OL=new OrdersState();
-	
+	static int start=(int) System.currentTimeMillis();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
 		
 		//------------------------------------------------PAULO--------------------------------------------------------------//
@@ -120,7 +120,7 @@ public class Main {
 		//System.out.println("OK");
 		//OL.addOrder(trans1);
 		
-		int start=(int) System.currentTimeMillis(),l=0;
+		int l=0;
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();
 		Erp_connection Erp =new Erp_connection(OL);

@@ -48,7 +48,10 @@ public class Order implements Comparable<Order>{
 		this.done=true;
 	}
 	
-	
+	public void pecaProcessada()
+	{
+		;
+	}
 	
 	public boolean equals(Order o) {
 		
