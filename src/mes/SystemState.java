@@ -120,6 +120,28 @@ public class SystemState {
 		this.nP8Warehouse = pieces[8];
 		this.nP9Warehouse = pieces[9];
 	}
+	public int getPecas(String piece)
+	{
+		if(piece.contains("P1")) {
+			return this.nP1Warehouse;
+		}
+		else if(piece.contains("P2")) {
+			return this.nP2Warehouse;
+		}
+		else if(piece.contains("P3")) {
+			return this.nP3Warehouse;
+		}
+		else if(piece.contains("P4")) {
+			return this.nP4Warehouse;
+		}
+		else if(piece.contains("P5")) {
+			return this.nP5Warehouse;
+		}
+		else if(piece.contains("P6")) {
+			return this.nP6Warehouse;
+		}
+		return -1;
 	
+	}
 
 }

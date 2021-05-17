@@ -52,6 +52,11 @@ public class Order implements Comparable<Order>{
 	{
 		;
 	}
+	public boolean existePecas()
+	{
+		return true;
+	}
+	
 	
 	public boolean equals(Order o) {
 		

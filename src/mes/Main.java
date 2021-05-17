@@ -114,7 +114,7 @@ public class Main {
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
-		sw.initApp();
+		//sw.initApp();
 		//sw.run();
 		
 		//System.out.println("OK");
@@ -131,7 +131,7 @@ public class Main {
 
 		Order prio = new Order(0,0,0,0);
 		
-	
+		
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
