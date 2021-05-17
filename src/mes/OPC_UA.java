@@ -140,6 +140,14 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId4 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId15 = new ReadValueId(new NodeId(id_node, path2 + "CL1T1.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId16 = new ReadValueId(new NodeId(id_node, path2 + "CL1T2.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId17 = new ReadValueId(new NodeId(id_node, path2 + "CL1T3.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId18 = new ReadValueId(new NodeId(id_node, path2 + "CL1T4.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId5 = new ReadValueId(new NodeId(id_node, path2 + "ALT5.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId6 = new ReadValueId(new NodeId(id_node, path2 + "ALT6.Sensor"), AttributeId.Value.uid(), null,
@@ -151,6 +159,14 @@ public class OPC_UA {
 		ReadValueId readValueId9 = new ReadValueId(new NodeId(id_node, path3 + "CR1T3.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId10 = new ReadValueId(new NodeId(id_node, path3 + "CR1T4.Disponivel"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId19 = new ReadValueId(new NodeId(id_node, path3 + "CR1T1.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId20 = new ReadValueId(new NodeId(id_node, path3 + "CR1T2.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId21 = new ReadValueId(new NodeId(id_node, path3 + "CR1T3.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId22 = new ReadValueId(new NodeId(id_node, path3 + "CR1T4.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId11 = new ReadValueId(new NodeId(id_node, path3 + "ART2.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
@@ -314,6 +330,93 @@ public class OPC_UA {
 		lmr.add(new MonitoredItemCreateRequest(readValueId14, MonitoringMode.Reporting,
 				parameters14));
 		
+		UInteger clientHandle15 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters15 = new MonitoringParameters(clientHandle15,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId15, MonitoringMode.Reporting,
+				parameters15));
+		
+		UInteger clientHandle16 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters16 = new MonitoringParameters(clientHandle16,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId16, MonitoringMode.Reporting,
+				parameters16));
+		
+		UInteger clientHandle17 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters17 = new MonitoringParameters(clientHandle17,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId17, MonitoringMode.Reporting,
+				parameters17));
+		
+		UInteger clientHandle18 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters18 = new MonitoringParameters(clientHandle18,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId18, MonitoringMode.Reporting,
+				parameters18));
+		
+		UInteger clientHandle19 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters19 = new MonitoringParameters(clientHandle19,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId19, MonitoringMode.Reporting,
+				parameters19));
+		
+		UInteger clientHandle20 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters20 = new MonitoringParameters(clientHandle20,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+		
+		lmr.add(new MonitoredItemCreateRequest(readValueId20, MonitoringMode.Reporting,
+				parameters20));
+		
+		UInteger clientHandle21 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters21 = new MonitoringParameters(clientHandle21,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId21, MonitoringMode.Reporting,
+				parameters21));
+		
+		UInteger clientHandle22 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters22 = new MonitoringParameters(clientHandle22,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId22, MonitoringMode.Reporting,
+				parameters22));
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
@@ -325,7 +428,8 @@ public class OPC_UA {
 		String identifier =item.getReadValueId().getNodeId().getIdentifier().toString();
 		
 		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
-		if(identifier.contains("CL1T4"))
+		
+		if(identifier.contains("CL1T4.Disponivel"))
 		{
 			
 			boolean state = (boolean) value.getValue().getValue();
@@ -342,6 +446,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[0].state = state;
 				
+		}
+		else if(identifier.contains("CL1T4.Sensor"))
+		{
+			
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T4: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			if(state)
 			{
 				r1=0;
@@ -359,7 +479,7 @@ public class OPC_UA {
 				Main.pr.mchs[0].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CL1T3"))
+		else if(identifier.contains("CL1T3.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -375,6 +495,23 @@ public class OPC_UA {
 			}
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[1].state = state;
+			
+			
+		}
+		else if(identifier.contains("CL1T3.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T3: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			if(state)
 			{
@@ -393,7 +530,7 @@ public class OPC_UA {
 				Main.pr.mchs[1].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CL1T2"))
+		else if(identifier.contains("CL1T2.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -409,6 +546,23 @@ public class OPC_UA {
 			}
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[2].state = state;
+			
+	
+		}
+		else if(identifier.contains("CL1T2.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T2: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			if(state)
 			{
@@ -427,7 +581,7 @@ public class OPC_UA {
 				Main.pr.mchs[2].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CL1T1"))
+		else if(identifier.contains("CL1T1.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -444,6 +598,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[3].state = state;
 			
+		}
+		else if(identifier.contains("CL1T1.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CL1T1: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
 			if(state)
 			{
 				r4=0;
@@ -492,7 +662,7 @@ public class OPC_UA {
 			}
 		}
 		///////////////// CELULA DIREITA DAQUI PARA BAIXO //////////////////////////////////
-		else if(identifier.contains("CR1T4"))
+		else if(identifier.contains("CR1T4.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -509,6 +679,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[4].state = state;
 			
+		}
+		else if(identifier.contains("CR1T4.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T4: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
 			if(state)
 			{
 				r5=0;
@@ -526,7 +712,7 @@ public class OPC_UA {
 				Main.pr.mchs[4].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CR1T3"))
+		else if(identifier.contains("CR1T3.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -543,6 +729,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[5].state = state;
 			
+		}
+		else if(identifier.contains("CR1T3.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T3: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+					
 			if(state)
 			{
 				r6=0;
@@ -560,7 +762,7 @@ public class OPC_UA {
 				Main.pr.mchs[5].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CR1T2"))
+		else if(identifier.contains("CR1T2.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -577,6 +779,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[6].state = state;
 			
+		}
+		else if(identifier.contains("CR1T2.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T2: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
 			if(state)
 			{
 				r7=0;
@@ -594,7 +812,7 @@ public class OPC_UA {
 				Main.pr.mchs[6].updateTime((int) (aux/1000));
 			}
 		}
-		else if(identifier.contains("CR1T1"))
+		else if(identifier.contains("CR1T1.Disponivel"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
@@ -611,6 +829,22 @@ public class OPC_UA {
 			
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[7].state = state;
 			
+		}
+		else if(identifier.contains("CR1T1.Sensor"))
+		{
+
+			boolean state = (boolean) value.getValue().getValue();
+			System.out.println("CR1T1: " + (boolean) value.getValue().getValue());
+			
+			if(state) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+						
 			if(state)
 			{
 				r8=0;
