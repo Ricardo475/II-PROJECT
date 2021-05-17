@@ -327,11 +327,11 @@ public class SwingApp implements Runnable{
 	
 	private void AddOrders() {
 		
-		//System.out.println(Main.OL.LengthOrderList());
+		//System.out.println("Supp");
 		
 		if(ol_length < Main.OL.LengthOrderList()) {
 			ol_length = Main.OL.LengthOrderList();
-			int rows = tableTrans.getRowCount();
+			
 			//System.out.println(rows);
 			for(int i = 0; i <  Main.OL.LengthOrderList(); i++) {
 				
@@ -339,24 +339,18 @@ public class SwingApp implements Runnable{
 				o = Main.OL.OrdersList.get(i);
 				
 				if(o.toString().contains("Transformation")) {
-
+					
+					int rows = tableTrans.getRowCount();
 					boolean add = true;
 					//tableTrans.setValueAt(aValue, row, column);
-					for(int j = 0; j < rows; j++) {
-						int id_table = (int) tableTrans.getValueAt(j, 0);
-						//System.out.println("ID_GET: " + id_table);
-						
-						if (id_table == o.getOrderNumber()) {
-							add = false;
-						/*	
-							if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
-								System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
-								tableTrans.setValueAt("Running", j, 1);
+					if(rows>0) {
+						for(int j = 0; j < rows; j++) {
+							int id_table = (int) tableTrans.getValueAt(j, 0);
+							//System.out.println("ID_GET: " + id_table);
+							
+							if (id_table == o.getOrderNumber()) {
+								add = false;
 							}
-							else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.activeOrder && o.done){
-								System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
-								tableTrans.setValueAt("Done", j, 1);
-							}*/
 						}
 					}
 					
@@ -370,7 +364,7 @@ public class SwingApp implements Runnable{
 						else v.add("Waiting");
 						
 						v.add(o.instanteChegada);
-						v.add(o.instanteEnviado);
+						v.add(((Transformação)o).exeTime);
 						v.add(((Transformação)o).From);
 						v.add(((Transformação)o).To);
 						v.add(((Transformação)o).finTime);
@@ -390,12 +384,16 @@ public class SwingApp implements Runnable{
 				
 				else if(o.toString().contains("Loading")) {
 					
+					int rows = tableLdr.getRowCount();
 					boolean add = true;
 					//tableTrans.setValueAt(aValue, row, column);
-					for(int j = 0; i < rows; j++) {
-						int id_table = (int) tableLdr.getValueAt(j, 0);
-						
-						if (id_table == o.getOrderNumber()) add = false;
+					if(rows>0) {
+						for(int j = 0; j < rows; j++) {
+							int id_table = (int) tableLdr.getValueAt(j, 0);
+							
+							//System.out.println("ID: " + id_table);
+							if (id_table == o.getOrderNumber()) add = false;
+						}
 					}
 					
 					if(add) {
@@ -405,9 +403,9 @@ public class SwingApp implements Runnable{
 						v.add(o.instanteChegada);
 						v.add(((Loading)o).pieceType);
 						
-						DefaultTableModel model = (DefaultTableModel) tableTrans.getModel();
+						DefaultTableModel model = (DefaultTableModel) tableLdr.getModel();
 						model.addRow(v);
-						scrollerTrans.setViewportView(tableTrans);						
+						scrollerLdr.setViewportView(tableLdr);						
 						
 					}
 					
@@ -426,23 +424,36 @@ public class SwingApp implements Runnable{
 				Order o = new Order();
 				o = Main.OL.OrdersList.get(i);
 				
-				for(int j = 0; j < tableTrans.getRowCount();j++) {
+				if(o.toString().contains("Transformation")) {
 					
-					if(o.getOrderNumber() == (int) tableTrans.getValueAt(j, 0)) {
-						
-						//System.out.println("Nº "+ j + ":" + tableTrans.getValueAt(j, 1));
-						
-						if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
-							//System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
-							tableTrans.setValueAt("Running", j, 1);
+					for(int j = 0; j < tableTrans.getRowCount();j++) {
+							
+						if(o.getOrderNumber() == (int) tableTrans.getValueAt(j, 0)) {
+							
+							//System.out.println("Nº "+ j + ":" + tableTrans.getValueAt(j, 1));
+							
+							if (tableTrans.getValueAt(j, 1)=="Waiting" && o.activeOrder && !o.done) {
+								//System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
+								tableTrans.setValueAt("Running", j, 1);
+							}
+							else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.done){
+								//System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
+								tableTrans.setValueAt("Done", j, 1);		
+							}
+							
+							
+							
+							tableTrans.setValueAt(((Transformação)o).exeTime, j, 3);
+							tableTrans.setValueAt(((Transformação)o).finTime, j, 6);
+							tableTrans.setValueAt(((Transformação)o).quantProcessed,j,8);
+							tableTrans.setValueAt(((Transformação)o).quantExe,j,9);
+							tableTrans.setValueAt(((Transformação)o).quantToBe,j,10);
+							
+							scrollerTrans.setViewportView(tableTrans);	
 						}
-						else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.done){
-							//System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
-							tableTrans.setValueAt("Done", j, 1);		
-						}
-						scrollerTrans.setViewportView(tableTrans);	
-					}
-				}	
+					}	
+
+				}
 			}
 			
 		}

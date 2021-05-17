@@ -76,7 +76,7 @@ public class XML_parser {
 						int Time = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Time").getTextContent());
 						int MaxDelay = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent());
 						int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
-						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
+						Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay+(((int)System.currentTimeMillis()-Main.start)/1000),Penalty,timeE);
 						OL.addOrder(trans);
 						//Main.pr.buildPathTransformation(trans,Main.tts);
 						

@@ -127,7 +127,6 @@ public class Transformação extends Order {
 				if(quantToBe==0) 
 				{	
 					this.orderDisactivate();
-					//pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
 					this.done=true;
 					System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			}

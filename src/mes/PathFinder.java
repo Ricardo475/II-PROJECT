@@ -181,6 +181,12 @@ public class PathFinder {
 			}
 		}
 	
+		if(trans.quantToBe==trans.quantTotal) {
+			
+			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
+			//System.out.println("EXECUTING TIME: " + trans.exeTime);
+			trans.finTime = trans.exeTime*trans.quantTotal;
+		}
 		
 		for(int i = 0; i<res.length;i++) {
 			
@@ -392,6 +398,13 @@ public class PathFinder {
 			}
 		}
 
+		if(trans.quantToBe==trans.quantTotal) {
+			
+			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
+			System.out.println("EXECUTING TIME: " + trans.exeTime);
+			trans.finTime = trans.exeTime*trans.quantTotal;
+		}
+		
 		for(int i = 0; i<res.length;i++) {
 		
 			if(res[i]!=0) {

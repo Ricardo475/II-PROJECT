@@ -30,7 +30,7 @@ public class OPC_UA {
 	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.",path3="|var|CODESYS Control Win V3 x64.Application.POU_2.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
-	int r1=1,r2=1,r3=1,r4=1;
+	int r1=1,r2=1,r3=1,r4=1,r5=1,r6=1,r7=1,r8=1;
 	public void connect() {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
@@ -348,7 +348,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T4.pieces_operated", 2);
 				Main.pr.mchs[0].updateOperatedPieces(aux);
-				System.out.println("Pieces " + aux[0] +": "+aux[1]);
+				System.out.println("Pieces " +": "+aux[1]);
 			}
 			else if(r1==0 && !(boolean) value.getValue().getValue())
 			{
@@ -382,7 +382,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T3.pieces_operated", 2);
 				Main.pr.mchs[1].updateOperatedPieces(aux);
-				System.out.println("Pieces " + aux[0] +": " + aux[1]);
+				System.out.println("Pieces " +": " + aux[1]);
 			}
 			else if(r2==0 && !(boolean) value.getValue().getValue())
 			{
@@ -416,7 +416,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T2.pieces_operated", 2);
 				Main.pr.mchs[2].updateOperatedPieces(aux);
-				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
+				System.out.println("Pieces " + ": " +aux[1]);
 			}
 			else if(r3==0 && !(boolean) value.getValue().getValue())
 			{
@@ -450,7 +450,7 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T1.pieces_operated", 2);
 				Main.pr.mchs[3].updateOperatedPieces(aux);
-				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
+				System.out.println("Pieces " + ": "+aux[1]);
 			}
 			else if(r4==0 && !(boolean) value.getValue().getValue())
 			{
@@ -470,11 +470,15 @@ public class OPC_UA {
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1); 
 				Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
+			
+				
 			}
+			
 			if(state)
 			{
 				Main.OL.pecaProc((short) this.get_Value("ALT5.curr_piece.ordem", 2));
 			}
+			
 		}
 		else if(identifier.contains("ALT6"))
 		{
@@ -507,15 +511,15 @@ public class OPC_UA {
 			
 			if(state)
 			{
-				r3=0;
+				r5=0;
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T4.pieces_operated", 3);
 				Main.pr.mchs[4].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
 			}
-			else if(r3==0 && !(boolean) value.getValue().getValue())
+			else if(r5==0 && !(boolean) value.getValue().getValue())
 			{
-				r3=1;
+				r5=1;
 				long aux;
 				aux= (long) this.get_Value("CR1T4.OperatedTime", 3);
 				System.out.println("OP: " + aux);
@@ -541,15 +545,15 @@ public class OPC_UA {
 			
 			if(state)
 			{
-				r2=0;
+				r6=0;
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T3.pieces_operated", 3);
 				Main.pr.mchs[5].updateOperatedPieces(aux);
 				System.out.println("Pieces " + aux[0] +": " + aux[1]);
 			}
-			else if(r2==0 && !(boolean) value.getValue().getValue())
+			else if(r6==0 && !(boolean) value.getValue().getValue())
 			{
-				r2=1;
+				r6=1;
 				long aux;
 				aux= (long) this.get_Value("CR1T3.OperatedTime", 3);
 				System.out.println("OP: " + aux);
@@ -575,15 +579,15 @@ public class OPC_UA {
 			
 			if(state)
 			{
-				r3=0;
+				r7=0;
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T2.pieces_operated", 3);
 				Main.pr.mchs[6].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
 			}
-			else if(r3==0 && !(boolean) value.getValue().getValue())
+			else if(r7==0 && !(boolean) value.getValue().getValue())
 			{
-				r3=1;
+				r7=1;
 				long aux;
 				aux= (long) this.get_Value("CR1T2.OperatedTime", 3);
 				System.out.println("OP: " + aux);
@@ -609,15 +613,15 @@ public class OPC_UA {
 			
 			if(state)
 			{
-				r4=0;
+				r8=0;
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T1.pieces_operated", 3);
 				Main.pr.mchs[7].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
 			}
-			else if(r4==0 && !(boolean) value.getValue().getValue())
+			else if(r8==0 && !(boolean) value.getValue().getValue())
 			{
-				r4=1;
+				r8=1;
 				long aux;
 				aux= (long) this.get_Value("CR1T1.OperatedTime", 3);
 				System.out.println("OP: " + aux);
@@ -632,12 +636,15 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
-				//Main.pr.sys.print_quantityPieces();
+			
 			}
+			
+			
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));
+				Main.OL.pecaProc((short) this.get_Value("ALT1.curr_piece.ordem", 3));		
 			}
+			
 		}
 		else if(identifier.contains("ART2"))
 		{
@@ -652,7 +659,34 @@ public class OPC_UA {
 		}
 		else if(identifier.contains("CR2T1b") || identifier.contains("CR2T7b"))
 		{
-			// TO DO DESCARGA
+			int lowest_no = 0;
+			Loading load = null;
+			boolean state = (boolean) value.getValue().getValue();
+			
+			if(state) {
+				
+				for(int i = 0; i < Main.OL.OrdersList.size();i++) {
+					
+					Order o = Main.OL.OrdersList.get(i);
+					
+					if(o.getOrderNumber()==lowest_no) 
+						lowest_no++;
+				}
+				
+				if(identifier.contains("CR2T1b")) {
+					System.out.println("CR2T1b: " + state);
+					load = new Loading(lowest_no,"P1",(((int)System.currentTimeMillis()-Main.start)/1000));	
+				}
+				
+				else if(identifier.contains("CR2T7b")) {
+					System.out.println("CR2T7b: " + state);
+					load = new Loading(lowest_no,"P2",(((int)System.currentTimeMillis()-Main.start)/1000));	
+				}
+						
+				((Order)load).activeOrder = true;
+				((Order)load).done = true;
+				Main.OL.addOrder(load);
+			}
 		}
 	}
 }
