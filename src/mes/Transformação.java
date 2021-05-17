@@ -30,8 +30,12 @@ public class Transformação extends Order {
 		this.path = result;
 	}
 	void orderDisactivate() {
-		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000);
+		
 		this.activeOrder=false;
+	
+	}
+	void FimOrdem() {
+		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000);
 		if(finTime > this.MaxDelay)
 		{
 			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-MaxDelay)/50);
@@ -46,6 +50,11 @@ public class Transformação extends Order {
 	public void pecaProcessada()
 	{
 		this.quantProcessed++;
+		this.quantExe--;
+		if(this.quantProcessed == this.quantTotal)
+		{
+			this.FimOrdem();
+		}
 		System.out.println(this.orderNumber +" : "+this.quantProcessed);
 	}
 	public void doOrder(PathFinder pr)
@@ -120,8 +129,6 @@ public class Transformação extends Order {
 					this.orderDisactivate();
 					//pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
 					this.done=true;
-					quantProcessed = quantExe;
-					quantExe = 0;
 					System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 			}
 		}
