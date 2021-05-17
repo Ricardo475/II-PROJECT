@@ -23,24 +23,24 @@ public class OrdersState {
 
 
 	public void addOrder(Order order) {
-		
+
 		PriorityQueue<Order> pqOrdem = new PriorityQueue<Order>();
 		ArrayList<Order> aux = new ArrayList<Order>();
-		
+
 		pqOrdem.add(order);
 		for(int i=0; i < OrdersList.size(); i++) {
-			
+
 			Order o_aux = new Order();
 			o_aux = OrdersList.get(i);
 			pqOrdem.add(o_aux);
 		}
-		
+
 		while(!pqOrdem.isEmpty()) {
-			
+
 			Order o_aux = pqOrdem.poll();
 			aux.add(o_aux);
 		}
-		
+
 		OrdersList = aux;
 		//this.RunningOrders = OrdersList.size();
 	}
@@ -61,42 +61,86 @@ public class OrdersState {
 
 	public Order OrdemPrioritária()
 	{
-		
-	
-			int i = -1,prazo=1000;
-			for(int j=0;j<this.LengthOrderList();j++)
+
+
+		int i = -1,prazo=1000;
+		for(int j=0;j<this.LengthOrderList();j++)
+		{
+			if(OrdersList.get(j).done==false )
 			{
-				if(OrdersList.get(j).done==false)
+				if(OrdersList.get(j).PrazoEntrega()<prazo)
 				{
-					if(OrdersList.get(j).PrazoEntrega()<prazo)
+					prazo=OrdersList.get(j).PrazoEntrega();
+					i=j;
+				}
+			}
+		}
+
+		if(i!=-1)
+		{
+			if(OrdersList.get(i).existePecas())
+			{
+				return OrdersList.get(i);
+			}
+			else
+			{
+				System.out.println("A PROCURA");
+				return this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i);
+			}
+		}
+		else
+			return null;
+
+	}
+
+	public void pecaProc(int ID)
+	{
+
+		for(int i=0;i < this.OrdersList.size() ; i++)
+		{
+			if(this.OrdersList.get(i).orderNumber == ID)
+			{
+				this.OrdersList.get(i).pecaProcessada();
+			}
+		}
+	}
+	public void printOrders() {
+		System.out.println(OrdersList);
+
+	}
+	private Order orderfindByTypePiece(String piece,int pos)
+	{
+
+		int i = -1,prazo=1000;
+		for(int j=0;j<this.LengthOrderList();j++)
+		{
+			if(OrdersList.get(j).done==false  && i != pos)
+			{
+				if(OrdersList.get(j).getClass().getName().contains("Transformação"))
+				{
+					if(OrdersList.get(j).PrazoEntrega()<prazo && ((Transformação)OrdersList.get(j)).To.contains(((Transformação)OrdersList.get(pos)).From))
 					{
 						prazo=OrdersList.get(j).PrazoEntrega();
 						i=j;
 					}
 				}
 			}
-			if(i!=-1)
-				return OrdersList.get(i);
-			else
-				return null;
+		}
 
-	}
-
-	public void pecaProc(int ID)
-	{
-		
-		for(int i=0;i < this.OrdersList.size() ; i++)
+		if(i!=-1)
 		{
-			if(this.OrdersList.get(i).orderNumber == ID)
+			if(OrdersList.get(i).existePecas())
 			{
-				 this.OrdersList.get(i).pecaProcessada();
+				return OrdersList.get(i);
+			}
+			else
+			{
+				System.out.println("A PROCURA"+"i");
+				return this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i);
 			}
 		}
+		else
+			return null;
 	}
-	public void printOrders() {
-		System.out.println(OrdersList);
-		
-	}
-
 
 }
