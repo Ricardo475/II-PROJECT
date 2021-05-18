@@ -31,6 +31,8 @@ public class OPC_UA {
 	private static int id_node = 4;
 	private UaSubscription sub = null;
 	int r1=1,r2=1,r3=1,r4=1,r5=1,r6=1,r7=1,r8=1;
+	
+	
 	public void connect() {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
@@ -876,7 +878,7 @@ public class OPC_UA {
 			
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ALT1.curr_piece.ordem", 3));		
+				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));		
 			}
 			
 		}
