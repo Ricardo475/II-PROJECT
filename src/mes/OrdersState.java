@@ -40,7 +40,7 @@ public class OrdersState {
 			Order o_aux = pqOrdem.poll();
 			aux.add(o_aux);
 		}
-
+		Main.DB.storeOrder(order);
 		OrdersList = aux;
 		//this.RunningOrders = OrdersList.size();
 	}

@@ -3,6 +3,7 @@ package mes;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,7 +21,8 @@ public class Main {
 	static SwingApp sw = new SwingApp();
 	static OrdersState OL=new OrdersState();
 	static int start=(int) System.currentTimeMillis();
-	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException {
+	static DataBase DB = new DataBase();
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 		
 		//------------------------------------------------PAULO--------------------------------------------------------------//
 		
@@ -31,7 +33,7 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		opc.connect();
+		//opc.connect();
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
