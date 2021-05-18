@@ -6,7 +6,7 @@ public class Transformação extends Order {
 	String From,To;
 	int[] path = {0,0,0,0,0,0};
 	boolean[] toolUsing = {false,false,false};
-	boolean flag;
+	boolean flag,chegouAzero = true;
 
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
 		super(orderNumber,MaxDelay,Time,timeE);
@@ -150,7 +150,7 @@ public class Transformação extends Order {
 	}
 	public boolean existePecas()
 	{
-		if(Main.pr.sys.getPecas(this.From) > 0)
+		if(Main.pr.sys.getPecas(this.From) > 0 && chegouAzero)
 		{
 			return true;
 		}

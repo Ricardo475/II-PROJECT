@@ -85,14 +85,62 @@ public class OrdersState {
 			else
 			{
 				System.out.println("A PROCURA");
-				return this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i);
+				if(this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i) != null)
+				{
+					return this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i);
+				}
+				else 
+				{
+					return this.OrdemPrioritária(i);
+				}
 			}
 		}
 		else
 			return null;
 
 	}
+	
+	public Order OrdemPrioritária(int k)
+	{
 
+
+		int i = -1,prazo=1000;
+		for(int j=0;j<this.LengthOrderList();j++)
+		{
+			if(OrdersList.get(j).done==false  && k!= j)
+			{
+				if(OrdersList.get(j).PrazoEntrega()<prazo)
+				{
+					prazo=OrdersList.get(j).PrazoEntrega();
+					i=j;
+				}
+			}
+		}
+		if(i!= -1)
+		{
+			if(OrdersList.get(i).existePecas())
+			{
+				return OrdersList.get(i);
+			}
+			else
+			{
+				System.out.println("A PROCURA");
+				if(this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i) != null)
+				{
+					return this.orderfindByTypePiece(((Transformação)OrdersList.get(i)).From, i);
+				}
+				else 
+				{
+					return this.OrdemPrioritária(i);
+				}
+			}
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	public void pecaProc(int ID)
 	{
 
