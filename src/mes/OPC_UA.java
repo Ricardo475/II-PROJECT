@@ -178,6 +178,12 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId14 = new ReadValueId(new NodeId(id_node, path3 + "CR2T7b.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId23 = new ReadValueId(new NodeId(id_node, path3 + "CR2T3.GOINGTOPUSHER"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId24 = new ReadValueId(new NodeId(id_node, path3 + "CR2T4.GOINGTOPUSHER"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId25 = new ReadValueId(new NodeId(id_node, path3 + "CR2T5.GOINGTOPUSHER"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
 		UInteger clientHandle = sub.nextClientHandle();
 		
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
@@ -419,6 +425,40 @@ public class OPC_UA {
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId22, MonitoringMode.Reporting,
 				parameters22));
+		
+		UInteger clientHandle23 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters23 = new MonitoringParameters(clientHandle23,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId23, MonitoringMode.Reporting,
+				parameters23));
+		
+		UInteger clientHandle24 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters24 = new MonitoringParameters(clientHandle24,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId24, MonitoringMode.Reporting,
+				parameters24));
+		
+		UInteger clientHandle25 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters25 = new MonitoringParameters(clientHandle25,10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId25, MonitoringMode.Reporting,
+				parameters25));
+		
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
@@ -898,6 +938,39 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
+				//Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("CR2T3"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR2T3.piecesOut", 3);
+				Main.pr.pshs[0].setPusher(aux);;
+				//Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("CR2T4"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR2T4.piecesOut", 3);
+				Main.pr.pshs[1].setPusher(aux);;
+				//Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("CR2T5"))
+		{
+			boolean state = (boolean) value.getValue().getValue();
+			if(state)
+			{
+				Short[] aux;
+				aux= (Short[]) this.get_Value("CR2T5.piecesOut", 3);
+				Main.pr.pshs[2].setPusher(aux);;
 				//Main.pr.sys.print_quantityPieces();
 			}
 		}

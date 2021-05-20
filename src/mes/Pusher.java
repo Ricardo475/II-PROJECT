@@ -40,6 +40,20 @@ public class Pusher {
 		this.p9Pieces_unloaded = p9;
 		this.totalPieces_unloaded = p1+p2+p3+p4+p5+p6+p7+p8+p9;
 	}
+	public void setPusher(Short[] s)
+	{
+	
+		this.p1Pieces_unloaded = s[1];
+		this.p2Pieces_unloaded = s[2];
+		this.p3Pieces_unloaded = s[3];
+		this.p4Pieces_unloaded = s[4];
+		this.p5Pieces_unloaded = s[5];
+		this.p6Pieces_unloaded = s[6];
+		this.p7Pieces_unloaded = s[7];
+		this.p8Pieces_unloaded = s[8];
+		this.p9Pieces_unloaded = s[9];
+		this.totalPieces_unloaded = s[1]+s[2]+s[3]+s[4]+s[5]+s[6]+s[7]+s[8]+s[9];
+	}
 	public void print_Pusher() {
 		
 		System.out.println("PUSHER NO:" + this.pusherID /*+"|| Pieces In the Rollers: " + this.piecesInRoller */+ "|| Quantity Unloaded: " + this.totalPieces_unloaded + "\n--P1:" + this.p1Pieces_unloaded + "\n--P2:" + this.p2Pieces_unloaded + "\n--P3:" + this.p3Pieces_unloaded + "\n--P4:" + this.p4Pieces_unloaded + "\n--P5:" + this.p5Pieces_unloaded + "\n--P6:" + this.p6Pieces_unloaded + "\n--P7:" + this.p7Pieces_unloaded + "\n--P8:" + this.p8Pieces_unloaded + "\n--P9:" + this.p9Pieces_unloaded );
