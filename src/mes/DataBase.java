@@ -177,7 +177,7 @@ public class DataBase {
 				String tipo=rs.getString("Tipo");
 				String Destino = rs.getString("Destino");
 				int Quantidade= rs.getInt("Quantidade");
-				int QuantidadePorenviar= rs.getInt("QuantidadePorEnivar");
+				int QuantidadePorenviar= rs.getInt("QuantidadePorEnviar");
 				int QuantidadeDescarregada= rs.getInt("QuantidadeDescarregada");
 				boolean done= rs.getBoolean("Done");
 				boolean ActiveOrder= rs.getBoolean("ActiveOrder");
@@ -309,7 +309,7 @@ public class DataBase {
 		if(count == 1) return true;
 		return false;
 	}
-	public Machine[] get_maquinaID(int ID)
+	public Machine[] get_maquinaID()
 	{
 		int i=0;
 		Machine[] m= new Machine[8];
@@ -318,7 +318,7 @@ public class DataBase {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(SQL)) {
 			while (rs.next()) {	
-				int IDOrdem = rs.getInt("CargaID");
+				int IDOrdem = rs.getInt("MaquinaID");
 				String tool=rs.getString("Tool");
 				int Time= rs.getInt("TempoTotal");
 				int p1= rs.getInt("P1");
@@ -450,7 +450,7 @@ public class DataBase {
 	public Pusher[] get_pushers()
 	{
 		Pusher[] p= new Pusher[3];
-		String SQL = "SELECT * FROM \"Armazem\"";
+		String SQL = "SELECT * FROM \"Pushers\"";
 		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(SQL)) {
