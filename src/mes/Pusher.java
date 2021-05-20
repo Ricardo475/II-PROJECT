@@ -20,7 +20,7 @@ public class Pusher {
 		this.p9Pieces_unloaded = 0;
 		this.totalPieces_unloaded = 0;
 		//this.piecesInRoller = 0;
-		
+		Main.DB.store_pusher(this);
 	}
 	
 	public void print_Pusher() {
@@ -41,6 +41,7 @@ public class Pusher {
 		else if(pieceType == "P9") p9Pieces_unloaded++;
 		
 		totalPieces_unloaded++;
+		Main.DB.store_pusher(this);
 		//piecesInRoller++;
 	}
 	

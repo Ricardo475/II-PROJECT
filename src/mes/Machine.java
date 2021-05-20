@@ -40,17 +40,21 @@ public class Machine {
 	public void changeTool(String toolNeeded) {
 		
 		this.tool = toolNeeded;
+		Main.DB.store_maquina(this);
 	}
 	
 	public void setToolCodesys(int id) {
 		
 		if(this.machineID == id)
 			Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(this.tool.charAt(1)));
+		
+		
 	}	
 	
 	public void updateTime(int time) {
 		
 		this.totalOperatingTime =time;
+		Main.DB.store_maquina(this);
 	}
 
 	public void updateOperatedPieces(Short [] piecesOperated) {
@@ -62,6 +66,7 @@ public class Machine {
 		nP6 = piecesOperated[6];
 		
 		nTotalOperated = nP1 + nP2 + nP3 + nP4 + nP5 + nP6;
+		Main.DB.store_maquina(this);
 		//print_operatedPieces();
 	}
 

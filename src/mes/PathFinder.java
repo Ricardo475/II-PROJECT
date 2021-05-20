@@ -667,6 +667,7 @@ public class PathFinder {
 			mchs[i] = new Machine();
 			mchs[i].setMachine(i, "T1");
 			mchs[i].print_machine();
+			Main.DB.store_maquina(mchs[i]);
 		}
 		
 	}
@@ -676,8 +677,7 @@ public class PathFinder {
 		for(int i = 0; i < 3; i++) {
 			
 			pshs[i] = new Pusher();
-			pshs[i].setPusher(i);
-			
+			pshs[i].setPusher(i);	
 			pshs[i].print_Pusher();
 		}
 		

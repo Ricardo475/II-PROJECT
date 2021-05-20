@@ -21,7 +21,10 @@ public class Transformação extends Order {
 		this.quantTotal = this.quantProcessed + this.quantExe + this.quantToBe;
 		this.flag = false;
 	}
-
+	public Transformação(int id,String From,String To,int QuantidadeTotal,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
+	{
+		
+	}
 
 	public Transformação() {
 	}

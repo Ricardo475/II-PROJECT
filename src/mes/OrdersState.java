@@ -26,7 +26,7 @@ public class OrdersState {
 
 		PriorityQueue<Order> pqOrdem = new PriorityQueue<Order>();
 		ArrayList<Order> aux = new ArrayList<Order>();
-
+		System.out.println("REGISTA ORDEM");
 		pqOrdem.add(order);
 		for(int i=0; i < OrdersList.size(); i++) {
 
@@ -75,11 +75,11 @@ public class OrdersState {
 				}
 			}
 		}
-
 		if(i!=-1)
 		{
 			if(OrdersList.get(i).existePecas())
 			{
+				System.out.println("SUPP333");
 				return OrdersList.get(i);
 			}
 			else
@@ -149,6 +149,7 @@ public class OrdersState {
 			if(this.OrdersList.get(i).orderNumber == ID)
 			{
 				this.OrdersList.get(i).pecaProcessada();
+				Main.DB.storeOrder(this.OrdersList.get(i));
 			}
 		}
 	}

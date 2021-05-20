@@ -33,7 +33,7 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		//opc.connect();
+		DB.FillTransOrders();
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
@@ -115,7 +115,7 @@ public class Main {
 		
 		
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		
+		opc.connect();
 		sw.initApp();
 		//sw.run();
 		
@@ -160,6 +160,8 @@ public class Main {
 					{
 					prio.orderActivate();
 					prio.doOrder(pr);
+					System.out.println("OLA");
+					DB.storeOrder(prio);
 					l=0;
 					}
 					else

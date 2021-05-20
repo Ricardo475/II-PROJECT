@@ -467,18 +467,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r1=0;
+			
+			}
+			else if(r1==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T4.pieces_operated", 2);
 				Main.pr.mchs[0].updateOperatedPieces(aux);
 				System.out.println("Pieces " +": "+aux[1]);
-			}
-			else if(r1==0 && !(boolean) value.getValue().getValue())
-			{
 				r1=1;
-				long aux;
-				aux= (long) this.get_Value("CL1T4.OperatedTime", 2);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[0].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CL1T4.OperatedTime", 2);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[0].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CL1T3.Disponivel"))
@@ -518,18 +519,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r2=0;
+				
+			}
+			else if(r2==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T3.pieces_operated", 2);
 				Main.pr.mchs[1].updateOperatedPieces(aux);
 				System.out.println("Pieces " +": " + aux[1]);
-			}
-			else if(r2==0 && !(boolean) value.getValue().getValue())
-			{
 				r2=1;
-				long aux;
-				aux= (long) this.get_Value("CL1T3.OperatedTime", 2);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[1].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CL1T3.OperatedTime", 2);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[1].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CL1T2.Disponivel"))
@@ -569,18 +571,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r3=0;
+				
+			}
+			else if(r3==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T2.pieces_operated", 2);
 				Main.pr.mchs[2].updateOperatedPieces(aux);
 				System.out.println("Pieces " + ": " +aux[1]);
-			}
-			else if(r3==0 && !(boolean) value.getValue().getValue())
-			{
 				r3=1;
-				long aux;
-				aux= (long) this.get_Value("CL1T2.OperatedTime", 2);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[2].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CL1T2.OperatedTime", 2);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[2].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CL1T1.Disponivel"))
@@ -619,18 +622,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r4=0;
+				
+			}
+			else if(r4==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CL1T1.pieces_operated", 2);
 				Main.pr.mchs[3].updateOperatedPieces(aux);
 				System.out.println("Pieces " + ": "+aux[1]);
-			}
-			else if(r4==0 && !(boolean) value.getValue().getValue())
-			{
 				r4=1;
-				long aux;
-				aux= (long) this.get_Value("CL1T1.OperatedTime", 2);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[3].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CL1T1.OperatedTime", 2);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[3].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("ALT5"))
@@ -700,18 +704,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r5=0;
+				
+			}
+			else if(r5==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T4.pieces_operated", 3);
 				Main.pr.mchs[4].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
-			}
-			else if(r5==0 && !(boolean) value.getValue().getValue())
-			{
 				r5=1;
-				long aux;
-				aux= (long) this.get_Value("CR1T4.OperatedTime", 3);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[4].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CR1T4.OperatedTime", 3);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[4].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CR1T3.Disponivel"))
@@ -750,18 +755,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r6=0;
+				
+			}
+			else if(r6==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T3.pieces_operated", 3);
 				Main.pr.mchs[5].updateOperatedPieces(aux);
 				System.out.println("Pieces " + aux[0] +": " + aux[1]);
-			}
-			else if(r6==0 && !(boolean) value.getValue().getValue())
-			{
 				r6=1;
-				long aux;
-				aux= (long) this.get_Value("CR1T3.OperatedTime", 3);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[5].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CR1T3.OperatedTime", 3);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[5].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CR1T2.Disponivel"))
@@ -800,18 +806,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r7=0;
+				
+			}
+			else if(r7==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T2.pieces_operated", 3);
 				Main.pr.mchs[6].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": " +aux[1]);
-			}
-			else if(r7==0 && !(boolean) value.getValue().getValue())
-			{
 				r7=1;
-				long aux;
-				aux= (long) this.get_Value("CR1T2.OperatedTime", 3);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[6].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CR1T2.OperatedTime", 3);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[6].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("CR1T1.Disponivel"))
@@ -850,18 +857,19 @@ public class OPC_UA {
 			if(state)
 			{
 				r8=0;
+				
+			}
+			else if(r8==0 && !(boolean) value.getValue().getValue())
+			{
 				Short[] aux;
 				aux= (Short[]) this.get_Value("CR1T1.pieces_operated", 3);
 				Main.pr.mchs[7].updateOperatedPieces(aux);
 				System.out.println("Pieces "+ aux[0] + ": "+aux[1]);
-			}
-			else if(r8==0 && !(boolean) value.getValue().getValue())
-			{
 				r8=1;
-				long aux;
-				aux= (long) this.get_Value("CR1T1.OperatedTime", 3);
-				System.out.println("OP: " + aux);
-				Main.pr.mchs[7].updateTime((int) (aux/1000));
+				long aux1;
+				aux1= (long) this.get_Value("CR1T1.OperatedTime", 3);
+				System.out.println("OP: " + aux1);
+				Main.pr.mchs[7].updateTime((int) (aux1/1000));
 			}
 		}
 		else if(identifier.contains("ART1"))

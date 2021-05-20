@@ -133,7 +133,7 @@ public class XML_parser {
 						int Quant = Integer.valueOf(eElement.getElementsByTagName("Unload").item(0).getAttributes().getNamedItem("Quantity").getTextContent());
 						System.out.println(Number + " " + Type + " " + Dest + " " + Quant);
 						Unloading u = new Unloading(Number, Type ,Dest,Quant);
-						OL.OrdersList.add(u);
+						OL.addOrder(u);
 						//Main.pr.buildPathUnloading(u);
 									
 					}		
