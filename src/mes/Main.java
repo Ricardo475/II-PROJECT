@@ -33,7 +33,7 @@ public class Main {
 		
 		//int orderNumber = 1;
 		
-		DB.FillTransOrders();
+		
 		//Unloading u = new Unloading(4, "P4","P2",2);
 		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);

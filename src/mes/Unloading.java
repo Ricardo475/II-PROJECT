@@ -15,7 +15,16 @@ public class Unloading extends Order{
 		quantityToBe = quantity;
 		flag = false;
 	}
-
+	public Unloading(int IDOrdem,String tipo,String dest,int quant,int quantPorEnviar,boolean done,boolean activeorder)
+	{
+		this.orderNumber=IDOrdem;
+		this.unloadType=tipo;
+		this.dest=dest;
+		this.quantity=quant;
+		this.quantityToBe=quantPorEnviar;
+		this.done=done;
+		this.activeOrder=activeorder;
+	}
 	@Override
 	public String toString()
 	{

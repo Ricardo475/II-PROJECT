@@ -24,7 +24,24 @@ public class Machine {
 		this.nP5 = 0;
 		this.nP6 = 0;
 	}
-	
+	public Machine()
+	{
+		;
+	}
+	public Machine(int id,String tool,int Temp,int p1, int p2, int p3, int p4, int p5, int p6)
+	{
+		this.machineID = id;
+		this.tool = tool;
+		this.state = true;
+		this.totalOperatingTime = Temp;
+		this.nP1 = p1;
+		this.nP2 = p2;
+		this.nP3 = p3;
+		this.nP4 = p4;
+		this.nP5 = p5;
+		this.nP6 = p6;
+		nTotalOperated = nP1 + nP2 + nP3 + nP4 + nP5 + nP6;
+	}
 	public void print_machine() {
 		
 		System.out.println("MACHINE NO:" + this.machineID +"|| Tool: " + this.tool + "|| State: " + this.state);

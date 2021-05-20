@@ -21,7 +21,20 @@ public class SystemState {
 		this.nTotalPiecesWarehouse = this.nP1Warehouse + this.nP2Warehouse + this.nP3Warehouse + this.nP4Warehouse + this.nP5Warehouse + this.nP6Warehouse + this.nP7Warehouse + this.nP8Warehouse + this.nP9Warehouse;
 		Main.DB.store_armazem(this);
 	}
-	
+	public SystemState(int p1,int p2, int p3,int p4,int p5,int p6,int p7,int p8, int p9)
+	{
+		this.nP1Warehouse = p1;
+		this.nP2Warehouse = p2;
+		this.nP3Warehouse = p3;
+		this.nP4Warehouse = p4;
+		this.nP5Warehouse = p5;
+		this.nP6Warehouse = p6;
+		this.nP7Warehouse = p7;
+		this.nP8Warehouse = p8;
+		this.nP9Warehouse = p9;
+		this.nTotalPiecesWarehouse = this.nP1Warehouse + this.nP2Warehouse + this.nP3Warehouse + this.nP4Warehouse + this.nP5Warehouse + this.nP6Warehouse + this.nP7Warehouse + this.nP8Warehouse + this.nP9Warehouse;
+		
+	}
 	public void print_quantityPieces() {
 		
 		System.out.println("Pieces Store in warehouse: " + this.nTotalPiecesWarehouse);

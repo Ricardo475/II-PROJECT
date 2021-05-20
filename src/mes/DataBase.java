@@ -166,7 +166,31 @@ public class DataBase {
 		if(count == 1) return true;
 		return false;
 	}
+	void FillUnloadOrders()
+	{
+		String SQL = "SELECT * FROM \"Ordens_de_descarga\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int IDOrdem = rs.getInt("IDOrdem");
+				String tipo=rs.getString("Tipo");
+				String Destino = rs.getString("Destino");
+				int Quantidade= rs.getInt("Quantidade");
+				int QuantidadePorenviar= rs.getInt("QuantidadePorEnivar");
+				int QuantidadeDescarregada= rs.getInt("QuantidadeDescarregada");
+				boolean done= rs.getBoolean("Done");
+				boolean ActiveOrder= rs.getBoolean("ActiveOrder");
+				Unloading aux = new Unloading(IDOrdem,tipo,Destino,Quantidade,QuantidadePorenviar,done,ActiveOrder);
+				Main.OL.addOrder(aux);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 
+		
+	}
 	void storeOrder_loading(Loading order)
 	{
 		String SQL="INSERT INTO \"Carga\" (\"CargaID\",\"PieceType\",\"Tempo\") VALUES ("+order.orderNumber+",'"+order.pieceType+"',"+ order.instanteChegada+")";
@@ -196,6 +220,24 @@ public class DataBase {
 		if(count == 1) return true;
 		return false;
 	}
+	void FillLoadOrders()
+	{
+		String SQL = "SELECT * FROM \"Carga\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int IDOrdem = rs.getInt("CargaID");
+				String tipo=rs.getString("PieceType");
+				int Time= rs.getInt("Tempo");
+				Loading aux = new Loading(IDOrdem,tipo,Time);
+				Main.OL.addOrder(aux);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
 	void storeOrder(Order order)
 	{
 		if(order.getClass().toString().contains("Transformação"))
@@ -221,12 +263,10 @@ public class DataBase {
 		}
 
 	}
-	ArrayList<Order> getOrdersList(){
-		ArrayList<Order> ordersList = new ArrayList<Order>();
-
-
-		return ordersList;
-
+	void getOrdersList(){
+		this.FillTransOrders();
+		this.FillUnloadOrders();
+		this.FillLoadOrders();
 	}
 	void store_maquina(Machine m)
 	{
@@ -269,6 +309,34 @@ public class DataBase {
 		if(count == 1) return true;
 		return false;
 	}
+	public Machine[] get_maquinaID(int ID)
+	{
+		int i=0;
+		Machine[] m= new Machine[8];
+		String SQL = "SELECT * FROM \"Maquinas\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int IDOrdem = rs.getInt("CargaID");
+				String tool=rs.getString("Tool");
+				int Time= rs.getInt("TempoTotal");
+				int p1= rs.getInt("P1");
+				int p2= rs.getInt("P2");
+				int p3= rs.getInt("P3");
+				int p4= rs.getInt("P4");
+				int p5= rs.getInt("P5");
+				int p6= rs.getInt("P6");
+				Machine  aux = new Machine(IDOrdem,tool,Time,p1,p2,p3,p4,p5,p6);
+				m[i]=aux;
+				i++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return m;
+	}
 	void store_armazem(SystemState s)
 	{
 		String SQL= "INSERT INTO \"Armazem\" (\"ID\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\") VALUES ("+1+","+s.nP1Warehouse+","+s.nP2Warehouse+","+s.nP3Warehouse+","+s.nP4Warehouse+","+s.nP5Warehouse+","+s.nP6Warehouse+","+s.nP7Warehouse+","+s.nP8Warehouse+","+s.nP9Warehouse+")";
@@ -309,6 +377,32 @@ public class DataBase {
 
 		if(count == 1) return true;
 		return false;
+	}
+	public SystemState get_armazem()
+	{
+		String SQL = "SELECT * FROM \"Armazem\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int IDOrdem = rs.getInt("ID");
+				int p1= rs.getInt("P1");
+				int p2= rs.getInt("P2");
+				int p3= rs.getInt("P3");
+				int p4= rs.getInt("P4");
+				int p5= rs.getInt("P5");
+				int p6= rs.getInt("P6");
+				int p7= rs.getInt("P7");
+				int p8= rs.getInt("P8");
+				int p9= rs.getInt("P9");
+				SystemState aux =new SystemState(p1,p2,p3,p4,p5,p6,p7,p8,p9);
+				return aux;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return null; 
 	}
 	//void getStatistics()
 	void store_pusher(Pusher p)
@@ -352,5 +446,34 @@ public class DataBase {
 
 		if(count == 1) return true;
 		return false;
+	}
+	public Pusher[] get_pushers()
+	{
+		Pusher[] p= new Pusher[3];
+		String SQL = "SELECT * FROM \"Armazem\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int IDOrdem = rs.getInt("IDSaida");
+				int p1= rs.getInt("P1");
+				int p2= rs.getInt("P2");
+				int p3= rs.getInt("P3");
+				int p4= rs.getInt("P4");
+				int p5= rs.getInt("P5");
+				int p6= rs.getInt("P6");
+				int p7= rs.getInt("P7");
+				int p8= rs.getInt("P8");
+				int p9= rs.getInt("P9");
+				Pusher aux =new Pusher(IDOrdem,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+				p[IDOrdem]=aux;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+
+		return p;
+		
 	}
 }
