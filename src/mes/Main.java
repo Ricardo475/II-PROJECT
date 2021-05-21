@@ -126,7 +126,7 @@ public class Main {
 
 		}
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		//opc.connect();
+		opc.connect();
 		sw.initApp();
 		//sw.run();
 
@@ -170,9 +170,9 @@ public class Main {
 				if(prio != null)
 				{
 					prio.orderActivate();
-					//prio.doOrder(pr);
-					System.out.println("OLA");
+					//System.out.println("OLA");
 					DB.storeOrder(prio);
+					prio.doOrder(pr);
 					l=0;
 				}
 				else
