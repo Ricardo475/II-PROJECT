@@ -4,7 +4,8 @@ public class Transformação extends Order {
 
 	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe;
 	String From,To;
-	int[] path = {0,0,0,0,0,0};
+	int[] pathLeft = {0,0,0,0,0,0};
+	int[] pathRight = {0,0,0,0,0,0};
 	boolean[] toolUsing = {false,false,false};
 	boolean flag;
 
@@ -29,8 +30,11 @@ public class Transformação extends Order {
 	public Transformação() {
 	}
 
-	public void set_Path(int[] result) {
-		this.path = result;
+	public void set_PathLeft(int[] result) {
+		this.pathLeft = result;
+	}
+	public void set_PathRight(int[] result) {
+		this.pathRight = result;
 	}
 	void orderDisactivate() {
 
@@ -72,6 +76,7 @@ public class Transformação extends Order {
 				//System.out.println("Quant: "+quantTotal);
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
+				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
 				//System.out.println(aux.length);
 				String aux2 =this.convert(aux);
 				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {

@@ -10,13 +10,21 @@ public class PathFinder {
 	Pusher pshs[] = new Pusher[3];
 	SystemState sys;
 	Transformação trans_before;
+	boolean flag_left = true;
+	boolean flag_right = false;
 	
 	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
-		//ONLY LEFT SIDE
+		
+		System.out.println("------------------------------------------------------TESTING NEW PATHFINDER ALGORITHM------------------------------------------------------");
 		
 		String result = "";
 		int[] res = {0,0,0,0,0,0};
+		
+		//
+		// DECONSTRUCTING TRANSFORMATION
+		//
+		
 		String transformation = contructTranformations(trans, tts);
 		String[] divideTransformation;
 		divideTransformation = transformation.split("/");
@@ -25,24 +33,46 @@ public class PathFinder {
 		String tools_before[] = { mchs[0].tool,mchs[1].tool,mchs[2].tool,mchs[3].tool };
 		String aux_result = "[";
 		
-	
-		
 		//
-		// SAVE AVAILABLE MACHINES
+		// SEE HOW MANY MACHINES NEEDED ----> PODE SER SEPARADO DESTE CODIGO
+		//
+		
+		int mchs_needed = 0;
+		
+		for(int i = 0; i < divideTransformation.length-1;i++) {
+			mchs_needed++;
+			if(mchs_needed == 4) break;
+		}
+		
+		System.out.println("MACHINES NEEDED: " + mchs_needed + "\n");
+			
+		//
+		// SAVE AVAILABLE MACHINES  ----> PODE SER SEPARADO DESTE CODIGO
 		//
 		
 		ArrayList<Machine> mchs_available = new ArrayList<Machine>();
-		//int counter_mch = 0;
 		
+		System.out.println("MACHINES AVAILABLE:");
 		
-		for(int i = 0; i < 4; i++) {
-			
+		for(int i = 0; i < 4; i++) {	
 			if(mchs[i].state) {
-				mchs_available.add(mchs[i]);	
-				//counter_mch++;
+				mchs_available.add(mchs[i]);
+				mchs[i].print_machine();
 			}
-					
+			
 		}
+		
+		//System.out.println("\n");
+		
+		//
+		// COMPARE MACHINES AVAILABLE VS MACHINES NEEDED
+		//
+		
+		if(mchs_needed>mchs_available.size()) {
+			System.out.println("PASSING TO RIGHT SIDE!" + "\n");
+			//return buildPathOnRight(trans,tts,divideTransformation);
+		}
+		else System.out.println("LEFT SIDE IS VALID!" + "\n");
 		
 		//
 		// SAVE TOOLS TO USE AND IF THERE IS MORE OR LESS THEN 3 TRANSFORMATIONS
@@ -85,9 +115,44 @@ public class PathFinder {
 			
 		}
 		
-		//System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
-		//System.out.println(tool_counter);
+		System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
+		System.out.println("TOOL COUNTER: " + tool_counter + "\n");
 	
+		//
+		// SEE IF THE TOOLS ARE ALREADY IN THE AVAILABLE MACHINES TO THE PATHING
+		//
+	
+
+		boolean[] toolsMchs = {false,false,false};
+		
+		for(int i = 0;i < mchs_available.size(); i++) {
+			
+			if(mchs_available.get(i).tool == "T1")
+				toolsMchs[0] = true;
+			else if (mchs_available.get(i).tool == "T2")
+				toolsMchs[1] = true;
+			else if (mchs_available.get(i).tool == "T3")
+				toolsMchs[2] = true;
+		}
+		
+		int count = 0;
+		
+		for(int i = 0; i < toolsMchs.length; i++) {
+			
+			if(!toolsMchs[i] && toolUsed[i]) {
+				
+				System.out.println("TOOL NO" + (i+1) + " IS NOT AVAILABLE: ONE MACHINE NEEDS TO CHANGE");
+				
+				//if(toolUsed[0])
+					//mchs_available.get(1).changeTool("T"+i);
+				
+			}
+				
+		}
+		System.out.print("\n");
+		
+		for(int i = 0; i < mchs_available.size();i++)
+			mchs[i].print_machine();
 		
 		//
 		// TOOLS CHANGES BEFORE THE PATH (mes only)
@@ -96,7 +161,7 @@ public class PathFinder {
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed,trans.quantTotal);
 
 
-		if(trans.path[0]!=0 && trans.path[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
+		if(trans.pathLeft[0]!=0 && trans.pathLeft[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
 			for(int i = 0; i<4;i++) {
 				while(!mchs[i].state) {
@@ -107,10 +172,10 @@ public class PathFinder {
 					}
 				mchs[i].setToolCodesys(i);
 			}
-			return trans.path;
+			return trans.pathLeft;
 		}
 		
-		else if(trans.path[0]!=0 && trans.path[0]>=4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
+		else if(trans.pathRight[0]!=0 && trans.pathRight[0]>=4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			
 			return buildPathOnRight(trans,tts,divideTransformation);
 		}
@@ -133,7 +198,7 @@ public class PathFinder {
 					
 					for(int k = 0; k < tts.length; k++) {
 						
-						//System.out.println(i);
+						//System.out.println("oasiçlfhsauoafshuofasghfuoasghfoaisfhasoIFasoiufahoIFHagiofagifhail");
 						if(tts[k].existsTranformationInTable(divideTransformation[i], divideTransformation[i+1])) {
 							
 							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
@@ -187,7 +252,7 @@ public class PathFinder {
 			
 			if(res[i]!=0) {
 				mchs[res[i]-1].state = false;
-				trans.set_Path(res);
+				trans.set_PathLeft(res);
 			}
 			
 		}
@@ -320,7 +385,7 @@ public class PathFinder {
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed,trans.quantTotal);
 
 
-		if(trans.path[0]!=0 && trans.path[0]>=4 &&toolUsed[0] && toolUsed[1] && toolUsed[2]) {
+		if(trans.pathRight[0]!=0 && trans.pathRight[0]>=4 &&toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
 			for(int i = 4; i<8;i++) {
 				while(!mchs[i].state) {
@@ -336,7 +401,7 @@ public class PathFinder {
 				}
 				mchs[i].setToolCodesys(i);
 			}
-			return trans.path;
+			return trans.pathRight;
 		}
 		
 	for(int i = 0; i < (divideTransformation.length-1);i++) {
@@ -397,14 +462,14 @@ public class PathFinder {
 			
 			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			System.out.println("EXECUTING TIME: " + trans.exeTime);
-			trans.finTime = trans.exeTime*trans.quantTotal;
+			trans.finTime = trans.exeTime*trans.quantTotal/mchs_available.size();
 		}
 		
 		for(int i = 0; i<res.length;i++) {
 		
 			if(res[i]!=0) {
 				mchs[res[i]-1].state = false;
-				trans.set_Path(res);
+				trans.set_PathRight(res);
 			}
 		
 		}
@@ -511,9 +576,10 @@ public class PathFinder {
 					if(quant==1) break;
 					else if(quant==2 && i>0) break;
 					else if(quant==3 && i>1) break;
-			}
+				}
 				
 			
+			}
 		}
 		
 		else if(tool_counter == 2 && mchs_available.size()>1) {
@@ -561,7 +627,6 @@ public class PathFinder {
 			}
 			
 		}
-	}
 		
 		
 }
@@ -614,7 +679,7 @@ public class PathFinder {
 			}
 			
 		}
-		System.out.println("TRANSFORMATIONS: " + result);
+		System.out.println("TRANSFORMATIONS: " + result + "\n");
 		return result;
 	}
 	
