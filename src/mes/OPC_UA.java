@@ -967,13 +967,14 @@ public class OPC_UA {
 				Short[] aux;
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
+				
 			
 			}
 			
 			
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));		
+				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));
 			}
 			
 		}

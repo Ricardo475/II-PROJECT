@@ -36,71 +36,6 @@ public class PathFinder {
 		String aux_result = "[";
 		
 		//
-		// SEE IF THE LAST CYCLE WAS FROM THE SAME ORDER	
-		//
-		
-		
-		if(trans_before.getOrderNumber()==trans.getOrderNumber()) {
-			
-			if(flag_left) {
-				flag_left = false;
-				flag_right = true;
-		
-				if(trans.pathRight[0]!=0) {
-
-					//if(flag2) {
-						
-						res = trans.pathRight;
-						
-						for(int i = 0; i<res.length;i++) {
-							if(res[i] == 0) break;
-							
-							mchs[res[i]-1].state = false;
-							
-						}
-	
-					//}
-					return res;
-				}
-				else return buildPathOnRight(trans,tts,divideTransformation);
-			}
-			else if(flag_right) {
-				flag_right = false;
-				flag_left = true;
-				
-				
-				if(trans.pathLeft[0]!=0) {
-					
-					//if(flag1) {
-							
-						res = trans.pathLeft;
-							
-						for(int i = 0; i<res.length;i++) {
-							if(res[i] == 0) break;
-							
-								mchs[res[i]-1].state = false;
-						}
-					//}
-					return res;
-				}
-
-			}
-		}
-		
-		//
-		// SEE HOW MANY MACHINES NEEDED ----> PODE SER SEPARADO DESTE CODIGO
-		//
-		
-		int mchs_needed = 0;
-		
-		for(int i = 0; i < divideTransformation.length-1;i++) {
-			mchs_needed++;
-			if(mchs_needed == 4) break;
-		}
-		
-		System.out.println("MACHINES NEEDED: " + mchs_needed + "\n");
-			
-		//
 		// SAVE AVAILABLE MACHINES  ----> PODE SER SEPARADO DESTE CODIGO
 		//
 		
@@ -116,6 +51,23 @@ public class PathFinder {
 			
 		}
 		
+		
+		
+		//
+		// SEE HOW MANY MACHINES NEEDED ----> PODE SER SEPARADO DESTE CODIGO
+		//
+		
+		/*
+		int mchs_needed = 0;
+		
+		for(int i = 0; i < divideTransformation.length-1;i++) {
+			mchs_needed++;
+			if(mchs_needed == 4) break;
+		}
+		
+		System.out.println("MACHINES NEEDED: " + mchs_needed + "\n");
+			
+		*/
 		//System.out.println("\n");
 		
 		//
@@ -172,7 +124,6 @@ public class PathFinder {
 		System.out.println("T1: " +toolUsed[0]+ " || T2: " + toolUsed[1] + " || T3: " + toolUsed[2]);
 		System.out.println("TOOL COUNTER: " + tool_counter + "\n");
 		
-		
 		//
 		// TOOLS CHANGES BEFORE THE PATH (mes only)
 		//
@@ -183,6 +134,60 @@ public class PathFinder {
 		for(int i = 0; i < mchs_available.size();i++)
 			mchs[i].print_machine();
 		
+		
+		//
+		// SEE IF THE LAST CYCLE WAS FROM THE SAME ORDER	
+		//
+		
+		
+		if(trans_before.getOrderNumber()==trans.getOrderNumber()) {
+			
+			if(flag_left) {
+				flag_left = false;
+				flag_right = true;
+		
+				if(trans.pathRight[0]!=0) {
+
+					//if(flag2) {
+						
+						res = trans.pathRight;
+						
+						for(int i = 0; i<res.length;i++) {
+							if(res[i] == 0) break;
+							
+							mchs[res[i]-1].state = false;
+							
+						}
+	
+					//}
+					return res;
+				}
+				else return buildPathOnRight(trans,tts,divideTransformation);
+			}
+			else if(flag_right) {
+				flag_right = false;
+				flag_left = true;
+				
+				
+				if(trans.pathLeft[0]!=0) {
+					
+					//if(flag1) {
+							
+						res = trans.pathLeft;
+							
+						for(int i = 0; i<res.length;i++) {
+							if(res[i] == 0) break;
+							
+								mchs[res[i]-1].state = false;
+						}
+					//}
+					return res;
+				}
+
+			}
+		}
+		
+
 		
 		
 		if(trans.pathLeft[0]!=0 && trans.pathLeft[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
