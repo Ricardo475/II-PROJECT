@@ -24,7 +24,7 @@ public class Transformação extends Order {
 	}
 	public Transformação(int id,String From,String To,int QuantidadeTotal,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
 	{
-		
+
 	}
 
 	public Transformação() {
@@ -99,14 +99,13 @@ public class Transformação extends Order {
 						Main.opc.Set_value("atual_piece.path", aux,4);
 						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
 					}
-					
+
 
 					//boolean before_flag = flag;
 					if(Side.equals("L"))
 					{
-						int i = 0;
 						while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
-							
+
 							if((short)Main.opc.get_Value("devia_esperar",1)== 1)
 							{
 								flag= false;
@@ -118,9 +117,8 @@ public class Transformação extends Order {
 					}
 					else if(Side.equals("R"))
 					{
-						int i = 0;
 						while((short)Main.opc.get_Value("ordem_recebida",4)!=1){
-							
+
 							if((short)Main.opc.get_Value("devia_esperar",4)== 1)
 							{
 								flag= false;
@@ -129,7 +127,7 @@ public class Transformação extends Order {
 							flag = true;
 						};
 					}
-					
+
 					if(flag) {
 						//quantTotal--;
 						quantToBe--;
@@ -138,7 +136,7 @@ public class Transformação extends Order {
 						//pr.sys.decreasePieces(this.From);
 						flag = false;
 					}
-					
+
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
