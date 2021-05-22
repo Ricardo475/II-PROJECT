@@ -36,10 +36,10 @@ public class XML_parser {
 		    if(xml.contains("<Transform") || xml.contains("<Unload") || xml.contains("<Request_Stores/>") || xml.contains("<Request_Orders/>"))
 			{
 				NodeList nlist=doc.getElementsByTagName("Order");
-
+				NodeList nlist1=doc.getElementsByTagName("ORDERS");
+				
 				for(int i=0;i<nlist.getLength();i++)
 				{
-
 					Node nNode= nlist.item(i);
 
 					if(nNode.getNodeType() == Node.ELEMENT_NODE)
@@ -73,7 +73,19 @@ public class XML_parser {
 							OL.addOrder(u);
 						}
 						
-						else if(eElement.getElementsByTagName("Request_Stores").item(0) != null)
+					}
+
+				}
+				
+				for(int i=0;i<nlist1.getLength();i++) {
+					
+					Node nNode1= nlist1.item(i);
+					
+					if(nNode1.getNodeType() == Node.ELEMENT_NODE)
+					{
+						Element eElement= (Element) nNode1;
+						
+						if(eElement.getElementsByTagName("Request_Stores").item(0) != null)
 						{
 							SoredInWarehouse[] siw = new SoredInWarehouse[9];
 							//System.out.println(xml);
@@ -120,8 +132,8 @@ public class XML_parser {
 							storedOrders = storedOrders + "</Order_Schedule>";
 							System.out.println(storedOrders);
 						}
+					
 					}
-
 				}
 			}
 		}
