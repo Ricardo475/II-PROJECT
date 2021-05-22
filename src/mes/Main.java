@@ -21,7 +21,7 @@ public class Main {
 	static SwingApp sw = new SwingApp();
 	static OrdersState OL=new OrdersState();
 	static int start=(int) System.currentTimeMillis();
-	static DataBase DB = new DataBase();
+	//static DataBase DB = new DataBase();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 
 		//------------------------------------------------PAULO--------------------------------------------------------------//
@@ -39,18 +39,18 @@ public class Main {
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
 		//Transformação trans3 = new Transformação(102, "P4", "P6", 20, 0, 10, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
-		if(DB.existeArm(1))
-		{
-			DB.getOrdersList();
-			pr.sys=DB.get_armazem();
-			pr.sys.print_quantityPieces();
-			pr.mchs=DB.get_maquinaID();
-			pr.mchs[0].print_machine();
-			pr.pshs=DB.get_pushers();
-			pr.pshs[0].print_Pusher();
-		}
-		else
-		{
+		//if(DB.existeArm(1))
+		//{
+			//DB.getOrdersList();
+			//pr.sys=DB.get_armazem();
+			//pr.sys.print_quantityPieces();
+			//pr.mchs=DB.get_maquinaID();
+			//pr.mchs[0].print_machine();
+			//pr.pshs=DB.get_pushers();
+			//pr.pshs[0].print_Pusher();
+		//}
+		//else
+		//{
 			pr.initializeMachines();
 			//pr.mchs[1].changeTool("T2");
 			//pr.mchs[2].changeTool("T3");
@@ -124,7 +124,7 @@ public class Main {
 
 			 */
 
-		}
+		//}
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		opc.connect();
 		sw.initApp();
@@ -132,7 +132,8 @@ public class Main {
 
 		//System.out.println("OK");
 		//OL.addOrder(trans1);
-
+		pr.trans_before = new Transformação();
+		pr.trans_before.orderNumber = -1;
 		int l=0;
 		String ordem="aaa";
 		XML_parser parse=new XML_parser();

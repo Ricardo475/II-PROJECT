@@ -30,7 +30,7 @@ public class OPC_UA {
 	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.",path3="|var|CODESYS Control Win V3 x64.Application.POU_2.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
-	int r1=1,r2=1,r3=1,r4=1,r5=1,r6=1,r7=1,r8=1;
+	int r1=1,r2=1,r3=1,r4=1,r5=1,r6=1,r7=1,r8=1,r9=1,r10=1;
 	
 	
 	public void connect() {
@@ -184,6 +184,11 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId25 = new ReadValueId(new NodeId(id_node, path3 + "CR2T5.GOINGTOPUSHER"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId26 = new ReadValueId(new NodeId(id_node, path3 + "CR0T6.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		ReadValueId readValueId27 = new ReadValueId(new NodeId(id_node, path2 + "CL0T6.Sensor"), AttributeId.Value.uid(), null,
+				QualifiedName.NULL_VALUE);
+		
 		UInteger clientHandle = sub.nextClientHandle();
 		
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
@@ -464,6 +469,32 @@ public class OPC_UA {
 		List<UaMonitoredItem> items = sub
 				.createMonitoredItems(TimestampsToReturn.Both, lmr, onItemCreated).get();
 
+		
+
+	UInteger clientHandle26 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters26 = new MonitoringParameters(clientHandle26, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId26, MonitoringMode.Reporting,
+				parameters26));
+		
+		
+		
+		
+	UInteger clientHandle27 = sub.nextClientHandle();
+		
+		MonitoringParameters parameters27 = new MonitoringParameters(clientHandle27, 10.0, // sampling interval
+				null, // filter, null means use default
+				uint(10), // queue size
+				true // discard oldest
+		);
+
+		lmr.add(new MonitoredItemCreateRequest(readValueId27, MonitoringMode.Reporting,
+				parameters27));
 	}
 
 	private void onSubscriptionChangeValue(UaMonitoredItem item, DataValue value) {
@@ -705,6 +736,22 @@ public class OPC_UA {
 				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
 				Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
+			}
+		}
+		else if(identifier.contains("CL0T6")) {
+			
+			boolean state = (boolean) value.getValue().getValue();
+			
+			if(state) {
+				
+				r9 = 0;
+			}
+			else if(r9 == 0 && !(boolean) value.getValue().getValue()) {
+				
+				boolean aux;
+				aux = (boolean) value.getValue().getValue();
+				//Main.pr.flag1 = true;
+				r9 = 1;
 			}
 		}
 		///////////////// CELULA DIREITA DAQUI PARA BAIXO //////////////////////////////////
@@ -1003,6 +1050,22 @@ public class OPC_UA {
 				((Order)load).activeOrder = true;
 				((Order)load).done = true;
 				Main.OL.addOrder(load);
+			}
+		}
+		else if(identifier.contains("CR0T6")) {
+			
+			boolean state = (boolean) value.getValue().getValue();
+			
+			if(state) {
+				
+				r10 = 0;
+			}
+			else if(r10 == 0 && !(boolean) value.getValue().getValue()) {
+				
+				boolean aux;
+				aux = (boolean) value.getValue().getValue();
+				//Main.pr.flag2 = true;
+				r10 = 1;
 			}
 		}
 	}

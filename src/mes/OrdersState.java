@@ -40,7 +40,7 @@ public class OrdersState {
 			Order o_aux = pqOrdem.poll();
 			aux.add(o_aux);
 		}
-		Main.DB.storeOrder(order);
+		//Main.DB.storeOrder(order);
 		OrdersList = aux;
 		//this.RunningOrders = OrdersList.size();
 	}
@@ -149,7 +149,7 @@ public class OrdersState {
 			if(this.OrdersList.get(i).orderNumber == ID)
 			{
 				this.OrdersList.get(i).pecaProcessada();
-				Main.DB.storeOrder(this.OrdersList.get(i));
+				//Main.DB.storeOrder(this.OrdersList.get(i));
 			}
 		}
 	}

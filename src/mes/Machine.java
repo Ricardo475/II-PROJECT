@@ -5,6 +5,7 @@ public class Machine {
 	int machineID;
 	String tool;
 	boolean state;
+	//boolean flag = true;
 	int totalOperatingTime, nTotalOperated, nP1,nP2,nP3,nP4,nP5,nP6;
 	
 	//TIME IN SECONDS (for now)
@@ -57,7 +58,7 @@ public class Machine {
 	public void changeTool(String toolNeeded) {
 		
 		this.tool = toolNeeded;
-		Main.DB.store_maquina(this);
+		//Main.DB.store_maquina(this);
 	}
 	
 	public void setToolCodesys(int id) {
@@ -71,7 +72,7 @@ public class Machine {
 	public void updateTime(int time) {
 		
 		this.totalOperatingTime =time;
-		Main.DB.store_maquina(this);
+		//Main.DB.store_maquina(this);
 	}
 
 	public void updateOperatedPieces(Short [] piecesOperated) {
@@ -83,7 +84,7 @@ public class Machine {
 		nP6 = piecesOperated[6];
 		
 		nTotalOperated = nP1 + nP2 + nP3 + nP4 + nP5 + nP6;
-		Main.DB.store_maquina(this);
+		//Main.DB.store_maquina(this);
 		//print_operatedPieces();
 	}
 

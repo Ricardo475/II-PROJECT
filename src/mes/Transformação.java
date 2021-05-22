@@ -98,7 +98,13 @@ public class Transformação extends Order {
 					//boolean before_flag = flag;
 					if(Side.equals("L"))
 					{
+						int i = 0;
 						while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
+							if(i == 0) {
+								quantToBe--;
+								quantExe++;
+								i++;
+							}
 							if((short)Main.opc.get_Value("devia_esperar",1)== 1)
 							{
 								flag= false;
@@ -109,7 +115,13 @@ public class Transformação extends Order {
 					}
 					else if(Side.equals("R"))
 					{
+						int i = 0;
 						while((short)Main.opc.get_Value("ordem_recebida2",1)!=1){
+							if(i == 0) {
+								quantToBe--;
+								quantExe++;
+								i++;
+							}
 							if((short)Main.opc.get_Value("devia_esperar2",1)== 1)
 							{
 								flag= false;
@@ -118,12 +130,7 @@ public class Transformação extends Order {
 							flag = true;
 						};
 					}
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					/*
 					if(flag) {
 						//quantTotal--;
 						quantToBe--;
@@ -132,11 +139,19 @@ public class Transformação extends Order {
 						//pr.sys.decreasePieces(this.From);
 						flag = false;
 					}
+					*/
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					System.out.println(" qant: "+quantToBe);
 					if(quantToBe==0) 
 					{	
 						this.orderDisactivate();
-						//pr.sys.increasePieces(this.To,this.quantTotal);   //PARA JÁ FICAR ASSIM: ATUALIZAR SÓ NO FIM DA ORDEM -> FAZER É ATUALUZAR SEMPRE QUE UMA PEÇA ENTRA NO ARMAZÉM
+						//pr.sys.increasePieces(this.To,this.quantTotal);  
 						this.done=true;
 						System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
 				}
