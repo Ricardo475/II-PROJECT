@@ -222,12 +222,12 @@ public class SwingApp implements Runnable{
 		tableTrans.setModel(new DefaultTableModel(
 				new Object[][] {
 					}, 
-				new String [] {"Order ID", "Status", "Entry Time", "Start Time", "Initial Piece", "Final Piece", "End Time", "Deadline", "Processed", "Processing", "To be Processed", "Total"} 
+				new String [] {"Order ID", "Status", "Entry Time", "Start Time", "Initial Piece", "Final Piece", "End Time", "Deadline", "Processed", "Processing", "To be Processed", "Total","Penalty"} 
 	));
 		
 		tableTrans.getColumnModel().getColumn(0).setPreferredWidth(50);
 		
-		for(int i = 1; i < 11;i++) {
+		for(int i = 1; i < 12;i++) {
 			tableTrans.getColumnModel().getColumn(i).setPreferredWidth(75);
 		}
 		
@@ -238,12 +238,7 @@ public class SwingApp implements Runnable{
 	
 	
 		
-	
-		
-	
-	
-	
-	
+
 	
 	@Override
 	public void run() {
@@ -373,6 +368,7 @@ public class SwingApp implements Runnable{
 						v.add(((Transformação)o).quantExe);
 						v.add(((Transformação)o).quantToBe);
 						v.add(((Transformação)o).quantTotal);
+						v.add(0);
 						
 						DefaultTableModel model = (DefaultTableModel) tableTrans.getModel();
 						model.addRow(v);
@@ -448,6 +444,7 @@ public class SwingApp implements Runnable{
 							tableTrans.setValueAt(((Transformação)o).quantProcessed,j,8);
 							tableTrans.setValueAt(((Transformação)o).quantExe,j,9);
 							tableTrans.setValueAt(((Transformação)o).quantToBe,j,10);
+							tableTrans.setValueAt(((Transformação)o).PenaltyInc,j,12);
 							
 							scrollerTrans.setViewportView(tableTrans);	
 						}

@@ -103,7 +103,6 @@ public class Transformação extends Order {
 							if(i == 0) {
 								quantToBe--;
 								quantExe++;
-								pr.totalTransf++;
 								i++;
 							}
 							if((short)Main.opc.get_Value("devia_esperar",1)== 1)
@@ -121,7 +120,6 @@ public class Transformação extends Order {
 							if(i == 0) {
 								quantToBe--;
 								quantExe++;
-								pr.totalTransf++;
 								i++;
 							}
 							if((short)Main.opc.get_Value("devia_esperar2",1)== 1)
