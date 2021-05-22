@@ -1001,13 +1001,12 @@ public class OPC_UA {
 				aux= (Short[]) this.get_Value("Pecas_armazem", 5);
 				if(aux!=null)
 					Main.pr.sys.setPieces(aux);
-
 			}
 
 
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));		
+				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));
 			}
 
 		}

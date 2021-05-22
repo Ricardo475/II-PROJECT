@@ -8,7 +8,7 @@ public class Unloading extends Order{
 	boolean flag;
 	
 	public Unloading(int orderNumber, String unloadType, String dest, int quantity) {
-		super(orderNumber,0,0,0);
+		super(orderNumber,0,0,(((int)System.currentTimeMillis()-Main.start)/1000));
 		this.unloadType = unloadType;
 		this.dest = dest;
 		this.quantity = quantity;
