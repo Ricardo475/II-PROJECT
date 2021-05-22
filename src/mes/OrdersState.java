@@ -79,7 +79,7 @@ public class OrdersState {
 		{
 			if(OrdersList.get(i).existePecas())
 			{
-				System.out.println("SUPP333");
+				//System.out.println("SUPP333");
 				return OrdersList.get(i);
 			}
 			else

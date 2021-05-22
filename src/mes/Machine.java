@@ -64,7 +64,7 @@ public class Machine {
 	public void setToolCodesys(int id) {
 		
 		if(this.machineID == id)
-			Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(this.tool.charAt(1)));
+			Main.opc.Set_value("tool_maquina"+(this.machineID+1),Character.getNumericValue(this.tool.charAt(1)),5);
 		
 		
 	}	

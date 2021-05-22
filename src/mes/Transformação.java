@@ -77,37 +77,40 @@ public class Transformação extends Order {
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
 				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
-				//System.out.println(aux.length);
+				System.out.println(this.quantToBe);
 				String aux2 =this.convert(aux);
 				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
 					if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 					{
 						Side = "L";
+						Main.opc.Set_value("atual_piece.ordem", this.orderNumber,1);
+						Main.opc.Set_value("atual_piece.tipo", Side,1);
+						Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),1);
+						Main.opc.Set_value("atual_piece.path", aux,1);
+						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),1);
+
 					}
 					else if(aux2.contains("5") || aux2.contains("6") || aux2.contains("7") || aux2.contains("8"))
 					{
 						Side = "R";
+						Main.opc.Set_value("atual_piece.ordem", this.orderNumber,4);
+						Main.opc.Set_value("atual_piece.tipo", Side,4);
+						Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),4);
+						Main.opc.Set_value("atual_piece.path", aux,4);
+						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
 					}
-					Main.opc.Set_value("atual_piece.ordem", this.orderNumber);
-					Main.opc.Set_value("atual_piece.tipo", Side);
-					Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)));
-					Main.opc.Set_value("atual_piece.path", aux);
-					Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)));
-
+					
 
 					//boolean before_flag = flag;
 					if(Side.equals("L"))
 					{
 						int i = 0;
 						while((short)Main.opc.get_Value("ordem_recebida",1)!=1){
-							if(i == 0) {
-								quantToBe--;
-								quantExe++;
-								i++;
-							}
+							
 							if((short)Main.opc.get_Value("devia_esperar",1)== 1)
 							{
 								flag= false;
+								System.out.println("ESPERA");
 								return;
 							}
 							flag = true;
@@ -116,13 +119,9 @@ public class Transformação extends Order {
 					else if(Side.equals("R"))
 					{
 						int i = 0;
-						while((short)Main.opc.get_Value("ordem_recebida2",1)!=1){
-							if(i == 0) {
-								quantToBe--;
-								quantExe++;
-								i++;
-							}
-							if((short)Main.opc.get_Value("devia_esperar2",1)== 1)
+						while((short)Main.opc.get_Value("ordem_recebida",4)!=1){
+							
+							if((short)Main.opc.get_Value("devia_esperar",4)== 1)
 							{
 								flag= false;
 								return;
@@ -130,7 +129,7 @@ public class Transformação extends Order {
 							flag = true;
 						};
 					}
-					/*
+					
 					if(flag) {
 						//quantTotal--;
 						quantToBe--;
@@ -139,7 +138,7 @@ public class Transformação extends Order {
 						//pr.sys.decreasePieces(this.From);
 						flag = false;
 					}
-					*/
+					
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {

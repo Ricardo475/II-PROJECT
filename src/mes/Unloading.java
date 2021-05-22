@@ -43,9 +43,9 @@ public class Unloading extends Order{
 			int aux = pr.buildPathUnloading(this);
 			
 			if(aux!=0) {
-				Main.opc.Set_value("atual_piece.tipo", Side);
-				Main.opc.Set_value("atual_piece.path[0]", aux);
-				Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.unloadType.charAt(1)));
+				Main.opc.Set_value("atual_piece.tipo", Side,4);
+				Main.opc.Set_value("atual_piece.path[0]", aux,4);
+				Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.unloadType.charAt(1)),4);
 				
 			}
 			

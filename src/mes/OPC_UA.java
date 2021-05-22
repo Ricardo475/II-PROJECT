@@ -27,12 +27,12 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class OPC_UA {
 	private OpcUaClient client;
-	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.",path3="|var|CODESYS Control Win V3 x64.Application.POU_2.";
+	String IP = "localhost", path = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG.",path2="|var|CODESYS Control Win V3 x64.Application.POU.",path3="|var|CODESYS Control Win V3 x64.Application.POU_2.",path4 = "|var|CODESYS Control Win V3 x64.Application.PLC_PRG2.",path5="|var|CODESYS Control Win V3 x64.Application.GVL.";
 	private static int id_node = 4;
 	private UaSubscription sub = null;
 	int r1=1,r2=1,r3=1,r4=1,r5=1,r6=1,r7=1,r8=1,r9=1,r10=1;
-	
-	
+
+
 	public void connect() {
 		try {
 			client = OpcUaClient.create("opc.tcp://" + IP + ":4840");
@@ -56,12 +56,16 @@ public class OPC_UA {
 
 	public Object get_Value(String VarName,int p) {
 		String var ="";
-		if(p== 1)
+		if(p== 1) //plc_prg
 			var = path + VarName;
-		else if(p==2)
+		else if(p==2) //pou
 			var= path2+VarName;
-		else if(p==3)
+		else if(p==3) // pou2
 			var= path3+VarName;
+		else if(p==4) // plc_prg2
+			var= path4+VarName;
+		else if(p==5) //gvl
+			var= path5+VarName;
 		NodeId nodeidstring = new NodeId(id_node, var);
 		DataValue value;
 
@@ -75,9 +79,18 @@ public class OPC_UA {
 		return value.getValue().getValue();
 	}
 
-	public void Set_value(String VarName, int value) {
-		String var;
-		var = path + VarName;
+	public void Set_value(String VarName, int value,int p) {
+		String var="";
+		if(p== 1)
+			var = path + VarName;
+		else if(p==2)
+			var= path2+VarName;
+		else if(p==3)
+			var= path3+VarName;
+		else if(p==4)
+			var= path4+VarName;
+		else if(p==5)
+			var= path5+VarName;
 		NodeId nodeidstring = new NodeId(id_node, var);
 		int i = value;
 
@@ -89,9 +102,18 @@ public class OPC_UA {
 		}
 	}
 
-	public void Set_value(String VarName, boolean value) {
-		String var;
-		var = path + VarName;
+	public void Set_value(String VarName, boolean value,int p) {
+		String var="";
+		if(p== 1)
+			var = path + VarName;
+		else if(p==2)
+			var= path2+VarName;
+		else if(p==3)
+			var= path3+VarName;
+		else if(p==4)
+			var= path4+VarName;
+		else if(p==5)
+			var= path5+VarName;
 		NodeId nodeidstring = new NodeId(id_node, var);
 		boolean i = value;
 
@@ -103,28 +125,37 @@ public class OPC_UA {
 		}
 	}
 
-	public void Set_value(String VarName, String value) {
-		String var;
-		var = path + VarName;
-		NodeId nodeidstring = new NodeId(id_node, var);
-		String i = value;
+	public void Set_value(String VarName, String value,int p) {
+		String var="";
+		if(p== 1)
+			var = path + VarName;
+		else if(p==2)
+			var= path2+VarName;
+		else if(p==3)
+			var= path3+VarName;
+		else if(p==4)
+			var= path4+VarName;
+		else if(p==5)
+			var= path5+VarName;;
+			NodeId nodeidstring = new NodeId(id_node, var);
+			String i = value;
 
-		try {
-			System.out.println(client.writeValue(nodeidstring, new DataValue(new Variant(i))).get());
-		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				System.out.println(client.writeValue(nodeidstring, new DataValue(new Variant(i))).get());
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
-	
-	public void Set_value(String VarName, int[] value) {
+
+	public void Set_value(String VarName, int[] value,int p) {
 		for(int i=0; i<value.length;i++)
 		{
 			//System.out.println(i);
-			this.Set_value(VarName+"["+i+"]", value[i]);
+			this.Set_value(VarName+"["+i+"]", value[i],p);
 		}
 	}
-	
+
 	public void createSubscription() throws Exception {
 
 		if (sub != null) {
@@ -132,8 +163,8 @@ public class OPC_UA {
 		}
 		sub = client.getSubscriptionManager().createSubscription(10.0).get();
 		List<MonitoredItemCreateRequest> lmr= new ArrayList<>();
-		  
-		
+
+
 		ReadValueId readValueId = new ReadValueId(new NodeId(id_node, path2 + "CL1T1.Disponivel"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId2 = new ReadValueId(new NodeId(id_node, path2 + "CL1T2.Disponivel"), AttributeId.Value.uid(), null,
@@ -188,310 +219,310 @@ public class OPC_UA {
 				QualifiedName.NULL_VALUE);
 		ReadValueId readValueId27 = new ReadValueId(new NodeId(id_node, path2 + "CL0T6.Sensor"), AttributeId.Value.uid(), null,
 				QualifiedName.NULL_VALUE);
-		
+
 		UInteger clientHandle = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters = new MonitoringParameters(clientHandle, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId, MonitoringMode.Reporting,
 				parameters));
-		
+
 		UInteger clientHandle2 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters2 = new MonitoringParameters(clientHandle2, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId2, MonitoringMode.Reporting,
 				parameters2));
-		
+
 		UInteger clientHandle3 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters3 = new MonitoringParameters(clientHandle3, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId3, MonitoringMode.Reporting,
 				parameters3));
-		
+
 		UInteger clientHandle4 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters4 = new MonitoringParameters(clientHandle4, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId4, MonitoringMode.Reporting,
 				parameters4));
 		UInteger clientHandle5 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters5 = new MonitoringParameters(clientHandle5, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId5, MonitoringMode.Reporting,
 				parameters5));
-		
+
 		UInteger clientHandle6 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters6 = new MonitoringParameters(clientHandle6,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId6, MonitoringMode.Reporting,
 				parameters6));
-		
+
 		UInteger clientHandle7 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters7 = new MonitoringParameters(clientHandle7,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId7, MonitoringMode.Reporting,
 				parameters7));
-		
+
 		UInteger clientHandle8 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters8 = new MonitoringParameters(clientHandle8,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId8, MonitoringMode.Reporting,
 				parameters8));
-		
-		
+
+
 		UInteger clientHandle9 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters9 = new MonitoringParameters(clientHandle9,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId9, MonitoringMode.Reporting,
 				parameters9));
-		
+
 		UInteger clientHandle10 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters10 = new MonitoringParameters(clientHandle10,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId10, MonitoringMode.Reporting,
 				parameters10));
-		
+
 		UInteger clientHandle11 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters11 = new MonitoringParameters(clientHandle11,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId11, MonitoringMode.Reporting,
 				parameters11));
-		
+
 		UInteger clientHandle12 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters12 = new MonitoringParameters(clientHandle12,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId12, MonitoringMode.Reporting,
 				parameters12));
-		
+
 		UInteger clientHandle13 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters13 = new MonitoringParameters(clientHandle13,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId13, MonitoringMode.Reporting,
 				parameters13));
-		
+
 		UInteger clientHandle14 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters14 = new MonitoringParameters(clientHandle14,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId14, MonitoringMode.Reporting,
 				parameters14));
-		
+
 		UInteger clientHandle15 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters15 = new MonitoringParameters(clientHandle15,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId15, MonitoringMode.Reporting,
 				parameters15));
-		
+
 		UInteger clientHandle16 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters16 = new MonitoringParameters(clientHandle16,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId16, MonitoringMode.Reporting,
 				parameters16));
-		
+
 		UInteger clientHandle17 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters17 = new MonitoringParameters(clientHandle17,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId17, MonitoringMode.Reporting,
 				parameters17));
-		
+
 		UInteger clientHandle18 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters18 = new MonitoringParameters(clientHandle18,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId18, MonitoringMode.Reporting,
 				parameters18));
-		
+
 		UInteger clientHandle19 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters19 = new MonitoringParameters(clientHandle19,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId19, MonitoringMode.Reporting,
 				parameters19));
-		
+
 		UInteger clientHandle20 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters20 = new MonitoringParameters(clientHandle20,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
-		
+				);
+
 		lmr.add(new MonitoredItemCreateRequest(readValueId20, MonitoringMode.Reporting,
 				parameters20));
-		
+
 		UInteger clientHandle21 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters21 = new MonitoringParameters(clientHandle21,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId21, MonitoringMode.Reporting,
 				parameters21));
-		
+
 		UInteger clientHandle22 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters22 = new MonitoringParameters(clientHandle22,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId22, MonitoringMode.Reporting,
 				parameters22));
-		
+
 		UInteger clientHandle23 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters23 = new MonitoringParameters(clientHandle23,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId23, MonitoringMode.Reporting,
 				parameters23));
-		
+
 		UInteger clientHandle24 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters24 = new MonitoringParameters(clientHandle24,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId24, MonitoringMode.Reporting,
 				parameters24));
-		
+
 		UInteger clientHandle25 = sub.nextClientHandle();
-		
+
 		MonitoringParameters parameters25 = new MonitoringParameters(clientHandle25,10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId25, MonitoringMode.Reporting,
 				parameters25));
-		
+
 		ItemCreationCallback onItemCreated = (item, id) -> item.setValueConsumer(this::onSubscriptionChangeValue);
 
 		List<UaMonitoredItem> items = sub
 				.createMonitoredItems(TimestampsToReturn.Both, lmr, onItemCreated).get();
 
-		
 
-	UInteger clientHandle26 = sub.nextClientHandle();
-		
+
+		UInteger clientHandle26 = sub.nextClientHandle();
+
 		MonitoringParameters parameters26 = new MonitoringParameters(clientHandle26, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId26, MonitoringMode.Reporting,
 				parameters26));
-		
-		
-		
-		
-	UInteger clientHandle27 = sub.nextClientHandle();
-		
+
+
+
+
+		UInteger clientHandle27 = sub.nextClientHandle();
+
 		MonitoringParameters parameters27 = new MonitoringParameters(clientHandle27, 10.0, // sampling interval
 				null, // filter, null means use default
 				uint(10), // queue size
 				true // discard oldest
-		);
+				);
 
 		lmr.add(new MonitoredItemCreateRequest(readValueId27, MonitoringMode.Reporting,
 				parameters27));
@@ -499,15 +530,15 @@ public class OPC_UA {
 
 	private void onSubscriptionChangeValue(UaMonitoredItem item, DataValue value) {
 		String identifier =item.getReadValueId().getNodeId().getIdentifier().toString();
-		
+
 		System.out.println("item: " + identifier + " value: "+ value.getValue().getValue());
-		
+
 		if(identifier.contains("CL1T4.Disponivel"))
 		{
-			
+
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T4: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -516,16 +547,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[0].state = state;
-				
+
 		}
 		else if(identifier.contains("CL1T4.Sensor"))
 		{
-			
+
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T4: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -534,11 +565,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if(state)
 			{
 				r1=0;
-			
+
 			}
 			else if(r1==0 && !(boolean) value.getValue().getValue())
 			{
@@ -558,7 +589,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T3: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -567,17 +598,17 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[1].state = state;
-			
-			
+
+
 		}
 		else if(identifier.contains("CL1T3.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T3: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -586,11 +617,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if(state)
 			{
 				r2=0;
-				
+
 			}
 			else if(r2==0 && !(boolean) value.getValue().getValue())
 			{
@@ -610,7 +641,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T2: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -619,17 +650,17 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[2].state = state;
-			
-	
+
+
 		}
 		else if(identifier.contains("CL1T2.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T2: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -638,11 +669,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if(state)
 			{
 				r3=0;
-				
+
 			}
 			else if(r3==0 && !(boolean) value.getValue().getValue())
 			{
@@ -662,7 +693,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T1: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -671,16 +702,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[3].state = state;
-			
+
 		}
 		else if(identifier.contains("CL1T1.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CL1T1: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -689,11 +720,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-						
+
 			if(state)
 			{
 				r4=0;
-				
+
 			}
 			else if(r4==0 && !(boolean) value.getValue().getValue())
 			{
@@ -714,18 +745,19 @@ public class OPC_UA {
 			if(!state)
 			{
 				Short[] aux;
-				aux= (Short[]) this.get_Value("Pecas_armazem", 1); 
-				Main.pr.sys.setPieces(aux);
+				aux= (Short[]) this.get_Value("Pecas_armazem", 5); 
+				if(aux!=null)
+					Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
-			
-				
+
+
 			}
-			
+
 			if(state)
 			{
 				Main.OL.pecaProc((short) this.get_Value("ALT5.curr_piece.ordem", 2));
 			}
-			
+
 		}
 		else if(identifier.contains("ALT6"))
 		{
@@ -733,21 +765,22 @@ public class OPC_UA {
 			if(state)
 			{
 				Short[] aux;
-				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
-				Main.pr.sys.setPieces(aux);
+				aux= (Short[]) this.get_Value("Pecas_armazem", 5);
+				if(aux!=null)
+					Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
 			}
 		}
 		else if(identifier.contains("CL0T6")) {
-			
+
 			boolean state = (boolean) value.getValue().getValue();
-			
+
 			if(state) {
-				
+
 				r9 = 0;
 			}
 			else if(r9 == 0 && !(boolean) value.getValue().getValue()) {
-				
+
 				boolean aux;
 				aux = (boolean) value.getValue().getValue();
 				//Main.pr.flag1 = true;
@@ -760,7 +793,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T4: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -769,16 +802,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[4].state = state;
-			
+
 		}
 		else if(identifier.contains("CR1T4.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T4: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -787,11 +820,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-						
+
 			if(state)
 			{
 				r5=0;
-				
+
 			}
 			else if(r5==0 && !(boolean) value.getValue().getValue())
 			{
@@ -811,7 +844,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T3: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -820,16 +853,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[5].state = state;
-			
+
 		}
 		else if(identifier.contains("CR1T3.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T3: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -838,11 +871,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-					
+
 			if(state)
 			{
 				r6=0;
-				
+
 			}
 			else if(r6==0 && !(boolean) value.getValue().getValue())
 			{
@@ -862,7 +895,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T2: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -871,16 +904,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[6].state = state;
-			
+
 		}
 		else if(identifier.contains("CR1T2.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T2: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -889,11 +922,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-						
+
 			if(state)
 			{
 				r7=0;
-				
+
 			}
 			else if(r7==0 && !(boolean) value.getValue().getValue())
 			{
@@ -913,7 +946,7 @@ public class OPC_UA {
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T1: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -922,16 +955,16 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-			
+
 			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[7].state = state;
-			
+
 		}
 		else if(identifier.contains("CR1T1.Sensor"))
 		{
 
 			boolean state = (boolean) value.getValue().getValue();
 			System.out.println("CR1T1: " + (boolean) value.getValue().getValue());
-			
+
 			if(state) {
 				try {
 					Thread.sleep(200);
@@ -940,11 +973,11 @@ public class OPC_UA {
 					e.printStackTrace();
 				}
 			}
-						
+
 			if(state)
 			{
 				r8=0;
-				
+
 			}
 			else if(r8==0 && !(boolean) value.getValue().getValue())
 			{
@@ -965,17 +998,18 @@ public class OPC_UA {
 			if(!state)
 			{
 				Short[] aux;
-				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
-				Main.pr.sys.setPieces(aux);
-			
+				aux= (Short[]) this.get_Value("Pecas_armazem", 5);
+				if(aux!=null)
+					Main.pr.sys.setPieces(aux);
+
 			}
-			
-			
+
+
 			if(state)
 			{
 				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));		
 			}
-			
+
 		}
 		else if(identifier.contains("ART2"))
 		{
@@ -983,8 +1017,9 @@ public class OPC_UA {
 			if(state)
 			{
 				Short[] aux;
-				aux= (Short[]) this.get_Value("Pecas_armazem", 1);
-				Main.pr.sys.setPieces(aux);
+				aux= (Short[]) this.get_Value("Pecas_armazem", 5);
+				if(aux!=null)
+					Main.pr.sys.setPieces(aux);
 				//Main.pr.sys.print_quantityPieces();
 			}
 		}
@@ -1026,42 +1061,42 @@ public class OPC_UA {
 			int lowest_no = 0;
 			Loading load = null;
 			boolean state = (boolean) value.getValue().getValue();
-			
+
 			if(state) {
-				
+
 				for(int i = 0; i < Main.OL.OrdersList.size();i++) {
-					
+
 					Order o = Main.OL.OrdersList.get(i);
-					
+
 					if(o.getOrderNumber()==lowest_no) 
 						lowest_no++;
 				}
-				
+
 				if(identifier.contains("CR2T1b")) {
 					System.out.println("CR2T1b: " + state);
 					load = new Loading(lowest_no,"P1",(((int)System.currentTimeMillis()-Main.start)/1000));	
 				}
-				
+
 				else if(identifier.contains("CR2T7b")) {
 					System.out.println("CR2T7b: " + state);
 					load = new Loading(lowest_no,"P2",(((int)System.currentTimeMillis()-Main.start)/1000));	
 				}
-						
+
 				((Order)load).activeOrder = true;
 				((Order)load).done = true;
 				Main.OL.addOrder(load);
 			}
 		}
 		else if(identifier.contains("CR0T6")) {
-			
+
 			boolean state = (boolean) value.getValue().getValue();
-			
+
 			if(state) {
-				
+
 				r10 = 0;
 			}
 			else if(r10 == 0 && !(boolean) value.getValue().getValue()) {
-				
+
 				boolean aux;
 				aux = (boolean) value.getValue().getValue();
 				//Main.pr.flag2 = true;
