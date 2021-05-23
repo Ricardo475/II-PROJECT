@@ -131,8 +131,8 @@ public class PathFinder {
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed,trans.quantTotal);
 
 
-		for(int i = 0; i < mchs_available.size();i++)
-			mchs[i].print_machine();
+		//for(int i = 0; i < mchs_available.size();i++)
+		//	mchs[i].print_machine();
 		
 		
 		//
@@ -152,11 +152,17 @@ public class PathFinder {
 						System.out.println("--PIECE GO RIGHT--");
 						res = trans.pathRight;
 						
+						for(int i = 4; i<8; i++) 
+							mchs[i].setToolCodesys(i);
+						
 						for(int i = 0; i<res.length;i++) {
 							if(res[i] == 0) break;
 							
 							mchs[res[i]-1].state = false;
+							
 						}
+					
+						
 						flag_left = false;
 						flag_right = true;
 					}
@@ -178,15 +184,34 @@ public class PathFinder {
 						System.out.println("--PIECE GO LEFT--");
 						
 						res = trans.pathLeft;
-							
+						
 						for(int i = 0; i<res.length;i++) {
 							if(res[i] == 0) break;
-							
+			
 							mchs[res[i]-1].state = false;
+						}	
+						
+						//if(mchs[3].state)
+							mchs[3].changeTool("T1");
+						//if(mchs[2].state)
+							mchs[2].changeTool("T3");
+						//if(mchs[1].state)
+							mchs[1].changeTool("T2");
+						//if(mchs[0].state)
+							mchs[0].changeTool("T1");
+					
+						
+						for(int i = 0; i<4;i++) {
+
+							mchs[i].setToolCodesys(i);
 						}
+						
 						flag_right = false;
 						flag_left = true;	
 					}
+					for(int i= 0; i<4;i++) 
+						mchs[i].print_machine();
+				
 					return res;	
 					
 				}
@@ -288,6 +313,13 @@ public class PathFinder {
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);
 			trans.finTime = trans.exeTime*trans.quantTotal/mchs_available.size();
 			//flag1 = false;
+		}
+		
+		if(trans.quantToBe!=trans.quantTotal && tool_counter>3) {
+			for(int i = 0; i<4;i++) {
+				mchs[i].setToolCodesys(i);
+			}
+			
 		}
 		
 		for(int i = 0; i<res.length;i++) {
