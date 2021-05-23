@@ -143,41 +143,52 @@ public class PathFinder {
 		if(trans_before.getOrderNumber()==trans.getOrderNumber() && tool_counter>3) {
 			
 			if(flag_left) {
-				flag_left = false;
-				flag_right = true;
+				
 		
 				if(trans.pathRight[0]!=0) {
 					
-					System.out.println("--PIECE GO RIGHT--");
-					res = trans.pathRight;
+					
+					if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0) {
+						System.out.println("--PIECE GO RIGHT--");
+						res = trans.pathRight;
 						
-					for(int i = 0; i<res.length;i++) {
-						if(res[i] == 0) break;
+						for(int i = 0; i<res.length;i++) {
+							if(res[i] == 0) break;
 							
-						mchs[res[i]-1].state = false;
-							
+							mchs[res[i]-1].state = false;
+						}
+						flag_left = false;
+						flag_right = true;
 					}
-	
+					
 					return res;
 				}
-				else return buildPathOnRight(trans,tts,divideTransformation);
+				else {
+					flag_left = false;
+					flag_right = true;
+					return buildPathOnRight(trans,tts,divideTransformation);
+				}
 			}
 			
 			else if(flag_right) {
-				flag_right = false;
-				flag_left = true;
-					
+				
+				
 				if(trans.pathLeft[0]!=0) {
-					
-					System.out.println("--PIECE GO LEFT--");
-					res = trans.pathLeft;
+					if((short)Main.opc.get_Value("CL1T4.Oper_Faltam", 2)==0) {
+						System.out.println("--PIECE GO LEFT--");
+						
+						res = trans.pathLeft;
 							
-					for(int i = 0; i<res.length;i++) {
-						if(res[i] == 0) break;
+						for(int i = 0; i<res.length;i++) {
+							if(res[i] == 0) break;
 							
 							mchs[res[i]-1].state = false;
+						}
+						flag_right = false;
+						flag_left = true;	
 					}
-					return res;
+					return res;	
+					
 				}
 
 			}
@@ -345,8 +356,6 @@ public class PathFinder {
 		int[] res =  {0,0,0,0,0,0};
 		String result = "";
 		
-		if(trans.pathRight[0]!=0)
-			return trans.pathRight;
 		
 		ArrayList<Machine> mchs_available = new ArrayList<Machine>();
 		
@@ -409,6 +418,9 @@ public class PathFinder {
 			
 		}
 		
+		if(trans.pathRight[0]!=0 && tool_counter>3)
+			return trans.pathRight;
+		
 		//
 		// TOOLS CHANGES BEFORE THE PATH (mes only)
 		//
@@ -418,7 +430,7 @@ public class PathFinder {
 		//System.out.println("------------------------------------------------------------");
 		pathing_changeToolsMES(tool_counter,mchs_available, toolUsed,trans.quantTotal);
 
-
+/*
 		if(trans.pathRight[0]!=0 && trans.pathRight[0]>=4 &&toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
 			for(int i = 4; i<8;i++) {
@@ -437,7 +449,7 @@ public class PathFinder {
 			}
 			return trans.pathRight;
 		}
-		
+		*/
 	for(int i = 0; i < (divideTransformation.length-1);i++) {
 			
 			boolean already_chosen = false;

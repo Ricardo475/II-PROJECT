@@ -548,7 +548,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[0].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CL1T4.Oper_Faltam", 2)==0) Main.pr.mchs[0].state = state;
 
 		}
 		else if(identifier.contains("CL1T4.Sensor"))
@@ -599,7 +599,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[1].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CL1T3.Oper_Faltam", 2)==0) Main.pr.mchs[1].state = state;
 
 
 		}
@@ -651,7 +651,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[2].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CL1T2.Oper_Faltam", 2)==0) Main.pr.mchs[2].state = state;
 
 
 		}
@@ -703,7 +703,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[3].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CL1T1.Oper_Faltam", 2)==0) Main.pr.mchs[3].state = state;
 
 		}
 		else if(identifier.contains("CL1T1.Sensor"))
@@ -803,7 +803,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[4].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CR1T4.Oper_Faltam", 3)==0) Main.pr.mchs[4].state = state;
 
 		}
 		else if(identifier.contains("CR1T4.Sensor"))
@@ -854,7 +854,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[5].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CR1T3.Oper_Faltam", 3)==0) Main.pr.mchs[5].state = state;
 
 		}
 		else if(identifier.contains("CR1T3.Sensor"))
@@ -905,7 +905,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[6].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CR1T2.Oper_Faltam", 3)==0) Main.pr.mchs[6].state = state;
 
 		}
 		else if(identifier.contains("CR1T2.Sensor"))
@@ -956,7 +956,7 @@ public class OPC_UA {
 				}
 			}
 
-			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue()) Main.pr.mchs[7].state = state;
+			if((boolean) value.getValue().getValue()==state && (boolean) value.getValue().getValue() && (short)this.get_Value("CR1T1.Oper_Faltam", 3)==0) Main.pr.mchs[7].state = state;
 
 		}
 		else if(identifier.contains("CR1T1.Sensor"))
