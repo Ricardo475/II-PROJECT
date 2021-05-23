@@ -40,6 +40,8 @@ public class Erp_connection extends Thread{
 	            running = true;
 		  
 	            InetAddress address = packet.getAddress();
+	            Main.address=address;
+	            System.out.println("ADDRESS: "+address);
 	            int port = packet.getPort();
 	            packet = new DatagramPacket(buf, packet.getLength(), address, port);
 	            String received 

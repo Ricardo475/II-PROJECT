@@ -2,6 +2,7 @@ package mes;
 
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,7 @@ public class Main {
 	static SwingApp sw = new SwingApp();
 	static OrdersState OL=new OrdersState();
 	static int start=(int) System.currentTimeMillis();
+	static InetAddress address;
 	//static DataBase DB = new DataBase();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 

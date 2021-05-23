@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -108,29 +111,34 @@ public class XML_parser {
 						}
 						
 						else if(eElement.getElementsByTagName("Request_Orders").item(0) != null) {
-							String storedOrders = "<Order_Schedule>\n";
-
+							String storedOrders = "<?xml version=\"1.0\"?>\n<Order_Schedule>\n";
+								
 							for(int i1 = 0; i1<OL.OrdersList.size(); i1++) {
 
 								Order order = new Order();
 								order = OL.OrdersList.get(i1);
-
+								
 								storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
 
 								if(order.toString().contains("Transformation")) {
 
-									storedOrders = storedOrders + "Transform From=" + ((Transformação)order).From + " To=" + ((Transformação)order).To + " Quantity=" + ((Transformação)order).quantTotal + " Quantity1=" + ((Transformação)order).quantProcessed + " Quantity2="
-											+ ((Transformação)order).quantExe + "\nQuantity3=" + ((Transformação)order).quantToBe + " Time=" + order.instanteEnviado + " Time1=" + order.instanteChegada + " MaxDelay=" + order.MaxDelay + " Penalty=" + ((Transformação)order).Penalty + " Start=" + ((Transformação)order).exeTime
-											+ "\nEnd=" + ((Transformação)order).finTime + " PenaltyIncurred=" + ((Transformação)order).Penalty + "/>\n";
-
+									storedOrders = storedOrders + "<Transform From=\"" + ((Transformação)order).From + "\" To=\"" + ((Transformação)order).To + "\" Quantity=\"" + ((Transformação)order).quantTotal + "\" Quantity1=\"" + ((Transformação)order).quantProcessed + "\" Quantity2=\""
+											+ ((Transformação)order).quantExe + "\"Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).tobestarted
+											+ "\"End=\"" + ((Transformação)order).finTime + "\" PenaltyIncurred=\"" + ((Transformação)order).Penalty + "\"/>\n";
+									//CreateXMLFile c=new CreateXMLFile((Transformação) order);
+									storedOrders = storedOrders + "</Order>\n";
 								}
 
-								storedOrders = storedOrders + "</Order>\n";
-
+									
 							}
-
 							storedOrders = storedOrders + "</Order_Schedule>";
-							System.out.println(storedOrders);
+							InetAddress addr = Main.address;
+						    DatagramSocket dsock = new DatagramSocket();
+						    byte[] send = storedOrders.getBytes( "UTF-8" );
+						    DatagramPacket data = new DatagramPacket( send, send.length, addr, 54321 );
+						    dsock.send( data );
+							//storedOrders = storedOrders + "</Order_Schedule>";
+							//System.out.println(storedOrders);
 						}
 					
 					}

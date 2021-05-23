@@ -29,10 +29,10 @@ public class DataBase {
 	}
 
 	void StoreOrder_Transformação(Transformação Trans) {
-		String SQL1 = "\nUPDATE \"Ordens_transformacao\" SET \"QuantidadeProduzida\" = " + Trans.quantProcessed + ", \"QuantidadeEmProducao\"= " + Trans.quantExe+",\"QuantidadeAProduzir\"= "+Trans.quantToBe+ ",\"TempoDeSaida\"= "+ Trans.instanteEnviado+",\"TempoFim\"= "+ Trans.finTime+ ",\"PenalidadeAtual\" = "+Trans.PenaltyInc+",\"Done\" = "+Trans.done +",\"ActiveOrder\" = "+Trans.activeOrder+",\"ExeTime\" = "+Trans.exeTime+" WHERE \"IDOrdem\" = "+Trans.orderNumber;
+		String SQL1 = "\nUPDATE \"Ordens_transformacao\" SET \"QuantidadeProduzida\" = " + Trans.quantProcessed + ", \"QuantidadeEmProducao\"= " + Trans.quantExe+",\"QuantidadeAProduzir\"= "+Trans.quantToBe+ ",\"TempoDeSaida\"= "+ Trans.tobestarted+",\"TempoFim\"= "+ Trans.finTime+ ",\"PenalidadeAtual\" = "+Trans.PenaltyInc+",\"Done\" = "+Trans.done +",\"ActiveOrder\" = "+Trans.activeOrder+",\"ExeTime\" = "+Trans.exeTime+" WHERE \"IDOrdem\" = "+Trans.orderNumber;
 		String SQL = "INSERT INTO \"Ordens_transformacao\"" +
-				" (\"IDOrdem\", \"De\", \"Para\", \"QuantTotal\",\"QuantidadeAProduzir\", \"QuantidadeProduzida\", \"QuantidadeEmProducao\", \"TempoDeSaida\", \"TempoDeChegada\", \"MaximoDelay\", \"PenalidadePorDiaDeDelay\",\"TempoFim\",\"PenalidadeAtual\",\"Done\",\"ExeTime\",\"ActiveOrder\") VALUES " +
-				" ("+Trans.orderNumber+",'"+ Trans.From+"','"+ Trans.To+"'," + Trans.quantTotal+","+Trans.quantToBe +","+ Trans.quantProcessed+","+ Trans.quantExe +"," + Trans.instanteEnviado+","+ Trans.instanteChegada +","+Trans.MaxDelay +","+Trans.Penalty+","+Trans.finTime+","+Trans.PenaltyInc+","+Trans.done+","+Trans.exeTime+","+Trans.activeOrder+")";
+				" (\"IDOrdem\", \"De\", \"Para\", \"QuantTotal\",\"QuantidadeAProduzir\", \"QuantidadeProduzida\", \"QuantidadeEmProducao\", \"TempoDeSaida\", \"TempoDeChegada\",\"TempoDeChegadaEfetivo\", \"MaximoDelay\", \"PenalidadePorDiaDeDelay\",\"TempoFim\",\"PenalidadeAtual\",\"Done\",\"ExeTime\",\"ActiveOrder\") VALUES " +
+				" ("+Trans.orderNumber+",'"+ Trans.From+"','"+ Trans.To+"'," + Trans.quantTotal+","+Trans.quantToBe +","+ Trans.quantProcessed+","+ Trans.quantExe +"," + Trans.tobestarted+","+ Trans.instanteEnviado +Trans.instanteChegada+","+Trans.MaxDelay +","+Trans.Penalty+","+Trans.finTime+","+Trans.PenaltyInc+","+Trans.done+","+Trans.exeTime+","+Trans.activeOrder+")";
 		if(this.existeOrderTrans(Trans.orderNumber))
 		{
 			try (Connection conn = connect();
@@ -86,6 +86,7 @@ public class DataBase {
 					int QuantidadeEmProducao= rs.getInt("QuantidadeEmProducao");
 					int TempoDeSaida= rs.getInt("TempoDeSaida");
 					int TempoDeChegada= rs.getInt("TempoDeChegada");
+					int tempoChegadaefetivo= rs.getInt("TempoDeChegadaEfetivo");
 					int MaximoDelay = rs.getInt("MaximoDelay");
 					int Penalidapp  = rs.getInt("PenalidadePorDiaDeDelay");
 					int TempoFim = rs.getInt("TempoFim");
@@ -94,7 +95,7 @@ public class DataBase {
 					int ExeTime = rs.getInt("ExeTime");
 					int QuantTotal=rs.getInt("QuantTotal");
 					boolean ActiveOrder= rs.getBoolean("ActiveOrder");
-					Transformação aux = new Transformação(IDOrdem,de,Para,QuantidadeAProduzir,QuantidadeProduzida,QuantidadeEmProducao,TempoDeSaida,TempoDeChegada,MaximoDelay,Penalidapp,TempoFim,PenalidadeAtual,done,ExeTime,QuantTotal,ActiveOrder);
+					Transformação aux = new Transformação(IDOrdem,de,Para,QuantidadeAProduzir,QuantidadeProduzida,QuantidadeEmProducao,TempoDeSaida,TempoDeChegada,tempoChegadaefetivo,MaximoDelay,Penalidapp,TempoFim,PenalidadeAtual,done,ExeTime,QuantTotal,ActiveOrder);
 					Main.OL.addOrder(aux);
 				}
 			} catch (SQLException e) {

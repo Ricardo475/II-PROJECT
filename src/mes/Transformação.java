@@ -2,12 +2,12 @@ package mes;
 
 public class Transformação extends Order {
 
-	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe;
+	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe,tobestarted;
 	String From,To;
 	int[] pathLeft = {0,0,0,0,0,0};
 	int[] pathRight = {0,0,0,0,0,0};
 	boolean[] toolUsing = {false,false,false};
-	boolean flag;
+	boolean flag,first=true;
 
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
 		super(orderNumber,MaxDelay,Time,timeE);
@@ -19,12 +19,26 @@ public class Transformação extends Order {
 		this.quantProcessed = 0;
 		this.quantExe = 0;
 		this.quantToBe = Quantity;
+		this.tobestarted=0;
 		this.quantTotal = this.quantProcessed + this.quantExe + this.quantToBe;
 		this.flag = false;
 	}
-	public Transformação(int id,String From,String To,int QuantidadeTotal,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
+	public Transformação(int id,String From,String To,int QuantidadeAprouzir,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int tempodechegadaefetiva,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
 	{
-
+		super(id,maximoDelay,TempoDeChegada,tempodechegadaefetiva);
+		this.quantTotal=QuantTotal;
+		this.quantToBe= QuantidadeProduzida;
+		this.quantProcessed=QuantidadeProduzida;
+		this.quantExe=QuantidadeEmproducao;
+		this.tobestarted=tempoDeSaida;
+		this.MaxDelay= maximoDelay;
+		this.Penalty=PenalidadePPD;
+		this.finTime=TempoFim;
+		this.PenaltyInc=PenalidadeAtual;
+		this.done=Done;
+		this.exeTime=ExeTime;
+		this.activeOrder=ActiveOrder;
+		
 	}
 
 	public Transformação() {
@@ -66,6 +80,11 @@ public class Transformação extends Order {
 	}
 	public void doOrder(PathFinder pr)
 	{
+		if(first)
+		{
+			this.tobestarted=((int)System.currentTimeMillis()-Main.start)/1000;
+			first = false;
+		}
 		if(this.existePecas())
 		{
 			if(quantToBe > 0)

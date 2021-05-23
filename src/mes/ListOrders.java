@@ -11,7 +11,11 @@ public class ListOrders extends Order{
 		
 	}
 	
-	
+	public void doOrder(PathFinder pr)
+	{
+		
+		this.done=true;
+	}
 	void setParameters(String from, String to, int quantityTotal,int quantityDone, int quantityRunning, int quantityWaiting,int timeSent, int timeReceived, int maxDelay, int penalty, int startTime, int endTime, int penaltyIncurred) {
 		
 		this.from = from;
