@@ -140,47 +140,43 @@ public class PathFinder {
 		//
 		
 		
-		if(trans_before.getOrderNumber()==trans.getOrderNumber()) {
+		if(trans_before.getOrderNumber()==trans.getOrderNumber() && tool_counter>3) {
 			
 			if(flag_left) {
 				flag_left = false;
 				flag_right = true;
 		
 				if(trans.pathRight[0]!=0) {
-
-					//if(flag2) {
+					
+					System.out.println("--PIECE GO RIGHT--");
+					res = trans.pathRight;
 						
-						res = trans.pathRight;
-						
-						for(int i = 0; i<res.length;i++) {
-							if(res[i] == 0) break;
+					for(int i = 0; i<res.length;i++) {
+						if(res[i] == 0) break;
 							
-							mchs[res[i]-1].state = false;
+						mchs[res[i]-1].state = false;
 							
-						}
+					}
 	
-					//}
 					return res;
 				}
 				else return buildPathOnRight(trans,tts,divideTransformation);
 			}
+			
 			else if(flag_right) {
 				flag_right = false;
 				flag_left = true;
-				
-				
+					
 				if(trans.pathLeft[0]!=0) {
 					
-					//if(flag1) {
+					System.out.println("--PIECE GO LEFT--");
+					res = trans.pathLeft;
 							
-						res = trans.pathLeft;
+					for(int i = 0; i<res.length;i++) {
+						if(res[i] == 0) break;
 							
-						for(int i = 0; i<res.length;i++) {
-							if(res[i] == 0) break;
-							
-								mchs[res[i]-1].state = false;
-						}
-					//}
+							mchs[res[i]-1].state = false;
+					}
 					return res;
 				}
 
@@ -188,7 +184,7 @@ public class PathFinder {
 		}
 		
 
-		
+		/*
 		
 		if(trans.pathLeft[0]!=0 && trans.pathLeft[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
 			//System.out.println("Hello!");
@@ -214,6 +210,7 @@ public class PathFinder {
 		}
 			
 		
+		*/
 		
 		//
 		// PATHFINDER
@@ -232,7 +229,6 @@ public class PathFinder {
 					
 					for(int k = 0; k < tts.length; k++) {
 						
-						//System.out.println("oasiçlfhsauoafshuofasghfuoasghfoaisfhasoIFasoiufahoIFHagiofagifhail");
 						if(tts[k].existsTranformationInTable(divideTransformation[i], divideTransformation[i+1])) {
 							
 							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
@@ -263,19 +259,19 @@ public class PathFinder {
 				}
 				
 				
-				res[0] = 0;
-				res[1] = 0;
-				res[2] = 0;
-				res[3] = 0;
-				res[4] = 0;
-				res[5] = 0;
+				//res[0] = 0;
+				//res[1] = 0;
+				//res[2] = 0;
+				//res[3] = 0;
+				//res[4] = 0;
+				//res[5] = 0;
 				
-				//res = buildPathOnRight(trans,tts,divideTransformation);
+				res = buildPathOnRight(trans,tts,divideTransformation);
 				return res;
 			}
 		}
 	
-		if(trans.quantToBe==trans.quantTotal) {
+		if(trans.quantToBe==trans.quantTotal && res[0]!=0) {
 			
 			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);
@@ -496,7 +492,7 @@ public class PathFinder {
 			}
 		}
 
-		if(trans.quantToBe==trans.quantTotal) {
+		if(trans.quantToBe==trans.quantTotal && res[0]!=0) {
 			
 			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);

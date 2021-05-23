@@ -70,16 +70,13 @@ public class Transformação extends Order {
 		{
 			if(quantToBe > 0)
 			{
-				//this.SelectPath();
-
-				//System.out.println("Quant: "+quantToBe);
-				//System.out.println("Quant: "+quantTotal);
+				
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
 				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println(this.quantToBe);
 				String aux2 =this.convert(aux);
-				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0)) {
+				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0) && quantToBe>0) {
 					if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 					{
 						Side = "L";
@@ -129,16 +126,13 @@ public class Transformação extends Order {
 					}
 
 					if(flag) {
-						//quantTotal--;
 						quantToBe--;
 						quantExe++;
-						//System.out.println(this.From);
-						//pr.sys.decreasePieces(this.From);
 						flag = false;
 					}
 
 					try {
-						Thread.sleep(2000);
+						Thread.sleep(4000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
