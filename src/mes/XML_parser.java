@@ -94,7 +94,7 @@ public class XML_parser {
 							//System.out.println(xml);
 							Order n= new Order(0,0,0,0);
 							OL.addOrder(n);
-							String storedMessage = "<Current_Stores>";
+							String storedMessage = "<?xml version=\"1.0\"?>\n<Current_Stores>";
 
 							for(int i1 = 0; i1<9;i1++) {
 
@@ -107,6 +107,11 @@ public class XML_parser {
 							}
 							storedMessage = storedMessage + "\n" + "</Current_Stores>";
 							System.out.println(storedMessage);
+							InetAddress addr = Main.address;
+						    DatagramSocket dsock = new DatagramSocket();
+						    byte[] send = storedMessage.getBytes( "UTF-8" );
+						    DatagramPacket data = new DatagramPacket( send, send.length, addr, 54321 );
+						    dsock.send( data );
 
 						}
 						

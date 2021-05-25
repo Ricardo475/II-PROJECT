@@ -32,7 +32,7 @@ public class DataBase {
 		String SQL1 = "\nUPDATE \"Ordens_transformacao\" SET \"QuantidadeProduzida\" = " + Trans.quantProcessed + ", \"QuantidadeEmProducao\"= " + Trans.quantExe+",\"QuantidadeAProduzir\"= "+Trans.quantToBe+ ",\"TempoDeSaida\"= "+ Trans.tobestarted+",\"TempoFim\"= "+ Trans.finTime+ ",\"PenalidadeAtual\" = "+Trans.PenaltyInc+",\"Done\" = "+Trans.done +",\"ActiveOrder\" = "+Trans.activeOrder+",\"ExeTime\" = "+Trans.exeTime+" WHERE \"IDOrdem\" = "+Trans.orderNumber;
 		String SQL = "INSERT INTO \"Ordens_transformacao\"" +
 				" (\"IDOrdem\", \"De\", \"Para\", \"QuantTotal\",\"QuantidadeAProduzir\", \"QuantidadeProduzida\", \"QuantidadeEmProducao\", \"TempoDeSaida\", \"TempoDeChegada\",\"TempoDeChegadaEfetivo\", \"MaximoDelay\", \"PenalidadePorDiaDeDelay\",\"TempoFim\",\"PenalidadeAtual\",\"Done\",\"ExeTime\",\"ActiveOrder\") VALUES " +
-				" ("+Trans.orderNumber+",'"+ Trans.From+"','"+ Trans.To+"'," + Trans.quantTotal+","+Trans.quantToBe +","+ Trans.quantProcessed+","+ Trans.quantExe +"," + Trans.tobestarted+","+ Trans.instanteEnviado +Trans.instanteChegada+","+Trans.MaxDelay +","+Trans.Penalty+","+Trans.finTime+","+Trans.PenaltyInc+","+Trans.done+","+Trans.exeTime+","+Trans.activeOrder+")";
+				" ("+Trans.orderNumber+",'"+ Trans.From+"','"+ Trans.To+"'," + Trans.quantTotal+","+Trans.quantToBe +","+ Trans.quantProcessed+","+ Trans.quantExe +"," + Trans.tobestarted+","+ Trans.instanteEnviado+"," +Trans.instanteChegada+","+Trans.MaxDelay +","+Trans.Penalty+","+Trans.finTime+","+Trans.PenaltyInc+","+Trans.done+","+Trans.exeTime+","+Trans.activeOrder+")";
 		if(this.existeOrderTrans(Trans.orderNumber))
 		{
 			try (Connection conn = connect();

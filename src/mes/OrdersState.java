@@ -63,7 +63,7 @@ public class OrdersState {
 	{
 
 
-		int i = -1,prazo=1000;
+		int i = -1,prazo=1000000;
 		for(int j=0;j<this.LengthOrderList();j++)
 		{
 			if(OrdersList.get(j).done==false )
@@ -72,6 +72,22 @@ public class OrdersState {
 				{
 					prazo=OrdersList.get(j).PrazoEntrega();
 					i=j;
+				}
+			}
+		}
+		if(OrdersList.get(i).getClass().toString().contains("Transformação"))
+		{
+			prazo=OrdersList.get(i).PrazoEntrega()*1/(((Transformação)OrdersList.get(i)).Penalty/50);
+			for(int j=0;j<this.LengthOrderList();j++)
+			{
+				if(OrdersList.get(j).done==false )
+				{
+					System.out.println("\n ORDER: "+OrdersList.get(j).orderNumber+" Prazo "+OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)+ " compare "+ prazo);
+					if(OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)<prazo)
+					{
+						prazo=OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50);
+						i=j;
+					}
 				}
 			}
 		}

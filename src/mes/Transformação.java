@@ -116,7 +116,12 @@ public class Transformação extends Order {
 						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
 					}
 
-
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//boolean before_flag = flag;
 					if(Side.equals("L"))
 					{
@@ -188,5 +193,16 @@ public class Transformação extends Order {
 			return true;
 		}
 		return false;
+	}
+	
+
+	public int compareTo(Transformação o) {
+		
+		if(this.equals(o))
+			return 0;
+		else if (this.PrazoEntrega()+1/(this.Penalty/50) > o.PrazoEntrega()+1/(o.Penalty/50))
+			return 1;
+		else
+			return -1;
 	}
 }
