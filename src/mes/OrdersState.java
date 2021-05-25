@@ -34,15 +34,15 @@ public class OrdersState {
 			o_aux = OrdersList.get(i);
 			pqOrdem.add(o_aux);
 		}
-
+		
 		while(!pqOrdem.isEmpty()) {
 
 			Order o_aux = pqOrdem.poll();
+			
 			aux.add(o_aux);
 		}
 		//Main.DB.storeOrder(order);
 		OrdersList = aux;
-		//this.RunningOrders = OrdersList.size();
 	}
 
 
@@ -206,6 +206,53 @@ public class OrdersState {
 		}
 		else
 			return null;
+	}
+
+
+	public void organizeTimes(Transformação trans) {
+		
+		int endTime_running = 0;
+		for(int i = 0; i < this.LengthOrderList(); i++) {
+			
+			Order o = this.OrdersList.get(i);
+			
+			if(!o.done) {
+				
+				if(o.toString().contains("Transformation") ) {
+					
+					if(o.getOrderNumber() == trans.getOrderNumber()) {
+						endTime_running = trans.finTime;
+						//System.out.println("TESTE TEMPOS: ORDER Nº " + o.getOrderNumber() + "|| TIME:" + endTime_running + "|| INTERATION: " + i);
+						continue;
+					}	
+					
+					else if(!o.activeOrder) {
+						
+						((Transformação)o).startTime = (int) (endTime_running*0.6);
+						((Transformação)o).finTime = (int) (endTime_running + ((Transformação)o).quantTotal*7.5);
+						endTime_running = ((Transformação)o).finTime;
+						//System.out.println("UPDATED TIME: " + ((Transformação)o).exeTime);
+					
+					}
+					
+					else if(o.activeOrder) {			
+						((Transformação)o).finTime = (int) (endTime_running + ((Transformação)o).quantTotal*7.5);
+						endTime_running = ((Transformação)o).finTime;
+					}
+					
+					
+				}
+				
+				
+			}
+
+				
+				
+			
+			
+			
+		}
+		
 	}
 
 }
