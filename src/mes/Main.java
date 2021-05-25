@@ -2,6 +2,7 @@ package mes;
 
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.sql.SQLException;
@@ -22,7 +23,9 @@ public class Main {
 	static SwingApp sw = new SwingApp();
 	static OrdersState OL=new OrdersState();
 	static int start=(int) System.currentTimeMillis();
-	static InetAddress address;
+	static    DatagramPacket packet;
+	static 	Erp_connection Erp ;
+	static XML_parser parse;
 	//static DataBase DB = new DataBase();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 
@@ -138,8 +141,9 @@ public class Main {
 		pr.trans_before.orderNumber = -1;
 		int l=0;
 		String ordem="aaa";
-		XML_parser parse=new XML_parser();
-		Erp_connection Erp =new Erp_connection(OL);
+		Erp=new Erp_connection(OL);
+		parse=new XML_parser();
+	
 
 
 		Erp.start();
@@ -147,10 +151,11 @@ public class Main {
 
 		Order prio = new Order(0,0,0,0);
 
-
+		
 		//System.out.println(opc.get_Value("int_var"));
 		for(int i=1;i>0;i++)
 		{
+			
 			String aux=Erp.getXML();
 			//System.out.println(i);
 
@@ -158,9 +163,7 @@ public class Main {
 			if(!aux.equals(ordem))
 			{	
 				ordem=aux;
-				int duration= (((int)System.currentTimeMillis()-start)/1000);
-				//System.out.println(duration);
-				parse.parse(ordem, OL,duration);
+				
 				System.out.println("------------------------------------------------------------");
 
 			}
@@ -188,7 +191,7 @@ public class Main {
 				}
 			}
 			Thread.sleep(1000);
-
+			
 		}
 
 

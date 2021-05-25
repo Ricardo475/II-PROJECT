@@ -75,24 +75,25 @@ public class OrdersState {
 				}
 			}
 		}
-		if(OrdersList.get(i).getClass().toString().contains("Transformação"))
+		
+		if(i!=-1)
 		{
-			prazo=OrdersList.get(i).PrazoEntrega()*1/(((Transformação)OrdersList.get(i)).Penalty/50);
-			for(int j=0;j<this.LengthOrderList();j++)
+			if(OrdersList.get(i).getClass().toString().contains("Transformação"))
 			{
-				if(OrdersList.get(j).done==false )
+				prazo=OrdersList.get(i).PrazoEntrega()*1/(((Transformação)OrdersList.get(i)).Penalty/50);
+				for(int j=0;j<this.LengthOrderList();j++)
 				{
-					System.out.println("\n ORDER: "+OrdersList.get(j).orderNumber+" Prazo "+OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)+ " compare "+ prazo);
-					if(OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)<prazo)
+					if(OrdersList.get(j).done==false )
 					{
-						prazo=OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50);
-						i=j;
+						System.out.println("\n ORDER: "+OrdersList.get(j).orderNumber+" Prazo "+OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)+ " compare "+ prazo);
+						if(OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)<prazo)
+						{
+							prazo=OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50);
+							i=j;
+						}
 					}
 				}
 			}
-		}
-		if(i!=-1)
-		{
 			if(OrdersList.get(i).existePecas())
 			{
 				//System.out.println("SUPP333");

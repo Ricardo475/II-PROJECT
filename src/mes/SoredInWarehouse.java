@@ -21,7 +21,7 @@ public class SoredInWarehouse extends Order{
 	
 	public String sendResponse(int orderNumber,String pieceType ,SystemState system) {
 		
-		String result = "<WordPiece type=";
+		String result = "<WorkPiece type=";
 		
 		this.setPieceType(pieceType);
 		
@@ -54,7 +54,7 @@ public class SoredInWarehouse extends Order{
 		
 		else return "DOESNT EXIST";
 		
-		result = result + this.pieceType + " quantity=" + this.quantity + "/>";
+		result = result + "\""+ this.pieceType + "\" quantity=\"" + this.quantity + "\"/>\r\n";
 		
 		
 		return result;
