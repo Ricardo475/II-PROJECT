@@ -359,11 +359,11 @@ public class SwingApp implements Runnable{
 						else v.add("Waiting");
 						
 						v.add(o.instanteChegada);
-						v.add(((Transformação)o).exeTime);
+						v.add(((Transformação)o).startTime);
 						v.add(((Transformação)o).From);
 						v.add(((Transformação)o).To);
 						v.add(((Transformação)o).finTime);
-						v.add(((Transformação)o).MaxDelay);
+						v.add(((Transformação)o).deadline);
 						v.add(((Transformação)o).quantProcessed);
 						v.add(((Transformação)o).quantExe);
 						v.add(((Transformação)o).quantToBe);
@@ -432,14 +432,14 @@ public class SwingApp implements Runnable{
 								//System.out.println(tableTrans.getValueAt(j, 1) + " to RUNNING");
 								tableTrans.setValueAt("Running", j, 1);
 							}
-							else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.done){
+							else if((tableTrans.getValueAt(j, 1)=="Waiting" || tableTrans.getValueAt(j, 1)=="Running") && o.done && ((Transformação)o).flagEnd){
 								//System.out.println(tableTrans.getValueAt(j, 1) + " to DONE");
 								tableTrans.setValueAt("Done", j, 1);		
 							}
 							
 							
 							
-							tableTrans.setValueAt(((Transformação)o).exeTime, j, 3);
+							tableTrans.setValueAt(((Transformação)o).startTime, j, 3);
 							tableTrans.setValueAt(((Transformação)o).finTime, j, 6);
 							tableTrans.setValueAt(((Transformação)o).quantProcessed,j,8);
 							tableTrans.setValueAt(((Transformação)o).quantExe,j,9);

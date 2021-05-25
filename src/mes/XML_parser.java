@@ -61,9 +61,8 @@ public class XML_parser {
 							int Time = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Time").getTextContent());
 							int MaxDelay = Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("MaxDelay").getTextContent());
 							int Penalty =Integer.valueOf(eElement.getElementsByTagName("Transform").item(0).getAttributes().getNamedItem("Penalty").getTextContent());
-							Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay+(((int)System.currentTimeMillis()-Main.start)/1000),Penalty,timeE);
+							Transformação trans= new Transformação(Number,From,To,Quant,Time,MaxDelay,Penalty,timeE);
 							OL.addOrder(trans);
-							//Main.pr.buildPathTransformation(trans,Main.tts);
 						}
 						else if(eElement.getElementsByTagName("Unload").item(0) != null)
 						{
@@ -74,6 +73,7 @@ public class XML_parser {
 							System.out.println(Number + " " + Type + " " + Dest + " " + Quant);
 							Unloading u = new Unloading(Number, Type ,Dest,Quant);
 							OL.addOrder(u);
+							
 						}
 						
 					}
@@ -127,7 +127,7 @@ public class XML_parser {
 								if(order.toString().contains("Transformation")) {
 
 									storedOrders = storedOrders + "<Transform From=\"" + ((Transformação)order).From + "\" To=\"" + ((Transformação)order).To + "\" Quantity=\"" + ((Transformação)order).quantTotal + "\" Quantity1=\"" + ((Transformação)order).quantProcessed + "\" Quantity2=\""
-											+ ((Transformação)order).quantExe + "\" Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).tobestarted
+											+ ((Transformação)order).quantExe + "\" Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).startTime
 											+ "\" End=\"" + ((Transformação)order).finTime + "\" PenaltyIncurred=\"" + ((Transformação)order).PenaltyInc + "\"/>\r\n";
 									//CreateXMLFile c=new CreateXMLFile((Transformação) order);
 									storedOrders = storedOrders + "</Order>\r\n";

@@ -2,26 +2,29 @@ package mes;
 
 public class Transformação extends Order {
 
-	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe,tobestarted;
+	int quantTotal,Penalty,PenaltyInc,exeTime,finTime,quantProcessed,quantExe,quantToBe,startTime;
 	String From,To;
 	int[] pathLeft = {0,0,0,0,0,0};
 	int[] pathRight = {0,0,0,0,0,0};
 	boolean[] toolUsing = {false,false,false};
 	boolean flag,first=true;
-
+	boolean flagEnd = false;
+	int deadline;
+	
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
 		super(orderNumber,MaxDelay,Time,timeE);
 		this.From=From;
 		this.To=to;
-		this.Penalty=Penalty;
-		this.exeTime = 0;
-		this.finTime = exeTime*quantTotal;
 		this.quantProcessed = 0;
 		this.quantExe = 0;
 		this.quantToBe = Quantity;
-		this.tobestarted=0;
 		this.quantTotal = this.quantProcessed + this.quantExe + this.quantToBe;
+		this.Penalty=Penalty;
+		this.exeTime = 0;
+		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000)*Quantity/8;
 		this.flag = false;
+		this.deadline = timeE + MaxDelay;
+		this.startTime=0;
 	}
 	public Transformação(int id,String From,String To,int QuantidadeAprouzir,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int tempodechegadaefetiva,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
 	{
@@ -30,7 +33,7 @@ public class Transformação extends Order {
 		this.quantToBe= QuantidadeProduzida;
 		this.quantProcessed=QuantidadeProduzida;
 		this.quantExe=QuantidadeEmproducao;
-		this.tobestarted=tempoDeSaida;
+		this.startTime=tempoDeSaida;
 		this.MaxDelay= maximoDelay;
 		this.Penalty=PenalidadePPD;
 		this.finTime=TempoFim;
@@ -59,8 +62,9 @@ public class Transformação extends Order {
 		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000);
 		if(finTime > this.MaxDelay)
 		{
-			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-MaxDelay)/50);
+			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
 		}
+		flagEnd = true;
 	}
 	@Override
 	public String toString()
@@ -82,7 +86,7 @@ public class Transformação extends Order {
 	{
 		if(first)
 		{
-			this.tobestarted=((int)System.currentTimeMillis()-Main.start)/1000;
+			this.startTime=((int)System.currentTimeMillis()-Main.start)/1000;
 			first = false;
 		}
 		if(this.existePecas())
@@ -92,10 +96,14 @@ public class Transformação extends Order {
 				
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
+				//int[] aux = {0,0,0,0,0,0};
 				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println(this.quantToBe);
 				String aux2 =this.convert(aux);
 				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0) && quantToBe>0) {
+					Main.OL.organizeTimes(this);
+
+
 					if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 					{
 						Side = "L";
@@ -168,7 +176,10 @@ public class Transformação extends Order {
 						this.orderDisactivate();
 						//pr.sys.increasePieces(this.To,this.quantTotal);  
 						this.done=true;
-						System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");}
+						System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");
+					}
+					
+
 				}
 			}
 		}

@@ -14,6 +14,7 @@ public class PathFinder {
 	boolean flag_right = false;
 	//boolean flag1 = true;
 	//boolean flag2 = true;
+	int counter_flags = 0;
 	
 	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
 		
@@ -162,10 +163,31 @@ public class PathFinder {
 							
 						}
 					
+						mchs[7].changeTool("T1");
+						mchs[6].changeTool("T3");
+						mchs[5].changeTool("T2");
+						mchs[4].changeTool("T1");
+						
+						for(int i = 4; i<8;i++) {
+
+							mchs[i].setToolCodesys(i);
+						}
 						
 						flag_left = false;
 						flag_right = true;
 					}
+					if(counter_flags == 3) {
+						flag_left = false;
+						flag_right = true;
+						counter_flags = 0;
+					}
+					if(res[0] == 0) {
+						counter_flags++;
+					}
+					else {
+						counter_flags = 0;
+					}
+					
 					
 					return res;
 				}
@@ -191,13 +213,9 @@ public class PathFinder {
 							mchs[res[i]-1].state = false;
 						}	
 						
-						//if(mchs[3].state)
 							mchs[3].changeTool("T1");
-						//if(mchs[2].state)
 							mchs[2].changeTool("T3");
-						//if(mchs[1].state)
 							mchs[1].changeTool("T2");
-						//if(mchs[0].state)
 							mchs[0].changeTool("T1");
 					
 						
@@ -209,6 +227,19 @@ public class PathFinder {
 						flag_right = false;
 						flag_left = true;	
 					}
+					
+					if(counter_flags == 3) {
+						flag_right = false;
+						flag_left = true;
+						counter_flags = 0;
+					}
+					if(res[0] == 0) {
+						counter_flags++;
+					}
+					else {
+						counter_flags = 0;
+					}
+					
 					for(int i= 0; i<4;i++) 
 						mchs[i].print_machine();
 				
@@ -309,9 +340,9 @@ public class PathFinder {
 	
 		if(trans.quantToBe==trans.quantTotal && res[0]!=0) {
 			
-			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
+			trans.exeTime = counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);
-			trans.finTime = trans.exeTime*trans.quantTotal/mchs_available.size();
+			trans.finTime = (int) ((trans.startTime + trans.exeTime*trans.quantTotal*(divideTransformation.length)*0.6/8));
 			//flag1 = false;
 		}
 		
@@ -540,7 +571,7 @@ public class PathFinder {
 			
 			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);
-			trans.finTime = trans.exeTime*trans.quantTotal/mchs_available.size();
+			trans.finTime = (int) ((trans.startTime + trans.exeTime*trans.quantTotal*(divideTransformation.length)*0.6/8));
 			//flag2 = false;
 		}
 		

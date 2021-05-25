@@ -177,7 +177,7 @@ public class Main {
 				{
 					prio.orderActivate();
 					//System.out.println("OLA");
-					//DB.storeOrder(prio);
+					//DB.storeOrder(prio);	
 					prio.doOrder(pr);
 					l=0;
 				}
