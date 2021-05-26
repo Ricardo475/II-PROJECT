@@ -33,7 +33,6 @@ public class Machine {
 	{
 		this.machineID = id;
 		this.tool = tool;
-		this.state = true;
 		this.totalOperatingTime = Temp;
 		this.nP1 = p1;
 		this.nP2 = p2;

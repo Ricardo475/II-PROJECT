@@ -175,7 +175,7 @@ public class Main {
 				prio=OL.OrdemPrioritária();
 				if(prio != null)
 				{
-					System.out.println(prio.orderNumber);
+					
 					prio.orderActivate();
 					//System.out.println("OLA");
 					DB.storeOrder(prio);	

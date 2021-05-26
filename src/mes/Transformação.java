@@ -26,13 +26,13 @@ public class Transformação extends Order {
 		this.deadline = timeE + MaxDelay;
 		this.startTime=0;
 	}
-	public Transformação(int id,String From,String To,int QuantidadeAprouzir,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int tempodechegadaefetiva,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
+	public Transformação(int id,String From,String To,int QuantidadeAproduzir,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int tempodechegadaefetiva,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
 	{
 		super(id,maximoDelay,TempoDeChegada,tempodechegadaefetiva);
 		this.From=From;
 		this.To= To;
 		this.quantTotal=QuantTotal;
-		this.quantToBe= QuantidadeProduzida;
+		this.quantToBe= QuantidadeAproduzir;
 		this.quantProcessed=QuantidadeProduzida;
 		this.quantExe=QuantidadeEmproducao;
 		this.startTime=tempoDeSaida;
@@ -43,6 +43,11 @@ public class Transformação extends Order {
 		this.exeTime=ExeTime;
 		this.activeOrder=ActiveOrder;
 		this.deadline = maximoDelay + tempodechegadaefetiva;
+		if(this.quantToBe!= this.quantTotal)
+		{
+			this.first=false;
+		}
+		
 	}
 
 	public Transformação() {
@@ -85,16 +90,19 @@ public class Transformação extends Order {
 	}
 	public void doOrder(PathFinder pr)
 	{
+		System.out.println("OLA");
 		if(first)
 		{
+			System.out.println("OLA3");
 			this.startTime=((int)System.currentTimeMillis()-Main.start)/1000;
 			first = false;
 		}
 		if(this.existePecas())
 		{
-			if(quantToBe > 0)
+			
+			if(this.quantToBe > 0)
 			{
-				
+				System.out.println("OLA3");
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
 				//int[] aux = {0,0,0,0,0,0};
