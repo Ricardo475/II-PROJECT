@@ -1,5 +1,7 @@
 package mes;
 
+import org.eclipse.milo.opcua.stack.core.types.structured.MonitoredItemNotification.MonitoredItemNotificationBuilder;
+
 public class Pusher {
 	
 	int totalPieces_unloaded, p1Pieces_unloaded, p2Pieces_unloaded, p3Pieces_unloaded, p4Pieces_unloaded, p5Pieces_unloaded, p6Pieces_unloaded, p7Pieces_unloaded, p8Pieces_unloaded, p9Pieces_unloaded;
@@ -20,7 +22,7 @@ public class Pusher {
 		this.p9Pieces_unloaded = 0;
 		this.totalPieces_unloaded = 0;
 		//this.piecesInRoller = 0;
-		//Main.DB.store_pusher(this);
+		Main.DB.store_pusher(this);
 	}
 	public Pusher()
 	{
@@ -39,6 +41,7 @@ public class Pusher {
 		this.p8Pieces_unloaded = p8;
 		this.p9Pieces_unloaded = p9;
 		this.totalPieces_unloaded = p1+p2+p3+p4+p5+p6+p7+p8+p9;
+		Main.DB.store_pusher(this);
 	}
 	public void setPusher(Short[] s)
 	{
@@ -53,7 +56,7 @@ public class Pusher {
 		this.p8Pieces_unloaded = s[8];
 		this.p9Pieces_unloaded = s[9];
 		this.totalPieces_unloaded = s[1]+s[2]+s[3]+s[4]+s[5]+s[6]+s[7]+s[8]+s[9];
-		//Main.DB.store_pusher(this);
+		Main.DB.store_pusher(this);
 	}
 	public void print_Pusher() {
 		
@@ -73,7 +76,7 @@ public class Pusher {
 		else if(pieceType == "P9") p9Pieces_unloaded++;
 		
 		totalPieces_unloaded++;
-		//Main.DB.store_pusher(this);
+		Main.DB.store_pusher(this);
 		//piecesInRoller++;
 	}
 	

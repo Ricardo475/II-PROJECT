@@ -1,6 +1,11 @@
 package mes;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,10 +23,10 @@ import org.w3c.dom.Element;
 
 public class CreateXMLFile {
 
-	public CreateXMLFile(Transformação trans) {
+	public CreateXMLFile(Transformação trans) throws IOException {
 		try {
 			 
-			String filePath="C:\4ano\ficheiro.xml";
+			String filePath="C:\\4ano\\2_semestre\\II\\ficheiro.xml";
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
  
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -128,8 +133,13 @@ public class CreateXMLFile {
             // You can use that for debugging 
 
             transformer.transform(domSource, streamResult);
-            String text = streamResult.getOutputStream().toString();
-           System.out.println("\nAQUI: \n" +text+"\n END\n");
+            byte[] buf = Files.readAllBytes(Paths.get(filePath));
+            DatagramSocket dsock = new DatagramSocket();
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, Main.packet.getAddress(), Main.packet.getPort());
+          
+            dsock.send(packet);
+            dsock.close();
+            System.out.println("\nAQUI: \n" +buf.toString()+"\n END\n");
             System.out.println("Done creating XML File");
  
         } catch (ParserConfigurationException pce) {

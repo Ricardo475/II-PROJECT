@@ -94,7 +94,7 @@ public class XML_parser {
 							//System.out.println(xml);
 							Order n= new Order(0,0,0,0);
 							OL.addOrder(n);
-							String storedMessage = "<?xml version=\"1.0\"?>\n<Current_Stores>";
+							String storedMessage = "<?xml version=\"1.0\"?>\r\n<Current_Stores>\r\n";
 
 							for(int i1 = 0; i1<9;i1++) {
 
@@ -102,55 +102,54 @@ public class XML_parser {
 								siw[i1] = new SoredInWarehouse(i1);
 
 								if( siw[i1].sendResponse(i1,"P" + pNumber,Main.pr.sys).compareTo("DOESNT EXIST")!=0)
-									storedMessage = storedMessage + "\n" + siw[i1].sendResponse(i1,"P" + pNumber,Main.pr.sys);	
+									storedMessage = storedMessage + siw[i1].sendResponse(i1,"P" + pNumber,Main.pr.sys);	
 
 							}
-							storedMessage = storedMessage + "\n" + "</Current_Stores>";
+							storedMessage = storedMessage + "</Current_Stores>";												   
+						    byte[] send = storedMessage.getBytes();
+						    System.out.println( InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()) + "PORT: "+Main.packet.getPort());
+						    DatagramPacket data = new DatagramPacket( send, send.length, Main.packet.getAddress(),Main.packet.getPort());
+						    Main.Erp.socket.send(data);
 							System.out.println(storedMessage);
-							InetAddress addr = Main.address;
-						    DatagramSocket dsock = new DatagramSocket();
-						    byte[] send = storedMessage.getBytes( "UTF-8" );
-						    DatagramPacket data = new DatagramPacket( send, send.length, addr, 54321 );
-						    dsock.send( data );
 
 						}
 						
 						else if(eElement.getElementsByTagName("Request_Orders").item(0) != null) {
-							String storedOrders = "<?xml version=\"1.0\"?>\n<Order_Schedule>\n";
+							String storedOrders = "<?xml version=\"1.0\"?>\r\n<Order_Schedule>\r\n";
 								
 							for(int i1 = 0; i1<OL.OrdersList.size(); i1++) {
 
 								Order order = new Order();
 								order = OL.OrdersList.get(i1);
 								
-								storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() + "\n";
+								storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() +">"+ "\n";
 
 								if(order.toString().contains("Transformation")) {
 
 									storedOrders = storedOrders + "<Transform From=\"" + ((Transformação)order).From + "\" To=\"" + ((Transformação)order).To + "\" Quantity=\"" + ((Transformação)order).quantTotal + "\" Quantity1=\"" + ((Transformação)order).quantProcessed + "\" Quantity2=\""
-											+ ((Transformação)order).quantExe + "\"Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).startTime
-											+ "\"End=\"" + ((Transformação)order).finTime + "\" PenaltyIncurred=\"" + ((Transformação)order).Penalty + "\"/>\n";
+											+ ((Transformação)order).quantExe + "\" Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).startTime
+											+ "\" End=\"" + ((Transformação)order).finTime + "\" PenaltyIncurred=\"" + ((Transformação)order).PenaltyInc + "\"/>\r\n";
 									//CreateXMLFile c=new CreateXMLFile((Transformação) order);
-									storedOrders = storedOrders + "</Order>\n";
+									storedOrders = storedOrders + "</Order>\r\n";
 								}
 
 									
 							}
-							storedOrders = storedOrders + "</Order_Schedule>";
-							InetAddress addr = Main.address;
-						    DatagramSocket dsock = new DatagramSocket();
-						    byte[] send = storedOrders.getBytes( "UTF-8" );
-						    DatagramPacket data = new DatagramPacket( send, send.length, addr, 54321 );
-						    dsock.send( data );
-							//storedOrders = storedOrders + "</Order_Schedule>";
-							//System.out.println(storedOrders);
+							storedOrders = storedOrders + "</Order_Schedule>";						  
+						    byte[] send = storedOrders.getBytes();
+						    System.out.println( InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()) + "PORT: "+Main.packet.getPort());
+						    DatagramPacket data = new DatagramPacket( send, send.length, Main.packet.getAddress(),Main.packet.getPort());
+					   
+						    Main.Erp.socket.send(data);
+						    
+							System.out.println(storedOrders);
 						}
 					
 					}
 				}
 			}
 		}
-		else System.out.println(xml);
+		else System.out.println("BUG:" + xml);
 
 	}
 }

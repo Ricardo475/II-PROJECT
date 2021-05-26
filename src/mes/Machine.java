@@ -33,7 +33,6 @@ public class Machine {
 	{
 		this.machineID = id;
 		this.tool = tool;
-		this.state = true;
 		this.totalOperatingTime = Temp;
 		this.nP1 = p1;
 		this.nP2 = p2;
@@ -58,7 +57,7 @@ public class Machine {
 	public void changeTool(String toolNeeded) {
 		
 		this.tool = toolNeeded;
-		//Main.DB.store_maquina(this);
+		Main.DB.store_maquina(this);
 	}
 	
 	public void setToolCodesys(int id) {
@@ -72,7 +71,7 @@ public class Machine {
 	public void updateTime(int time) {
 		
 		this.totalOperatingTime =time;
-		//Main.DB.store_maquina(this);
+		Main.DB.store_maquina(this);
 	}
 
 	public void updateOperatedPieces(Short [] piecesOperated) {
