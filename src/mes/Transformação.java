@@ -29,19 +29,20 @@ public class Transformação extends Order {
 	public Transformação(int id,String From,String To,int QuantidadeAprouzir,int QuantidadeProduzida,int QuantidadeEmproducao,int tempoDeSaida,int TempoDeChegada,int tempodechegadaefetiva,int maximoDelay, int PenalidadePPD,int TempoFim,int PenalidadeAtual,boolean Done,int ExeTime,int QuantTotal,boolean ActiveOrder)
 	{
 		super(id,maximoDelay,TempoDeChegada,tempodechegadaefetiva);
+		this.From=From;
+		this.To= To;
 		this.quantTotal=QuantTotal;
 		this.quantToBe= QuantidadeProduzida;
 		this.quantProcessed=QuantidadeProduzida;
 		this.quantExe=QuantidadeEmproducao;
 		this.startTime=tempoDeSaida;
-		this.MaxDelay= maximoDelay;
 		this.Penalty=PenalidadePPD;
 		this.finTime=TempoFim;
 		this.PenaltyInc=PenalidadeAtual;
 		this.done=Done;
 		this.exeTime=ExeTime;
 		this.activeOrder=ActiveOrder;
-		
+		this.deadline = maximoDelay + tempodechegadaefetiva;
 	}
 
 	public Transformação() {

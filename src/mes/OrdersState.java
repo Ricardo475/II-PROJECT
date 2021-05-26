@@ -41,7 +41,7 @@ public class OrdersState {
 			
 			aux.add(o_aux);
 		}
-		//Main.DB.storeOrder(order);
+		Main.DB.storeOrder(order);
 		OrdersList = aux;
 	}
 
@@ -85,7 +85,7 @@ public class OrdersState {
 				{
 					if(OrdersList.get(j).done==false )
 					{
-						System.out.println("\n ORDER: "+OrdersList.get(j).orderNumber+" Prazo "+OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)+ " compare "+ prazo);
+						//System.out.println("\n ORDER: "+OrdersList.get(j).orderNumber+" Prazo "+OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)+ " compare "+ prazo);
 						if(OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50)<prazo)
 						{
 							prazo=OrdersList.get(j).PrazoEntrega()*1/(((Transformação)OrdersList.get(j)).Penalty/50);
@@ -166,7 +166,7 @@ public class OrdersState {
 			if(this.OrdersList.get(i).orderNumber == ID)
 			{
 				this.OrdersList.get(i).pecaProcessada();
-				//Main.DB.storeOrder(this.OrdersList.get(i));
+				Main.DB.storeOrder(this.OrdersList.get(i));
 			}
 		}
 	}

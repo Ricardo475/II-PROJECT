@@ -19,7 +19,7 @@ public class SystemState {
 		this.nP8Warehouse = 0;
 		this.nP9Warehouse = 0;
 		this.nTotalPiecesWarehouse = this.nP1Warehouse + this.nP2Warehouse + this.nP3Warehouse + this.nP4Warehouse + this.nP5Warehouse + this.nP6Warehouse + this.nP7Warehouse + this.nP8Warehouse + this.nP9Warehouse;
-		//Main.DB.store_armazem(this);
+		Main.DB.store_armazem(this);
 	}
 	public SystemState(int p1,int p2, int p3,int p4,int p5,int p6,int p7,int p8, int p9)
 	{
@@ -132,7 +132,7 @@ public class SystemState {
 		this.nP7Warehouse = pieces[7];
 		this.nP8Warehouse = pieces[8];
 		this.nP9Warehouse = pieces[9];
-		//Main.DB.store_armazem(this);
+		Main.DB.store_armazem(this);
 	}
 	public int getPecas(String piece)
 	{

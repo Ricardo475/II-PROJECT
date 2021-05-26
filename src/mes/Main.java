@@ -12,7 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import dijkstraAlgorithm_Test.test;
 
 
 public class Main {
@@ -26,7 +25,7 @@ public class Main {
 	static    DatagramPacket packet;
 	static 	Erp_connection Erp ;
 	static XML_parser parse;
-	//static DataBase DB = new DataBase();
+	static DataBase DB = new DataBase();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 
 		//------------------------------------------------PAULO--------------------------------------------------------------//
@@ -44,18 +43,26 @@ public class Main {
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
 		//Transformação trans3 = new Transformação(102, "P4", "P6", 20, 0, 10, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
-		//if(DB.existeArm(1))
-		//{
-			//DB.getOrdersList();
-			//pr.sys=DB.get_armazem();
-			//pr.sys.print_quantityPieces();
-			//pr.mchs=DB.get_maquinaID();
-			//pr.mchs[0].print_machine();
-			//pr.pshs=DB.get_pushers();
-			//pr.pshs[0].print_Pusher();
-		//}
-		//else
-		//{
+		tts[0] = new TransformationTable("P1","P2","T1",15);
+		tts[1] = new TransformationTable("P4","P5","T1",15);
+		tts[2] = new TransformationTable("P6","P8","T1",15);
+		tts[3] = new TransformationTable("P2","P3","T2",15);
+		tts[4] = new TransformationTable("P5","P6","T2",30);
+		tts[5] = new TransformationTable("P3","P4","T3",15);
+		tts[6] = new TransformationTable("P5","P9","T3",30);
+		tts[7] = new TransformationTable("P6","P7","T3",30);
+		if(DB.existeArm(1))
+		{
+			DB.getOrdersList();
+			pr.sys=DB.get_armazem();
+			pr.sys.print_quantityPieces();
+			pr.mchs=DB.get_maquinaID();
+			pr.mchs[0].print_machine();
+			pr.pshs=DB.get_pushers();
+			pr.pshs[0].print_Pusher();
+		}
+		else
+		{
 			pr.initializeMachines();
 			//pr.mchs[1].changeTool("T2");
 			//pr.mchs[2].changeTool("T3");
@@ -69,14 +76,7 @@ public class Main {
 			//System.out.println("------------------------------------------------------------");
 
 
-			tts[0] = new TransformationTable("P1","P2","T1",15);
-			tts[1] = new TransformationTable("P4","P5","T1",15);
-			tts[2] = new TransformationTable("P6","P8","T1",15);
-			tts[3] = new TransformationTable("P2","P3","T2",15);
-			tts[4] = new TransformationTable("P5","P6","T2",30);
-			tts[5] = new TransformationTable("P3","P4","T3",15);
-			tts[6] = new TransformationTable("P5","P9","T3",30);
-			tts[7] = new TransformationTable("P6","P7","T3",30);
+			
 
 			System.out.println("------------------------------------------------------------");
 
@@ -129,7 +129,7 @@ public class Main {
 
 			 */
 
-		//}
+		}
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		opc.connect();
 		sw.initApp();
@@ -175,9 +175,10 @@ public class Main {
 				prio=OL.OrdemPrioritária();
 				if(prio != null)
 				{
+					System.out.println(prio.orderNumber);
 					prio.orderActivate();
 					//System.out.println("OLA");
-					//DB.storeOrder(prio);	
+					DB.storeOrder(prio);	
 					prio.doOrder(pr);
 					l=0;
 				}
