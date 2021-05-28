@@ -139,6 +139,8 @@ public class Main {
 		//OL.addOrder(trans1);
 		pr.aux_trans1 = new Transformação();
 		pr.aux_trans2 = new Transformação();
+		pr.aux_trans1.orderNumber = -1;
+		pr.aux_trans2.orderNumber = -1;
 		//pr.trans_before.orderNumber = -1;
 		int l=0;
 		String ordem="aaa";

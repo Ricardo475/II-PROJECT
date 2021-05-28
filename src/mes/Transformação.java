@@ -6,9 +6,12 @@ public class Transformação extends Order {
 	String From,To;
 	int[] pathLeft = {0,0,0,0,0,0};
 	int[] pathRight = {0,0,0,0,0,0};
-	boolean[] toolUsing = {false,false,false};
+	int[] toolUsingLeft = {0,0,0,0,0,0};
+	int[] toolUsingRight = {0,0,0,0,0,0};
 	boolean flag,first=true;
 	boolean flagEnd = false;
+	boolean flag_dividedTrans = false;
+	boolean flag_Dcounter = false;
 	int deadline;
 	
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
@@ -118,9 +121,26 @@ public class Transformação extends Order {
 						Side = "L";
 						Main.opc.Set_value("atual_piece.ordem", this.orderNumber,1);
 						Main.opc.Set_value("atual_piece.tipo", Side,1);
-						Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),1);
 						Main.opc.Set_value("atual_piece.path", aux,1);
-						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),1);
+						if(!flag_dividedTrans) {
+							Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),1);
+							Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),1);
+						}
+						else {
+							
+							if(pr.aux_trans1.pathLeft[0]!=0 && pr.aux_trans1.pathLeft[1]!=0 && pr.aux_trans1.pathLeft[2]!=0 && pr.aux_trans1.pathLeft[3]!=0) {
+								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),1);
+								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),1);
+								
+							}
+							else {
+								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans2.To.charAt(1)),1);
+								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans2.From.charAt(1)),1);
+							}
+							
+							
+						}
+						
 
 					}
 					else if(aux2.contains("5") || aux2.contains("6") || aux2.contains("7") || aux2.contains("8"))
@@ -128,9 +148,26 @@ public class Transformação extends Order {
 						Side = "R";
 						Main.opc.Set_value("atual_piece.ordem", this.orderNumber,4);
 						Main.opc.Set_value("atual_piece.tipo", Side,4);
-						Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),4);
 						Main.opc.Set_value("atual_piece.path", aux,4);
-						Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
+						if(!flag_dividedTrans) {
+							Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(this.To.charAt(1)),4);
+							Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
+						}
+						else {
+							
+							if(pr.aux_trans2.pathRight[0]!=0 && pr.aux_trans2.pathRight[1]!=0 && pr.aux_trans2.pathRight[2]!=0 && pr.aux_trans2.pathRight[3]!=0) {
+								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),4);
+								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),4);
+								
+							}
+							else {
+								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans2.To.charAt(1)),4);
+								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans2.From.charAt(1)),4);
+							}
+							
+							
+						}
+						
 					}
 
 					try {
@@ -167,8 +204,20 @@ public class Transformação extends Order {
 					}
 
 					if(flag) {
-						quantToBe--;
-						quantExe++;
+						if(!flag_dividedTrans) {
+							quantToBe--;
+							quantExe++;
+						}
+						else{
+							
+							
+							if(!flag_Dcounter)
+								flag_Dcounter = true;
+							else {
+								quantToBe--;
+								quantExe++;
+							}
+						}
 						flag = false;
 					}
 
