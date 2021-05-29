@@ -824,7 +824,7 @@ public class PathFinder {
 							
 							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
 								
-								//System.out.println("\nMACHINE TO GO: " + mchs_available.get(n).machineID + "\n");
+								System.out.println("\nMACHINE TO GO: " + mchs_available.get(n).machineID + "\n");
 								
 								aux_result = aux_result + (mchs_available.get(n).machineID+1);
 								res[i] = (mchs_available.get(n).machineID+1);

@@ -314,7 +314,7 @@ public class DataBase {
 	{
 		int i=0;
 		Machine[] m= new Machine[8];
-		String SQL = "SELECT * FROM \"Maquinas\"";
+		String SQL = "SELECT * FROM \"Maquinas\" ORDER BY \"MaquinaID\" ASC";
 		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(SQL)) {
@@ -451,7 +451,7 @@ public class DataBase {
 	public Pusher[] get_pushers()
 	{
 		Pusher[] p= new Pusher[3];
-		String SQL = "SELECT * FROM \"Pushers\"";
+		String SQL = "SELECT * FROM \"Pushers\" ORDER BY \"IDSaida\" ASC";
 		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(SQL)) {
