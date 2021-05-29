@@ -12,6 +12,7 @@ public class PathFinder {
 	Transformação aux_trans1;
 	Transformação aux_trans2;
 	int orderBefore = 0;
+	Transformação transBefore;
 	boolean flag_left = true;
 	boolean flag_right = false;
 	boolean flag_Dleft = false;
@@ -407,19 +408,20 @@ public class PathFinder {
 								
 							}
 						
-							//if((short)Main.opc.get_Value("CR1T1.Oper_Faltam", 3)==0)
-								//mchs[7].changeTool("T1");
-							//if((short)Main.opc.get_Value("CR1T2.Oper_Faltam", 3)==0)
-								//mchs[6].changeTool("T3");
-							//if((short)Main.opc.get_Value("CR1T3.Oper_Faltam", 3)==0)
-								//mchs[5].changeTool("T2");
-							//if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0)
-								//mchs[4].changeTool("T1");
+							for(int i = 4; i < 8; i++) {
+								
+								if(trans.toolUsingRight[i]==1)
+									mchs[i].changeTool("T1");
+								else if(trans.toolUsingRight[i]==2)
+									mchs[i].changeTool("T2");
+								else if(trans.toolUsingRight[i]==3)
+									mchs[i].changeTool("T3");
+							}
 							
-							//for(int i = 4; i<8;i++) {
-
-								//mchs[i].setToolCodesys(i);
-							//}
+							for(int i = 4; i<8;i++) {
+								//if((short)Main.opc.get_Value("CR1T"+(i-3)+".Oper_Faltam", 3)==0)
+									mchs[i].setToolCodesys(i);
+							}
 							
 							flag_left = false;
 							flag_right = true;
@@ -461,19 +463,23 @@ public class PathFinder {
 								mchs[res[i]-1].state = false;
 							}	
 							
-							if((short)Main.opc.get_Value("CL1T1.Oper_Faltam", 2)==0)
-								mchs[3].changeTool("T1");
-							if((short)Main.opc.get_Value("CL1T2.Oper_Faltam", 2)==0)
-								mchs[2].changeTool("T3");
-							if((short)Main.opc.get_Value("CL1T3.Oper_Faltam", 2)==0)
-								mchs[1].changeTool("T2");
-							if((short)Main.opc.get_Value("CL1T4.Oper_Faltam", 2)==0)
-								mchs[0].changeTool("T1");
+							
+							for(int i = 0; i < 4; i++) {
+								
+								if(trans.toolUsingLeft[i]==1)
+									mchs[i].changeTool("T1");
+								else if(trans.toolUsingLeft[i]==2)
+									mchs[i].changeTool("T2");
+								else if(trans.toolUsingLeft[i]==3)
+									mchs[i].changeTool("T3");
+							}
+					
+								
 						
 							
 							for(int i = 0; i<4;i++) {
-
-								mchs[i].setToolCodesys(i);
+								//if((short)Main.opc.get_Value("CL1T"+(i+1)+".Oper_Faltam", 2)==0)
+									mchs[i].setToolCodesys(i);
 							}
 							
 							flag_right = false;
@@ -502,8 +508,19 @@ public class PathFinder {
 				}
 			}
 			
-			flag_right = false;
-			flag_left = true;
+			else if(orderBefore!=trans.getOrderNumber() && transBefore.getOrderNumber()!=trans.getOrderNumber()) {
+			
+				flag_right = false;
+				flag_left = true;
+				
+				for(int i = 0; i < transBefore.pathLeft.length;i++) {
+					transBefore.pathLeft[i] = 0;
+					transBefore.pathRight[i] = 0;			
+				}
+				
+			}
+			
+			
 			/*
 			
 			if(trans.pathLeft[0]!=0 && trans.pathLeft[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
@@ -657,7 +674,7 @@ public class PathFinder {
 		
 		
 		
-		
+		transBefore = trans;
 		orderBefore = trans.getOrderNumber();
 		
 		return res;
@@ -886,6 +903,7 @@ public class PathFinder {
 		System.out.println("TIMES: [" + counter_time[0] + " " + counter_time[1] + " " + counter_time[2] + " "  + counter_time[3] + "]" );
 	
 		trans.toolUsingRight = toolsToUse;
+		transBefore = trans;
 		orderBefore = trans.getOrderNumber();
 		
 		return res;

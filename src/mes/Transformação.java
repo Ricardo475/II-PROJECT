@@ -279,4 +279,14 @@ public class Transformação extends Order {
 		else
 			return -1;
 	}
+	
+	public Transformação getTrans(int id) {
+		Transformação trans = new Transformação();
+		trans.orderNumber = -1;
+		
+		if(id==this.getOrderNumber())
+			trans = this;
+		
+		return trans;
+	}
 }

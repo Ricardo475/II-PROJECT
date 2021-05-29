@@ -141,7 +141,8 @@ public class Main {
 		pr.aux_trans2 = new Transformação();
 		pr.aux_trans1.orderNumber = -1;
 		pr.aux_trans2.orderNumber = -1;
-		//pr.trans_before.orderNumber = -1;
+		pr.transBefore = new Transformação();
+		pr.transBefore.orderNumber = -1;
 		int l=0;
 		String ordem="aaa";
 		Erp=new Erp_connection(OL);
