@@ -155,7 +155,27 @@ public class OPC_UA {
 			this.Set_value(VarName+"["+i+"]", value[i],p);
 		}
 	}
-
+	public int pecasNaFabrica(int number)
+	{
+		int count=0;
+		if((Short)this.get_Value("CL1T4.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T5.curr_piece.ordem",2)==number)
+				count++;
+		else if((Short)this.get_Value("CL1T3.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T4.curr_piece.ordem",2)==number)
+			count++;
+		else if((Short)this.get_Value("CL1T2.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T3.curr_piece.ordem",2)==number)
+			count++;
+		else if((Short)this.get_Value("CL1T1.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T2.curr_piece.ordem",2)==number)
+			count++;
+		else if((Short)this.get_Value("CR1T4.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T5.curr_piece.ordem",3)==number)
+			count++;
+		else if((Short)this.get_Value("CR1T3.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T4.curr_piece.ordem",3)==number)
+			count++;
+		else if((Short)this.get_Value("CR1T2.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T3.curr_piece.ordem",3)==number)
+			count++;
+		else if((Short)this.get_Value("CR1T1.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T2.curr_piece.ordem",3)==number)
+			count++;
+		return count;
+	}
 	public void createSubscription() throws Exception {
 
 		if (sub != null) {

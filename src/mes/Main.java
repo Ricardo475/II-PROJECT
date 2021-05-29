@@ -43,6 +43,7 @@ public class Main {
 		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
 		//Transformação trans3 = new Transformação(102, "P4", "P6", 20, 0, 10, 0, 0);
 		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
+		
 		tts[0] = new TransformationTable("P1","P2","T1",15);
 		tts[1] = new TransformationTable("P4","P5","T1",15);
 		tts[2] = new TransformationTable("P6","P8","T1",15);
@@ -53,16 +54,20 @@ public class Main {
 		tts[7] = new TransformationTable("P6","P7","T3",30);
 		if(DB.existeArm(1))
 		{
-			DB.getOrdersList();
+			
 			pr.sys=DB.get_armazem();
 			pr.sys.print_quantityPieces();
 			pr.mchs=DB.get_maquinaID();
 			pr.mchs[0].print_machine();
 			pr.pshs=DB.get_pushers();
 			pr.pshs[0].print_Pusher();
+			opc.connect();
+			Thread.sleep(1000);
+			DB.getOrdersList();
 		}
 		else
 		{
+			opc.connect();
 			pr.initializeMachines();
 			//pr.mchs[1].changeTool("T2");
 			//pr.mchs[2].changeTool("T3");
@@ -131,7 +136,7 @@ public class Main {
 
 		}
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		opc.connect();
+		
 		sw.initApp();
 		//sw.run();
 

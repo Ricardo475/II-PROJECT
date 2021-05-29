@@ -34,10 +34,35 @@ public class Transformação extends Order {
 		super(id,maximoDelay,TempoDeChegada,tempodechegadaefetiva);
 		this.From=From;
 		this.To= To;
+		int aux=0;
+		for(int j=0;j<QuantidadeEmproducao;j++)
+		{
+				aux= aux +this.checkFabrica();
+				System.out.println("OLAOLAOLA");
+				}
+		if(aux>0)
+		{
+			this.quantTotal=QuantTotal;
+			this.quantToBe= QuantidadeAproduzir;
+			if(aux!= QuantidadeEmproducao)
+			{
+				
+				this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao-aux;
+				this.quantExe=aux;
+			}
+			else
+			{
+				this.quantProcessed=QuantidadeProduzida;
+				this.quantExe=aux;
+			}
+		}
+		else
+		{
 		this.quantTotal=QuantTotal;
 		this.quantToBe= QuantidadeAproduzir;
-		this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao;;
+		this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao;
 		this.quantExe=0;
+		}
 		this.startTime=tempoDeSaida;
 		this.Penalty=PenalidadePPD;
 		this.finTime=TempoFim;
@@ -288,5 +313,10 @@ public class Transformação extends Order {
 			trans = this;
 		
 		return trans;
+	}
+	public int checkFabrica()
+	{
+		return Main.opc.pecasNaFabrica(this.orderNumber);
+	
 	}
 }
