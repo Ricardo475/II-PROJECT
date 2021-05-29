@@ -48,7 +48,7 @@ public class Order implements Comparable<Order>{
 		this.done=true;
 	}
 	
-	public void pecaProcessada()
+	public void pecaProcessada(int to)
 	{
 		;
 	}

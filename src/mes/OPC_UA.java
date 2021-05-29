@@ -755,7 +755,7 @@ public class OPC_UA {
 
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ALT5.curr_piece.ordem", 2));
+				Main.OL.pecaProc((short) this.get_Value("ALT5.curr_piece.ordem", 2),(short) this.get_Value("ALT5.curr_piece.finalType", 2));
 			}
 
 		}
@@ -1006,7 +1006,7 @@ public class OPC_UA {
 
 			if(state)
 			{
-				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3));
+				Main.OL.pecaProc((short) this.get_Value("ART1.curr_piece.ordem", 3),(short) this.get_Value("ART1.curr_piece.finalType", 3));
 			}
 
 		}

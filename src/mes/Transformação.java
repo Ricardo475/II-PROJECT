@@ -8,10 +8,13 @@ public class Transformação extends Order {
 	int[] pathRight = {0,0,0,0,0,0};
 	int[] toolUsingLeft = {0,0,0,0,0,0};
 	int[] toolUsingRight = {0,0,0,0,0,0};
+	int quant1 = 0;
+	int quant2 = 0;
+	int aux_to1 = 0;
+	int aux_to2 = 0;
 	boolean flag,first=true;
 	boolean flagEnd = false;
 	boolean flag_dividedTrans = false;
-	boolean flag_Dcounter = false;
 	int deadline;
 	
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
@@ -81,21 +84,53 @@ public class Transformação extends Order {
 		return "{ORDER Nº" + this.orderNumber + " || Type: Transformation" + " || TIME: " + this.PrazoEntrega() + "}";
 	}
 
-	public void pecaProcessada()
-	{
-		this.quantProcessed++;
-		if(this.quantExe>0)
-			this.quantExe--;
-		if(this.quantExe+this.quantProcessed+this.quantToBe != this.quantTotal)
-		{
-			this.quantProcessed=this.quantProcessed+(this.quantTotal-this.quantToBe-this.quantExe-this.quantProcessed);
+	public void pecaProcessada(int to)
+	{	
+		if(!flag_dividedTrans) {
+			this.quantProcessed++;
+			if(this.quantExe>0)
+				this.quantExe--;
+			if(this.quantExe+this.quantProcessed+this.quantToBe != this.quantTotal)
+			{
+				this.quantProcessed=this.quantProcessed+(this.quantTotal-this.quantToBe-this.quantExe-this.quantProcessed);
+			}
+			if(this.quantProcessed == this.quantTotal)
+			{
+				this.FimOrdem();
+			}
 		}
-		if(this.quantProcessed == this.quantTotal)
-		{
-			this.FimOrdem();
+		else {
+			
+			System.out.println("QUANT1: " + quant1);
+			System.out.println("QUANT2: " + quant2);
+			
+			if(to == this.aux_to1)
+				this.quant1++;
+			else if(to == this.aux_to2)
+				this.quant2++;
+			
+			if(this.quant1==this.quant2) {
+				this.quantProcessed = quant1;
+				this.quantExe = this.quantTotal - this.quantProcessed - this.quantToBe;
+			}
+			else {
+				
+				int least = this.quant1;
+				if(least > this.quant2)
+					least = this.quant2;
+				
+				this.quantProcessed = least;
+				
+				this.quantExe = this.quantTotal - this.quantProcessed - this.quantToBe;
+				
+			}
+			
 		}
+				
+			
 		System.out.println(this.orderNumber +" : "+this.quantProcessed);
 	}
+	
 	public void doOrder(PathFinder pr)
 	{
 		System.out.println("OLA");
@@ -215,17 +250,28 @@ public class Transformação extends Order {
 						}
 						else{
 							
-							
-							if(!flag_Dcounter)
-								flag_Dcounter = true;
-							else {
-								quantToBe--;
-								quantExe++;
+							if(pr.aux_trans1.quantExe!=pr.aux_trans2.quantExe) {
+								
+								int least = pr.aux_trans1.quantExe;
+								
+								if(least > pr.aux_trans2.quantExe)
+									least = pr.aux_trans2.quantExe;
+								
+								quantExe = least;
+								quantToBe = quantTotal - quantExe - quantProcessed;
+								
 							}
+							else {
+								quantExe = pr.aux_trans1.quantExe;
+								quantToBe = quantTotal - quantExe - quantProcessed;
+							}
+							
+							
+							
 						}
 						flag = false;
 					}
-
+					
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {

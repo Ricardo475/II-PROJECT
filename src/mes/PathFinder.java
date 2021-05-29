@@ -17,6 +17,7 @@ public class PathFinder {
 	boolean flag_right = false;
 	boolean flag_Dleft = false;
 	boolean flag_Dright = false;
+	boolean flag_goLeft = false;
 	int counter_flags = 0;
 	
 	int[] buildPathTransformation(Transformação trans, TransformationTable[] tts) {
@@ -139,8 +140,57 @@ public class PathFinder {
 				aux_trans2.From = divideTransformation[4];
 				aux_trans2.To = trans.To;
 				
+				if(aux_trans1.To.contains("P1"))
+					trans.aux_to1 = 1;
+				else if(aux_trans1.To.contains("P2"))
+					trans.aux_to1 = 2;
+				else if(aux_trans1.To.contains("P3"))
+					trans.aux_to1 = 3;
+				else if(aux_trans1.To.contains("P4"))
+					trans.aux_to1 = 4;
+				else if(aux_trans1.To.contains("P5"))
+					trans.aux_to1 = 5;
+				else if(aux_trans1.To.contains("P6"))
+					trans.aux_to1 = 6;
+				else if(aux_trans1.To.contains("P7"))
+					trans.aux_to1 = 7;
+				else if(aux_trans1.To.contains("P8"))
+					trans.aux_to1 = 8;
+				else if(aux_trans1.To.contains("P9"))
+					trans.aux_to1 = 9;
+				
+				if(aux_trans2.To.contains("P1"))
+					trans.aux_to2 = 1;
+				else if(aux_trans2.To.contains("P2"))
+					trans.aux_to2 = 2;
+				else if(aux_trans2.To.contains("P3"))
+					trans.aux_to2 = 3;
+				else if(aux_trans2.To.contains("P4"))
+					trans.aux_to2 = 4;
+				else if(aux_trans2.To.contains("P5"))
+					trans.aux_to2 = 5;
+				else if(aux_trans2.To.contains("P6"))
+					trans.aux_to2 = 6;
+				else if(aux_trans2.To.contains("P7"))
+					trans.aux_to2 = 7;
+				else if(aux_trans2.To.contains("P8"))
+					trans.aux_to2 = 8;
+				else if(aux_trans2.To.contains("P9"))
+					trans.aux_to2 = 9;
+				
+				System.out.print("TO1: " + trans.aux_to1);
+				System.out.print("TO2: " + trans.aux_to2);
+				System.out.println("");
+				
 				aux_trans1.quantTotal = trans.quantTotal;
 				aux_trans2.quantTotal = trans.quantTotal;
+				aux_trans1.quantToBe = trans.quantToBe;
+				aux_trans2.quantToBe = trans.quantToBe;
+				aux_trans1.quantProcessed = 0;
+				aux_trans2.quantProcessed = 0;
+				aux_trans1.quantExe= 0;
+				aux_trans2.quantExe = 0;
+				
 				
 				aux_trans1.flag_dividedTrans = trans.flag_dividedTrans;
 				aux_trans2.flag_dividedTrans = trans.flag_dividedTrans;
@@ -151,22 +201,37 @@ public class PathFinder {
 			}
 			
 			if(aux_trans1.pathLeft[0]==0 && aux_trans1.pathRight[0]==0) {
-				aux_trans1.quantTotal--;
-				return this.buildPathTransformation(aux_trans1, tts);
+				int[] aux = this.buildPathTransformation(aux_trans1, tts);
+				if(aux[0]!=0) {
+					aux_trans1.quantExe++;
+					aux_trans1.quantToBe--;
+				}
+				return aux;
 			}
 			else if((aux_trans1.pathLeft[0]!=0 || aux_trans1.pathRight[0]!=0) && aux_trans2.pathLeft[0]==0 && aux_trans2.pathRight[0]==0) {
 				if(aux_trans1.pathLeft[0]!=0 && aux_trans1.pathRight[0]==0) {
 					transformation = contructTranformations(aux_trans2, tts);
 					divideTransformation = transformation.split("/");
-					aux_trans2.quantTotal--;
-					return this.buildPathOnRight(aux_trans2, tts, divideTransformation);
+					int[] aux = this.buildPathOnRight(aux_trans2, tts, divideTransformation);
+					if(aux[0]!=0) {
+						aux_trans2.quantExe++;
+						aux_trans2.quantToBe--;
+					}
+					return aux;
 				}
 				else if(aux_trans1.pathRight[0]!=0 && aux_trans1.pathLeft[0]==0) {
-					aux_trans2.quantTotal--;
-					return this.buildPathTransformation(aux_trans2, tts);
+					
+					int[] aux = this.buildPathTransformation(aux_trans2, tts);
+					if(aux[0]!=0) {
+						aux_trans2.quantExe++;
+						aux_trans2.quantToBe--;
+					}
+					return aux;
 				}
 				
 			}
+			
+		
 			
 			else if(trans.pathLeft[0]==0 && trans.pathRight[0]==0) {
 				//trans.finTime =
@@ -214,17 +279,25 @@ public class PathFinder {
 			
 			}
 			
+			System.out.println("AUX1 BEING PROCESSED: " + aux_trans1.quantExe);
+			System.out.println("AUX2 BEING PROCESSED: " + aux_trans2.quantExe);
+			
+			aux_trans1.quantProcessed = trans.quant1;
+			aux_trans2.quantProcessed = trans.quant2;
+			aux_trans1.quantExe = aux_trans1.quantTotal - aux_trans1.quantProcessed - aux_trans1.quantToBe;
+			aux_trans2.quantExe = aux_trans2.quantTotal - aux_trans2.quantProcessed - aux_trans2.quantToBe;
+			
 			if(trans.pathLeft[0]!=0 && trans.pathRight[0]!=0) {
 				
-				System.out.println("---------FLAGS---------");
-				System.out.println("LEFT: " + flag_Dleft);
-				System.out.println("RIGHT: " + flag_Dright);
-				System.out.println("-----------------------");
+				//System.out.println("---------FLAGS---------");
+				//System.out.println("LEFT: " + flag_Dleft);
+				//System.out.println("RIGHT: " + flag_Dright);
+				//System.out.println("-----------------------");
 				
-				if(trans.pathLeft[0]!=0 && trans.pathLeft[1]!=0 && trans.pathLeft[2]!=0 && trans.pathLeft[3]!=0 && !flag_Dleft && !flag_Dright) {
+				if(trans.pathLeft[0]!=0 && trans.pathLeft[1]!=0 && trans.pathLeft[2]!=0 && trans.pathLeft[3]!=0 && !flag_Dleft && !flag_Dright && aux_trans1.quantToBe > 0) {
 						
 					
-						
+					flag_goLeft = true;
 					if(orderBefore != trans.getOrderNumber()) {
 						for(int i = 0; i < 4; i++) {
 								
@@ -242,8 +315,10 @@ public class PathFinder {
 					
 					if((short)Main.opc.get_Value("CL1T4.Oper_Faltam", 2)==0 && aux_trans1.quantTotal!=0) {
 						flag_Dleft = true;
+						flag_Dright = false;
 						counter_flags = 0;
-						aux_trans1.quantTotal--;
+						aux_trans1.quantExe++;
+						aux_trans1.quantToBe--;
 						res = trans.pathLeft;
 					}
 					
@@ -252,13 +327,14 @@ public class PathFinder {
 					if(counter_flags==3 && res[0]==0) { 
 						counter_flags = 0;
 						flag_Dleft = true;
+						flag_Dright = false;
 					}
 						
 
 					return res;
 				}
 				
-				else if(trans.pathRight[0]!=0 && trans.pathRight[1]!=0 && trans.pathRight[2]!=0 && trans.pathRight[3]!=0 && !flag_Dleft && !flag_Dright) {
+				else if(trans.pathRight[0]!=0 && trans.pathRight[1]!=0 && trans.pathRight[2]!=0 && trans.pathRight[3]!=0 && !flag_Dleft && !flag_Dright && aux_trans1.quantToBe > 0) {
 						
 					
 						
@@ -281,8 +357,10 @@ public class PathFinder {
 							
 						if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0  && aux_trans2.quantTotal!=0) {
 							flag_Dright = true;
+							flag_Dleft = false;
 							counter_flags = 0;
-							aux_trans2.quantTotal--;
+							aux_trans1.quantExe++;
+							aux_trans1.quantToBe--;
 							res = trans.pathRight;
 						}
 							
@@ -290,7 +368,7 @@ public class PathFinder {
 						
 						if(counter_flags==3 && res[0]==0) { 
 							counter_flags = 0;
-							aux_trans2.quantTotal--;
+							flag_Dleft = false;
 							flag_Dright = true;
 						}
 							
@@ -300,16 +378,16 @@ public class PathFinder {
 				}
 				
 				
-				
-				if(flag_Dleft) {
+				//if(flag_goLeft) {
+					
+				if(flag_Dleft && aux_trans2.quantToBe > 0) {
 					
 					int count = 0;
-					//int flag = 0;
 					
 					while(trans.pathRight[count]!=0) 
 						count++;
 						
-					System.out.println("COUNT = " + count);
+					//System.out.println("COUNT = " + count);
 					if(orderBefore != trans.getOrderNumber()) {
 											
 						for(int i = 4; i < 8; i++) {
@@ -331,11 +409,12 @@ public class PathFinder {
 						
 					}
 					
-					System.out.println("MACHINE 1: " + (trans.pathRight[0]-1));
+					//System.out.println("MACHINE 1: " + (trans.pathRight[0]-1));
 					if((short)Main.opc.get_Value("CR1T"+(trans.pathRight[0]-1)+".Oper_Faltam", 3)==0 && aux_trans2.quantTotal!=0){
 						res = trans.pathRight;
 						counter_flags = 0;
-						aux_trans2.quantTotal--;
+						aux_trans2.quantToBe--;
+						aux_trans2.quantExe++;
 						flag_Dleft = false;
 					}
 					
@@ -349,18 +428,72 @@ public class PathFinder {
 					return res;
 				}
 				
+				else if(flag_Dright && aux_trans2.quantToBe > 0) {
 					
-
+					int count = 0;
+					
+					while(trans.pathLeft[count]!=0) 
+						count++;
+						
+					//System.out.println("COUNT = " + count);
+					if(orderBefore != trans.getOrderNumber()) {
+											
+						for(int i = 0; i < 4; i++) {
+							
+							if((short)Main.opc.get_Value("CL1T"+(i)+".Oper_Faltam", 2)==0) {
+								if(trans.toolUsingRight[i]==1)
+									mchs[i].changeTool("T1");
+								else if(trans.toolUsingRight[i]==2)
+									mchs[i].changeTool("T2");
+								else if(trans.toolUsingRight[i]==3)
+									mchs[i].changeTool("T3");
+								mchs[i].setToolCodesys(i);
+	
+								count--;
+							}
+							
+							if(count==0) break;
+						}
+						
+					}
+					
+					//System.out.println("MACHINE 1: " + (trans.pathRight[0]-1));
+					if((short)Main.opc.get_Value("CL1T"+(trans.pathLeft[0]-1)+".Oper_Faltam", 2)==0 && aux_trans2.quantTotal!=0){
+						res = trans.pathRight;
+						counter_flags = 0;
+						aux_trans2.quantToBe--;
+						aux_trans2.quantExe++;
+						flag_Dright= false;
+					}
+					
+					counter_flags++;
+					
+					if(counter_flags==3 && res[0]==0) {
+						flag_Dright = false;
+						counter_flags = 0;
+					}
+					
+					return res;
+					
+				}
+				else if(!flag_Dleft && !flag_Dright && flag_goLeft && aux_trans1.quantToBe==0)
+					flag_Dleft = true;
+				else if(!flag_Dleft && !flag_Dright && !flag_goLeft && aux_trans1.quantToBe==0)
+					flag_Dright = true;
 				
-
-			}
-			
-					
-			
+			}					
+				
+				
+				
+				
+			//}		
 		}
 		
 		else {
 			
+			flag_Dleft = false;
+			flag_Dright = false;
+			flag_goLeft = false;
 
 			//
 			// SAVE AVAILABLE MACHINES  ----> PODE SER SEPARADO DESTE CODIGO

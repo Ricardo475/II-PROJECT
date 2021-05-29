@@ -158,14 +158,14 @@ public class OrdersState {
 		}
 	}
 	
-	public void pecaProc(int ID)
+	public void pecaProc(int ID, int to)
 	{
 
 		for(int i=0;i < this.OrdersList.size() ; i++)
 		{
 			if(this.OrdersList.get(i).orderNumber == ID)
 			{
-				this.OrdersList.get(i).pecaProcessada();
+				this.OrdersList.get(i).pecaProcessada(to);
 				Main.DB.storeOrder(this.OrdersList.get(i));
 			}
 		}
