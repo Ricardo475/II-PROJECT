@@ -123,6 +123,14 @@ public class PathFinder {
 				
 				trans.flag_dividedTrans = true;
 				
+				flag_right = false;
+				flag_left = true;
+				
+				for(int i = 0; i < transBefore.pathLeft.length;i++) {
+					transBefore.pathLeft[i] = 0;
+					transBefore.pathRight[i] = 0;			
+				}
+				
 				aux_trans1.orderNumber = trans.getOrderNumber();
 				aux_trans2.orderNumber = trans.getOrderNumber();
 				
@@ -410,11 +418,11 @@ public class PathFinder {
 						
 							for(int i = 4; i < 8; i++) {
 								
-								if(trans.toolUsingRight[i]==1)
+								if(trans.toolUsingRight[i-4]==1)
 									mchs[i].changeTool("T1");
-								else if(trans.toolUsingRight[i]==2)
+								else if(trans.toolUsingRight[i-4]==2)
 									mchs[i].changeTool("T2");
-								else if(trans.toolUsingRight[i]==3)
+								else if(trans.toolUsingRight[i-4]==3)
 									mchs[i].changeTool("T3");
 							}
 							
