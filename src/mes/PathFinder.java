@@ -407,15 +407,19 @@ public class PathFinder {
 								
 							}
 						
-							mchs[7].changeTool("T1");
-							mchs[6].changeTool("T3");
-							mchs[5].changeTool("T2");
-							mchs[4].changeTool("T1");
+							//if((short)Main.opc.get_Value("CR1T1.Oper_Faltam", 3)==0)
+								//mchs[7].changeTool("T1");
+							//if((short)Main.opc.get_Value("CR1T2.Oper_Faltam", 3)==0)
+								//mchs[6].changeTool("T3");
+							//if((short)Main.opc.get_Value("CR1T3.Oper_Faltam", 3)==0)
+								//mchs[5].changeTool("T2");
+							//if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0)
+								//mchs[4].changeTool("T1");
 							
-							for(int i = 4; i<8;i++) {
+							//for(int i = 4; i<8;i++) {
 
-								mchs[i].setToolCodesys(i);
-							}
+								//mchs[i].setToolCodesys(i);
+							//}
 							
 							flag_left = false;
 							flag_right = true;
@@ -457,9 +461,13 @@ public class PathFinder {
 								mchs[res[i]-1].state = false;
 							}	
 							
+							if((short)Main.opc.get_Value("CL1T1.Oper_Faltam", 2)==0)
 								mchs[3].changeTool("T1");
+							if((short)Main.opc.get_Value("CL1T2.Oper_Faltam", 2)==0)
 								mchs[2].changeTool("T3");
+							if((short)Main.opc.get_Value("CL1T3.Oper_Faltam", 2)==0)
 								mchs[1].changeTool("T2");
+							if((short)Main.opc.get_Value("CL1T4.Oper_Faltam", 2)==0)
 								mchs[0].changeTool("T1");
 						
 							
@@ -494,7 +502,8 @@ public class PathFinder {
 				}
 			}
 			
-
+			flag_right = false;
+			flag_left = true;
 			/*
 			
 			if(trans.pathLeft[0]!=0 && trans.pathLeft[0]<4 && toolUsed[0] && toolUsed[1] && toolUsed[2]) {
@@ -917,6 +926,8 @@ public class PathFinder {
 	private void pathing_changeToolsMES(int tool_counter, ArrayList<Machine> mchs_available, int[] toolToUse, int quant) {
 		
 		int i = 0;
+		for(int j = 0; j < mchs_available.size();j++)
+			mchs_available.get(j).print_machine();
 		
 		while(toolToUse[i]!=0 || i<4) {
 			
@@ -941,9 +952,10 @@ public class PathFinder {
 					
 				}
 				
-				else if(tool_counter>2 && mchs_available.size()>2) 
+				else if(tool_counter>2 && mchs_available.size()>=tool_counter) {
+					System.out.println("MACHINE ID: " + mchs_available.get(i).machineID);
 					mchs[mchs_available.get(i).machineID].changeTool("T1");
-				
+				}
 				
 			}
 			
@@ -968,7 +980,7 @@ public class PathFinder {
 					
 				}
 				
-				else if(tool_counter>2 && mchs_available.size()>2) 
+				else if(tool_counter>2 && mchs_available.size()>=tool_counter) 
 					mchs[mchs_available.get(i).machineID].changeTool("T2");				
 				
 				
@@ -995,7 +1007,7 @@ public class PathFinder {
 					
 				}
 				
-				else if(tool_counter>2 && mchs_available.size()>2) 
+				else if(tool_counter>2 && mchs_available.size()>=tool_counter) 
 					mchs[mchs_available.get(i).machineID].changeTool("T3");
 				
 			}
