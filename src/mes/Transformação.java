@@ -36,8 +36,8 @@ public class Transformação extends Order {
 		this.To= To;
 		this.quantTotal=QuantTotal;
 		this.quantToBe= QuantidadeAproduzir;
-		this.quantProcessed=QuantidadeProduzida;
-		this.quantExe=QuantidadeEmproducao;
+		this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao;;
+		this.quantExe=0;
 		this.startTime=tempoDeSaida;
 		this.Penalty=PenalidadePPD;
 		this.finTime=TempoFim;
@@ -84,7 +84,12 @@ public class Transformação extends Order {
 	public void pecaProcessada()
 	{
 		this.quantProcessed++;
-		this.quantExe--;
+		if(this.quantExe>0)
+			this.quantExe--;
+		if(this.quantExe+this.quantProcessed+this.quantToBe != this.quantTotal)
+		{
+			this.quantProcessed=this.quantProcessed+(this.quantTotal-this.quantToBe-this.quantExe-this.quantProcessed);
+		}
 		if(this.quantProcessed == this.quantTotal)
 		{
 			this.FimOrdem();
