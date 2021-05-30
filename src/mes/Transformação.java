@@ -12,11 +12,11 @@ public class Transformação extends Order {
 	int quant2 = 0;
 	int aux_to1 = 0;
 	int aux_to2 = 0;
-	boolean flag,first=true;
+	boolean flag,first,flagpecas=true;
 	boolean flagEnd = false;
 	boolean flag_dividedTrans = false;
 	int deadline;
-	
+
 	public Transformação(int orderNumber, String From, String to, int Quantity, int Time, int MaxDelay, int Penalty,int timeE) {
 		super(orderNumber,MaxDelay,Time,timeE);
 		this.From=From;
@@ -40,7 +40,7 @@ public class Transformação extends Order {
 		int aux=0;
 		aux=this.checkFabrica();
 		System.out.println("OLAOLAOLA");
-	
+
 		if(aux>0)
 		{
 			this.quantTotal=QuantTotal;
@@ -67,10 +67,10 @@ public class Transformação extends Order {
 		}
 		else
 		{
-		this.quantTotal=QuantTotal;
-		this.quantToBe= QuantidadeAproduzir;
-		this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao;
-		this.quantExe=0;
+			this.quantTotal=QuantTotal;
+			this.quantToBe= QuantidadeAproduzir;
+			this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao;
+			this.quantExe=0;
 		}
 		this.startTime=tempoDeSaida;
 		this.Penalty=PenalidadePPD;
@@ -84,7 +84,7 @@ public class Transformação extends Order {
 		{
 			this.first=false;
 		}
-		
+
 	}
 
 	public Transformação() {
@@ -141,38 +141,38 @@ public class Transformação extends Order {
 			{
 				this.quantProcessed=this.quantProcessed+(this.quantTotal-this.quantToBe-this.quantExe-this.quantProcessed);
 			}
-		
+
 		}
 		else {
-			
-			
-			
+
+
+
 			if(to == this.aux_to1)
 				this.quant1++;
 			else if(to == this.aux_to2)
 				this.quant2++;
-			
+
 			int lower = quant1;
-			
+
 			if(lower > quant2)
 				lower = quant2;
-			
+
 			quantProcessed = lower;
 			//System.out.println("QUANT1: " + quant1);
 			//System.out.println("QUANT2: " + quant2);
-			
+
 			if(quantToBe == 0) 
 				quantExe = quantTotal - quantProcessed;
-			
+
 		}
 		if(this.quantProcessed == this.quantTotal)
 		{
 			this.FimOrdem();
 		}		
-			
+
 		System.out.println(this.orderNumber +" : "+this.quantProcessed);
 	}
-	
+
 	public void doOrder(PathFinder pr)
 	{
 		System.out.println("OLA");
@@ -180,11 +180,11 @@ public class Transformação extends Order {
 		{
 			System.out.println("OLA3");
 			this.startTime=((int)System.currentTimeMillis()-Main.start)/1000;
-			
+
 		}
 		if(this.existePecas())
 		{
-			
+
 			if(this.quantToBe > 0)
 			{
 				System.out.println("OLA3");
@@ -194,7 +194,7 @@ public class Transformação extends Order {
 				{
 					first = false;
 					Main.OL.calculateTimes();
-					
+
 				}
 				//int[] aux = {0,0,0,0,0,0};
 				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
@@ -202,7 +202,7 @@ public class Transformação extends Order {
 				String aux2 =this.convert(aux);
 				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0) && quantToBe>0) {
 					//Main.OL.organizeTimes(this);
-					
+
 
 					if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 					{
@@ -215,20 +215,20 @@ public class Transformação extends Order {
 							Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),1);
 						}
 						else {
-							
+
 							if(pr.aux_trans1.pathLeft[0]!=0 && pr.aux_trans1.pathLeft[1]!=0 && pr.aux_trans1.pathLeft[2]!=0 && pr.aux_trans1.pathLeft[3]!=0) {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),1);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),1);
-								
+
 							}
 							else {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans2.To.charAt(1)),1);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans2.From.charAt(1)),1);
 							}
-							
-							
+
+
 						}
-						
+
 
 					}
 					else if(aux2.contains("5") || aux2.contains("6") || aux2.contains("7") || aux2.contains("8"))
@@ -242,20 +242,20 @@ public class Transformação extends Order {
 							Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(this.From.charAt(1)),4);
 						}
 						else {
-							
+
 							if(pr.aux_trans2.pathRight[0]!=0 && pr.aux_trans2.pathRight[1]!=0 && pr.aux_trans2.pathRight[2]!=0 && pr.aux_trans2.pathRight[3]!=0) {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),4);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),4);
-								
+
 							}
 							else {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans2.To.charAt(1)),4);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans2.From.charAt(1)),4);
 							}
-							
-							
+
+
 						}
-						
+
 					}
 
 					try {
@@ -297,22 +297,22 @@ public class Transformação extends Order {
 							quantExe++;
 						}
 						else{
-							
+
 							int bigger = pr.aux_trans1.quantToBe;
-							
+
 							if(bigger < pr.aux_trans2.quantToBe)
 								bigger = pr.aux_trans2.quantToBe;
-							
+
 							quantToBe = bigger;
-							
+
 							quantExe = quantTotal - quantToBe - quantProcessed;
-							
-						
-							
+
+
+
 						}
 						flag = false;
 					}
-					
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -328,12 +328,12 @@ public class Transformação extends Order {
 						this.done=true;
 						System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");
 					}
-					
+
 
 				}
 			}
 			else if(quantToBe==0) {
-			    this.orderDisactivate();
+				this.orderDisactivate();
 				//pr.sys.increasePieces(this.To,this.quantTotal);  
 				this.done=true;
 				System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");
@@ -355,51 +355,65 @@ public class Transformação extends Order {
 	}
 	public boolean existePecas()
 	{
-		if(Main.pr.sys.getPecas(this.From) > 0)
+		if(this.flagpecas)
 		{
-			return true;
+			if(Main.pr.sys.getPecas(this.From) > 0)
+			{
+				return true;
+			}
+			this.flagpecas=false;
+		}
+		else
+		{
+			if(Main.pr.sys.getPecas(this.From) > this.quantToBe)
+			{
+				this.flagpecas=true;
+				return true;
+			}
+			
 		}
 		return false;
-	}
 	
-	@Override
-	public int compareTo(Order o) {
-		if(o.getClass().toString().contains("Transformação"))
-		{
-		if(this.equals(((Transformação)o)))
-			return 0;
-		else if (this.PrazoEntrega()*1/(this.Penalty/50) > ((Transformação)o).PrazoEntrega()*1/(((Transformação)o).Penalty/50))
-		{
-			return 1;
-		}
-		else
-		{
-			return -1;
-		}
-		}
-		else
-		{
-			if(this.equals(o))
-				return 0;
-			else if (this.PrazoEntrega() > o.PrazoEntrega())
-				return 1;
+	}
+
+		@Override
+		public int compareTo(Order o) {
+			if(o.getClass().toString().contains("Transformação"))
+			{
+				if(this.equals(((Transformação)o)))
+					return 0;
+				else if (this.PrazoEntrega()*1/(this.Penalty/50) > ((Transformação)o).PrazoEntrega()*1/(((Transformação)o).Penalty/50))
+				{
+					return 1;
+				}
+				else
+				{
+					return -1;
+				}
+			}
 			else
-				return -1;
+			{
+				if(this.equals(o))
+					return 0;
+				else if (this.PrazoEntrega() > o.PrazoEntrega())
+					return 1;
+				else
+					return -1;
+			}
+		}
+
+		public Transformação getTrans(int id) {
+			Transformação trans = new Transformação();
+			trans.orderNumber = -1;
+
+			if(id==this.getOrderNumber())
+				trans = this;
+
+			return trans;
+		}
+		public int checkFabrica()
+		{
+			return Main.opc.pecasNaFabrica(this.orderNumber);
+
 		}
 	}
-	
-	public Transformação getTrans(int id) {
-		Transformação trans = new Transformação();
-		trans.orderNumber = -1;
-		
-		if(id==this.getOrderNumber())
-			trans = this;
-		
-		return trans;
-	}
-	public int checkFabrica()
-	{
-		return Main.opc.pecasNaFabrica(this.orderNumber);
-	
-	}
-}
