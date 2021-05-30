@@ -1058,9 +1058,9 @@ public class PathFinder {
 
 		if(trans.quantToBe==trans.quantTotal && res[0]!=0) {
 			
-			trans.exeTime = (((int)System.currentTimeMillis()-Main.start)/1000) + counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
+			trans.exeTime = counter_time[0] + counter_time[1] + counter_time[2]+ counter_time[3];
 			//System.out.println("EXECUTING TIME: " + trans.exeTime);
-			trans.finTime = (int) ((trans.startTime + trans.exeTime*trans.quantTotal*(divideTransformation.length)*0.6/8));
+			//trans.finTime = (int) ((trans.startTime + trans.exeTime*trans.quantTotal*(divideTransformation.length)*0.6/8));
 			//flag2 = false;
 		}
 		
@@ -1332,7 +1332,7 @@ public class PathFinder {
 
 
 
-	private String contructTranformations(Transformação trans, TransformationTable[] tts) {
+	public String contructTranformations(Transformação trans, TransformationTable[] tts) {
 		
 		String result = trans.From;
 		String newBegin = trans.From;

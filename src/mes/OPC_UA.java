@@ -158,21 +158,25 @@ public class OPC_UA {
 	public int pecasNaFabrica(int number)
 	{
 		int count=0;
-		if((Short)this.get_Value("CL1T4.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T5.curr_piece.ordem",2)==number)
+		if(((Short)this.get_Value("CL1T4.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T5.curr_piece.ordem",2)==number) && !((boolean)this.get_Value("CL0T5.TransC_O",2)))
 				count++;
-		else if((Short)this.get_Value("CL1T3.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T4.curr_piece.ordem",2)==number)
+		if(((Short)this.get_Value("CL1T3.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T4.curr_piece.ordem",2)==number) && !((boolean)this.get_Value("CL0T4.TransC_O",2)))
 			count++;
-		else if((Short)this.get_Value("CL1T2.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T3.curr_piece.ordem",2)==number)
+		if(((Short)this.get_Value("CL1T2.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T3.curr_piece.ordem",2)==number) && !((boolean)this.get_Value("CL0T3.TransC_O",2)))
 			count++;
-		else if((Short)this.get_Value("CL1T1.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T2.curr_piece.ordem",2)==number)
+		if(((Short)this.get_Value("CL1T1.curr_piece.ordem",2)==number || (Short)this.get_Value("CL0T2.curr_piece.ordem",2)==number) && !((boolean)this.get_Value("CL0T2.TransC_O",2)))
 			count++;
-		else if((Short)this.get_Value("CR1T4.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T5.curr_piece.ordem",3)==number)
+		if((Short)this.get_Value("CL0T1.curr_piece.ordem",2)==number)
 			count++;
-		else if((Short)this.get_Value("CR1T3.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T4.curr_piece.ordem",3)==number)
+		if(((Short)this.get_Value("CR1T4.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T5.curr_piece.ordem",3)==number) && !((boolean)this.get_Value("CR0T5.TransC_O",3)))
 			count++;
-		else if((Short)this.get_Value("CR1T2.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T3.curr_piece.ordem",3)==number)
+		if(((Short)this.get_Value("CR1T3.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T4.curr_piece.ordem",3)==number) && !((boolean)this.get_Value("CR0T4.TransC_O",3)))
 			count++;
-		else if((Short)this.get_Value("CR1T1.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T2.curr_piece.ordem",3)==number)
+		if(((Short)this.get_Value("CR1T2.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T3.curr_piece.ordem",3)==number) && !((boolean)this.get_Value("CR0T3.TransC_O",3)))
+			count++;
+		if(((Short)this.get_Value("CR1T1.curr_piece.ordem",3)==number || (Short)this.get_Value("CR0T2.curr_piece.ordem",3)==number) && !((boolean)this.get_Value("CR0T2.TransC_O",3)))
+			count++;
+		if((Short)this.get_Value("CR0T1.curr_piece.ordem",3)==number)
 			count++;
 		return count;
 	}
