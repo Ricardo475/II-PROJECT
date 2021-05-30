@@ -132,15 +132,11 @@ public class Transformação extends Order {
 			{
 				this.quantProcessed=this.quantProcessed+(this.quantTotal-this.quantToBe-this.quantExe-this.quantProcessed);
 			}
-			if(this.quantProcessed == this.quantTotal)
-			{
-				this.FimOrdem();
-			}
+		
 		}
 		else {
 			
-			System.out.println("QUANT1: " + quant1);
-			System.out.println("QUANT2: " + quant2);
+			
 			
 			if(to == this.aux_to1)
 				this.quant1++;
@@ -149,7 +145,7 @@ public class Transformação extends Order {
 			
 			if(this.quant1==this.quant2) {
 				this.quantProcessed = quant1;
-				this.quantExe = this.quantTotal - this.quantProcessed - this.quantToBe;
+				this.quantExe--;
 			}
 			else {
 				
@@ -157,14 +153,23 @@ public class Transformação extends Order {
 				if(least > this.quant2)
 					least = this.quant2;
 				
+				if(this.quantProcessed!=least)
+					this.quantExe--;
+				
 				this.quantProcessed = least;
 				
-				this.quantExe = this.quantTotal - this.quantProcessed - this.quantToBe;
+				
 				
 			}
 			
+			System.out.println("QUANT1: " + quant1);
+			System.out.println("QUANT2: " + quant2);
+			
 		}
-				
+		if(this.quantProcessed == this.quantTotal)
+		{
+			this.FimOrdem();
+		}		
 			
 		System.out.println(this.orderNumber +" : "+this.quantProcessed);
 	}
@@ -296,13 +301,17 @@ public class Transformação extends Order {
 								if(least > pr.aux_trans2.quantExe)
 									least = pr.aux_trans2.quantExe;
 								
+								if(quantExe!= least)
+									quantToBe--;
+								
 								quantExe = least;
-								quantToBe = quantTotal - quantExe - quantProcessed;
+								
 								
 							}
 							else {
 								quantExe = pr.aux_trans1.quantExe;
-								quantToBe = quantTotal - quantExe - quantProcessed;
+								quantToBe--;
+								
 							}
 							
 							
@@ -329,6 +338,12 @@ public class Transformação extends Order {
 					
 
 				}
+			}
+			else if(quantToBe==0) {
+			    this.orderDisactivate();
+				//pr.sys.increasePieces(this.To,this.quantTotal);  
+				this.done=true;
+				System.out.println("ORDEM "+this.getOrderNumber()+" ACABOU");
 			}
 		}
 		else
