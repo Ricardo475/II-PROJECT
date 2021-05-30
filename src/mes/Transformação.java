@@ -100,6 +100,7 @@ public class Transformação extends Order {
 		if(finTime > this.MaxDelay)
 		{
 			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
+			if(PenaltyInc < 0) PenaltyInc = 0;
 		}
 		flagEnd = true;
 	}
@@ -130,27 +131,17 @@ public class Transformação extends Order {
 			else if(to == this.aux_to2)
 				this.quant2++;
 			
-			if(this.quant1==this.quant2) {
-				this.quantProcessed = quant1;
-				this.quantExe--;
-			}
-			else {
-				
-				int least = this.quant1;
-				if(least > this.quant2)
-					least = this.quant2;
-				
-				if(this.quantProcessed!=least)
-					this.quantExe--;
-				
-				this.quantProcessed = least;
-				
-				
-				
-			}
+			int lower = quant1;
 			
-			System.out.println("QUANT1: " + quant1);
-			System.out.println("QUANT2: " + quant2);
+			if(lower > quant2)
+				lower = quant2;
+			
+			quantProcessed = lower;
+			//System.out.println("QUANT1: " + quant1);
+			//System.out.println("QUANT2: " + quant2);
+			
+			if(quantToBe == 0) 
+				quantExe = quantTotal - quantProcessed;
 			
 		}
 		if(this.quantProcessed == this.quantTotal)
@@ -280,6 +271,18 @@ public class Transformação extends Order {
 						}
 						else{
 							
+							int bigger = pr.aux_trans1.quantToBe;
+							
+							if(bigger < pr.aux_trans2.quantToBe)
+								bigger = pr.aux_trans2.quantToBe;
+							
+							quantToBe = bigger;
+							
+							quantExe = quantTotal - quantToBe - quantProcessed;
+							
+							
+							
+							/*
 							if(pr.aux_trans1.quantExe!=pr.aux_trans2.quantExe) {
 								
 								int least = pr.aux_trans1.quantExe;
@@ -299,7 +302,7 @@ public class Transformação extends Order {
 								quantToBe--;
 								
 							}
-							
+							*/
 							
 							
 						}
@@ -307,7 +310,7 @@ public class Transformação extends Order {
 					}
 					
 					try {
-						Thread.sleep(2000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
