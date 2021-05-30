@@ -13,6 +13,8 @@ public class PathFinder {
 	Transformação aux_trans2;
 	int orderBefore = 0;
 	Transformação transBefore;
+	Transformação aux_trans1Before;
+	Transformação aux_trans2Before;
 	boolean flag_left = true;
 	boolean flag_right = false;
 	boolean flag_Dleft = false;
@@ -120,12 +122,13 @@ public class PathFinder {
 		
 		if(tool_counter>4) {
 			
-			if(aux_trans1.orderNumber != trans.getOrderNumber() && aux_trans2.orderNumber != trans.getOrderNumber() && trans.quantTotal == trans.quantToBe) {
+			if(aux_trans1.orderNumber != trans.getOrderNumber() && aux_trans2.orderNumber != trans.getOrderNumber()) {
 				
 				trans.flag_dividedTrans = true;
 				
-				flag_right = false;
-				flag_left = true;
+				flag_Dleft = false;
+				flag_Dright = false;
+				flag_goLeft = false;
 				
 				for(int i = 0; i < transBefore.pathLeft.length;i++) {
 					transBefore.pathLeft[i] = 0;
@@ -178,37 +181,99 @@ public class PathFinder {
 				else if(aux_trans2.To.contains("P9"))
 					trans.aux_to2 = 9;
 				
-				System.out.print("TO1: " + trans.aux_to1);
-				System.out.print("TO2: " + trans.aux_to2);
-				System.out.println("");
+				//System.out.print("TO1: " + trans.aux_to1);
+				//System.out.print("TO2: " + trans.aux_to2);
+				//System.out.println("");
 				
 				aux_trans1.quantTotal = trans.quantTotal;
 				aux_trans2.quantTotal = trans.quantTotal;
-				aux_trans1.quantToBe = trans.quantToBe;
-				aux_trans2.quantToBe = trans.quantToBe;
-				aux_trans1.quantProcessed = 0;
-				aux_trans2.quantProcessed = 0;
-				aux_trans1.quantExe= 0;
-				aux_trans2.quantExe = 0;
+				
+				if(aux_trans2Before.getOrderNumber() != trans.getOrderNumber() && aux_trans1Before.getOrderNumber() != trans.getOrderNumber()) {
+
+					aux_trans1.quantToBe = trans.quantToBe;
+					aux_trans2.quantToBe = trans.quantToBe;
+					aux_trans1.quantProcessed = 0;
+					aux_trans2.quantProcessed = 0;
+					aux_trans1.quantExe= 0;
+					aux_trans2.quantExe = 0;
+				}
+				else {
+					aux_trans1.quantToBe = aux_trans1Before.quantToBe;
+					aux_trans1.quantProcessed = aux_trans1Before.quantProcessed;
+					aux_trans1.quantExe= aux_trans1Before.quantExe;
+					aux_trans2.quantToBe = aux_trans2Before.quantToBe;
+					aux_trans2.quantProcessed = aux_trans2Before.quantProcessed;
+					aux_trans2.quantExe = aux_trans2Before.quantExe;
+				}
+				
+				
 				
 				
 				aux_trans1.flag_dividedTrans = trans.flag_dividedTrans;
 				aux_trans2.flag_dividedTrans = trans.flag_dividedTrans;
 				
+				aux_trans1Before = aux_trans1;
+				aux_trans2Before = aux_trans2;
+				
 				System.out.println(aux_trans1.toString() + "||From: " + aux_trans1.From + "||To: " + aux_trans1.To);
 				System.out.println(aux_trans2.toString() + "||From: " + aux_trans2.From + "||To: " + aux_trans2.To);
 				
 			}
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			
+			System.out.println("AUX2 TO BEEE: " + aux_trans2.quantToBe);
+			
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.print("LEFT AUX1: [");
+			for(int i = 0; i < aux_trans1.pathLeft.length; i++)
+				System.out.print(aux_trans1.pathLeft[i]);
+			System.out.println("]");
+			
+			System.out.print("RIGHT AUX1: [");
+			for(int i = 0; i < aux_trans1.pathRight.length; i++)
+				System.out.print(aux_trans1.pathRight[i]);
+			System.out.println("]");
+			
+			System.out.print("LEFT AUX2: [");
+			for(int i = 0; i < aux_trans2.pathLeft.length; i++)
+				System.out.print(aux_trans2.pathLeft[i]);
+			System.out.println("]");
+			
+			System.out.print("RIGHT AUX2: [");
+			for(int i = 0; i < aux_trans2.pathRight.length; i++)
+				System.out.print(aux_trans2.pathRight[i]);
+			System.out.println("]");
+			
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			
 			if(aux_trans1.pathLeft[0]==0 && aux_trans1.pathRight[0]==0) {
+				//System.out.println("****************************************************************************************************************************************************************************************************************************************");
 				int[] aux = this.buildPathTransformation(aux_trans1, tts);
 				if(aux[0]!=0) {
 					aux_trans1.quantExe++;
 					aux_trans1.quantToBe--;
 				}
+				
+				aux_trans1Before = aux_trans1;
+				
 				return aux;
 			}
 			else if((aux_trans1.pathLeft[0]!=0 || aux_trans1.pathRight[0]!=0) && aux_trans2.pathLeft[0]==0 && aux_trans2.pathRight[0]==0) {
+				
+				
+				
 				if(aux_trans1.pathLeft[0]!=0 && aux_trans1.pathRight[0]==0) {
 					transformation = contructTranformations(aux_trans2, tts);
 					divideTransformation = transformation.split("/");
@@ -217,15 +282,24 @@ public class PathFinder {
 						aux_trans2.quantExe++;
 						aux_trans2.quantToBe--;
 					}
+					
+					aux_trans2Before = aux_trans2;
+					
 					return aux;
 				}
 				else if(aux_trans1.pathRight[0]!=0 && aux_trans1.pathLeft[0]==0) {
 					
 					int[] aux = this.buildPathTransformation(aux_trans2, tts);
-					if(aux[0]!=0) {
+					if(aux[0]!=0 && aux[0]<5) {
 						aux_trans2.quantExe++;
 						aux_trans2.quantToBe--;
 					}
+					else if(aux[0]>4)
+						for(int i = 0; i < aux.length; i++)
+							aux[i] = 0;
+					
+					aux_trans2Before = aux_trans2;
+					
 					return aux;
 				}
 				
@@ -235,9 +309,9 @@ public class PathFinder {
 			
 			else if(trans.pathLeft[0]==0 && trans.pathRight[0]==0) {
 				//trans.finTime =
-				/*
-				System.out.println("IM HERE :o !!!!!!!!!!!!!!!");
 				
+				System.out.println("IM HERE :o !!!!!!!!!!!!!!!");
+				/*
 				System.out.print("TRANSFORMATION AUX1 LEFT: ");
 				for(int i = 0; i < aux_trans1.pathLeft.length; i++)
 					System.out.print(aux_trans1.pathLeft[i]);
@@ -298,25 +372,26 @@ public class PathFinder {
 				aux_trans2.quantExe--;
 			}
 			
-			trans.quantExe = trans.quantTotal - trans.quantProcessed - trans.quantToBe;
 			
+			trans.quantExe = trans.quantTotal - trans.quantProcessed - trans.quantToBe;
+			System.out.println("");
 			System.out.println("AUX1 BEING PROCESSED: " + aux_trans1.quantExe);
 			System.out.println("AUX2 BEING PROCESSED: " + aux_trans2.quantExe);
 			System.out.println("AUX1 TO BE: " + aux_trans1.quantToBe);
 			System.out.println("AUX2 TO BE: " + aux_trans2.quantToBe);
-			
+			System.out.println("");
 			if(trans.pathLeft[0]!=0 && trans.pathRight[0]!=0) {
 				
-				//System.out.println("---------FLAGS---------");
-				//System.out.println("LEFT: " + flag_Dleft);
-				//System.out.println("RIGHT: " + flag_Dright);
-				//System.out.println("-----------------------");
+				System.out.println("---------FLAGS---------");
+				System.out.println("LEFT: " + flag_Dleft);
+				System.out.println("RIGHT: " + flag_Dright);
+				System.out.println("-----------------------");
 			
 				if(trans.pathLeft[0]!=0 && trans.pathLeft[1]!=0 && trans.pathLeft[2]!=0 && trans.pathLeft[3]!=0 && !flag_Dleft && !flag_Dright && aux_trans1.quantToBe > 0) {
 						
 					
 					flag_goLeft = true;
-					if(orderBefore != trans.getOrderNumber()) {
+				//	if(orderBefore != trans.getOrderNumber()) {
 						for(int i = 0; i < 4; i++) {
 								
 							if((short)Main.opc.get_Value("CL1T"+(4-i)+".Oper_Faltam", 2)==0) {
@@ -329,7 +404,7 @@ public class PathFinder {
 								mchs[i].setToolCodesys(i);
 							}
 						}	
-					}
+					//}
 					
 					if((short)Main.opc.get_Value("CL1T4.Oper_Faltam", 2)==0 && aux_trans1.quantTotal!=0) {
 						flag_Dleft = true;
@@ -348,51 +423,66 @@ public class PathFinder {
 						flag_Dright = false;
 					}
 						
-
+					aux_trans1Before = aux_trans1;
+					
 					return res;
 				}
 				
 				else if(trans.pathRight[0]!=0 && trans.pathRight[1]!=0 && trans.pathRight[2]!=0 && trans.pathRight[3]!=0 && !flag_Dleft && !flag_Dright && aux_trans1.quantToBe > 0) {
-						
-					
-						
-					if(trans.pathRight[0]!=0 && trans.pathRight[1]!=0 && trans.pathRight[2]!=0 & trans.pathRight[3]!=0) {
-							
-						if(orderBefore != trans.getOrderNumber()) {
-							for(int i = 4; i < 8; i++) {
 									
-								if((short)Main.opc.get_Value("CR1T"+(4-i)+".Oper_Faltam", 3)==0) {
-									if(trans.toolUsingRight[i]==1)
-										mchs[i].changeTool("T1");
-									else if(trans.toolUsingRight[i]==2)
-										mchs[i].changeTool("T2");
-									else if(trans.toolUsingRight[i]==3)
-										mchs[i].changeTool("T3");
-									mchs[i].setToolCodesys(i);
-								}
-							}	
-						}
-							
-						if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0  && aux_trans2.quantTotal!=0) {
-							flag_Dright = true;
-							flag_Dleft = false;
-							counter_flags = 0;
-							aux_trans1.quantExe++;
-							aux_trans1.quantToBe--;
-							res = trans.pathRight;
-						}
-							
-						counter_flags++;
+					//if(orderBefore != trans.getOrderNumber()) {
 						
-						if(counter_flags==3 && res[0]==0) { 
-							counter_flags = 0;
-							flag_Dleft = false;
-							flag_Dright = true;
-						}
+						int number = 0;
+						
+						if(trans.pathRight[0]==5)
+							number = 4;
+						else if(trans.pathRight[0]==6)
+							number = 3;
+						else if(trans.pathRight[0]==7)
+							number = 2;
+						else if(trans.pathRight[0]==7)
+							number = 1;
+						
+						for(int i = 4; i < 8; i++) {
+								
+							if((short)Main.opc.get_Value("CR1T"+number+".Oper_Faltam", 3)==0) {
+								if(trans.toolUsingRight[i-4]==1)
+									mchs[i].changeTool("T1");
+								else if(trans.toolUsingRight[i-4]==2)
+									mchs[i].changeTool("T2");
+								else if(trans.toolUsingRight[i-4]==3)
+									mchs[i].changeTool("T3");
+								mchs[i].setToolCodesys(i);
+							}
+						}	
+					//}
 							
-
-						return res;
+					if((short)Main.opc.get_Value("CR1T4.Oper_Faltam", 3)==0  && aux_trans1.quantTotal!=0) {
+						flag_Dright = true;
+						flag_Dleft = false;
+						counter_flags = 0;
+						aux_trans1.quantExe++;
+						aux_trans1.quantToBe--;
+						res = trans.pathRight;
 					}
+							
+					counter_flags++;
+						
+					if(counter_flags==3 && res[0]==0) { 
+						counter_flags = 0;
+						flag_Dleft = false;
+						flag_Dright = true;
+					}
+							
+					aux_trans1Before = aux_trans1;
+						
+					return res;
+				
+				}
+				else if((flag_Dleft || flag_Dright) && aux_trans1.quantToBe>0 && aux_trans2.quantToBe==0) {
+					flag_Dleft = false;
+					flag_Dright = false;
+					
 				}
 				else if(aux_trans1.quantToBe==0 && aux_trans2.quantToBe==0) {
 					
@@ -415,6 +505,18 @@ public class PathFinder {
 					
 				if(flag_Dleft && aux_trans2.quantToBe > 0) {
 					
+					transformation = contructTranformations(aux_trans2, tts);
+					divideTransformation = transformation.split("/");
+					
+					res = this.buildPathOnRight(aux_trans2, tts, divideTransformation);
+					
+					if(res[0]!=0) {
+						counter_flags = 0;
+						aux_trans2.quantToBe--;
+						aux_trans2.quantExe++;
+						flag_Dleft = false;
+					}
+				/*	
 					int count = 0;
 					
 					while(trans.pathRight[count]!=0) 
@@ -466,19 +568,36 @@ public class PathFinder {
 						System.out.println("hOi!!");
 						flag_Dleft = false;
 					}
-					
+					*/
 					counter_flags++;
 					
-					if(counter_flags==3 && res[0]==0) {
+					if(counter_flags==3 && res[0]==0 && aux_trans1.quantToBe > 0) {
 						flag_Dleft = false;
 						counter_flags = 0;
 					}
+					
+					aux_trans2Before = aux_trans2;
 					
 					return res;
 				}
 				
 				else if(flag_Dright && aux_trans2.quantToBe > 0) {
 					
+					res = this.buildPathTransformation(aux_trans2, tts);
+					
+					if(res[0]!=0 && res[0]<5) {
+						
+						counter_flags = 0;
+						aux_trans2.quantToBe--;
+						aux_trans2.quantExe++;
+						flag_Dright = false;
+						flag_Dleft = false;
+					}
+					else if(res[0]>4)
+						for(int i = 0; i < res.length; i++)
+							res[i] = 0;
+					
+					/*
 					int count = 0;
 					
 					while(trans.pathLeft[count]!=0) 
@@ -514,13 +633,17 @@ public class PathFinder {
 						aux_trans2.quantExe++;
 						flag_Dright= false;
 					}
+					*/
 					
 					counter_flags++;
 					
 					if(counter_flags==3 && res[0]==0) {
 						flag_Dright = false;
+						flag_Dleft = false;
 						counter_flags = 0;
 					}
+					
+					aux_trans2Before = aux_trans2;
 					
 					return res;
 					
@@ -542,6 +665,7 @@ public class PathFinder {
 					
 				}
 				
+				
 			}					
 				
 				
@@ -556,7 +680,21 @@ public class PathFinder {
 			flag_Dleft = false;
 			flag_Dright = false;
 			flag_goLeft = false;
+			
+			if(trans.getOrderNumber()!= aux_trans1.getOrderNumber() && trans.getOrderNumber()!= aux_trans2.getOrderNumber()) {
+				aux_trans1.orderNumber = -1;
+				aux_trans2.orderNumber = -1;
+			}
 
+			
+			if(trans.getOrderNumber()!= aux_trans1.getOrderNumber() && trans.getOrderNumber()!= aux_trans2.getOrderNumber()) {
+				for(int i = 0; i < transBefore.pathLeft.length;i++) {
+					transBefore.pathLeft[i] = 0;
+					transBefore.pathRight[i] = 0;				
+				}
+			}
+			
+			
 			//
 			// SAVE AVAILABLE MACHINES  ----> PODE SER SEPARADO DESTE CODIGO
 			//
@@ -1019,7 +1157,7 @@ public class PathFinder {
 							
 							if(mchs[mchs_available.get(n).machineID].tool == tts[k].get_toolNeeded(divideTransformation[i], divideTransformation[i+1])) {
 								
-								System.out.println("\nMACHINE TO GO: " + mchs_available.get(n).machineID + "\n");
+								//System.out.println("\nMACHINE TO GO: " + mchs_available.get(n).machineID + "\n");
 								
 								aux_result = aux_result + (mchs_available.get(n).machineID+1);
 								res[i] = (mchs_available.get(n).machineID+1);
@@ -1064,16 +1202,18 @@ public class PathFinder {
 			//flag2 = false;
 		}
 		
-		for(int i = 0; i<res.length;i++) {
-		
-			if(res[i]!=0) {
-				mchs[res[i]-1].state = false;
-				//mchs[res[i]-1].flag = false;
-				trans.set_PathRight(res);
-			}
-		
-		}
 	
+		for(int i = 0; i<res.length;i++) {
+
+			if(res[i]!=0) {
+				if(i==0) 
+				mchs[res[i]-1].state = false;		
+				trans.set_PathRight(res);
+				
+			}
+		}
+		
+		
 		//for(int i= 4; i<8;i++) 
 			//mchs[i].print_machine();
 
@@ -1174,7 +1314,7 @@ public class PathFinder {
 				}
 				
 				else if(tool_counter>2 && mchs_available.size()>=tool_counter) {
-					System.out.println("MACHINE ID: " + mchs_available.get(i).machineID);
+					//System.out.println("MACHINE ID: " + mchs_available.get(i).machineID);
 					mchs[mchs_available.get(i).machineID].changeTool("T1");
 				}
 				

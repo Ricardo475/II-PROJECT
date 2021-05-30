@@ -203,7 +203,7 @@ public class Transformação extends Order {
 						}
 						else {
 							
-							if(pr.aux_trans1.pathLeft[0]!=0 && pr.aux_trans1.pathLeft[1]!=0 && pr.aux_trans1.pathLeft[2]!=0 && pr.aux_trans1.pathLeft[3]!=0) {
+							if(pr.aux_trans1.pathLeft[0]!=0) {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),1);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),1);
 								
@@ -230,7 +230,7 @@ public class Transformação extends Order {
 						}
 						else {
 							
-							if(pr.aux_trans2.pathRight[0]!=0 && pr.aux_trans2.pathRight[1]!=0 && pr.aux_trans2.pathRight[2]!=0 && pr.aux_trans2.pathRight[3]!=0) {
+							if(pr.aux_trans1.pathRight[0]!=0) {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),4);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),4);
 								

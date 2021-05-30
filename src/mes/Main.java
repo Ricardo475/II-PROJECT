@@ -28,22 +28,6 @@ public class Main {
 	static DataBase DB = new DataBase();
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, InterruptedException, SQLException {
 
-		//------------------------------------------------PAULO--------------------------------------------------------------//
-
-		/*
-		test t = new test();
-		t.doTest();
-		 */
-
-		//int orderNumber = 1;
-
-
-		//Unloading u = new Unloading(4, "P4","P2",2);
-		//Transformação trans1 = new Transformação(100, "P1", "P8", 2, 1, 300, 0, 0);
-		//Transformação trans2 = new Transformação(101, "P4", "P8", 5, 2, 100, 0, 0);
-		//Transformação trans3 = new Transformação(102, "P4", "P6", 20, 0, 10, 0, 0);
-		//SoredInWarehouse[] siw = new SoredInWarehouse[9];
-		
 		tts[0] = new TransformationTable("P1","P2","T1",15);
 		tts[1] = new TransformationTable("P4","P5","T1",15);
 		tts[2] = new TransformationTable("P6","P8","T1",15);
@@ -52,6 +36,7 @@ public class Main {
 		tts[5] = new TransformationTable("P3","P4","T3",15);
 		tts[6] = new TransformationTable("P5","P9","T3",30);
 		tts[7] = new TransformationTable("P6","P7","T3",30);
+		
 		if(DB.existeArm(1))
 		{
 			
@@ -70,74 +55,18 @@ public class Main {
 		{
 			
 			pr.initializeMachines();
-			//pr.mchs[1].changeTool("T2");
-			//pr.mchs[2].changeTool("T3");
-			//pr.mchs[5].changeTool("T2");
-			//pr.mchs[6].changeTool("T3");
-
 			System.out.println("------------------------------------------------------------");
 
 			pr.initializeSystemState();
-
-			//System.out.println("------------------------------------------------------------");
-
-
-			
 
 			System.out.println("------------------------------------------------------------");
 
 			pr.initializePushers();
 
 			System.out.println("------------------------------------------------------------");
-			/*
-		//OL.printOrders();
-
-		System.out.println("------------------------------------------------------------");
-
-		OL.addOrder(trans1);
-		OL.printOrders();
-
-		System.out.println("------------------------------------------------------------");
-		pr.buildPathTransformation(trans1,tts);
-
-		System.out.println("------------------------------------------------------------");
-
-		TimeUnit.SECONDS.sleep(2);
-
-		OL.addOrder(trans2);
-		OL.printOrders();
-
-		System.out.println("------------------------------------------------------------");
-
-		TimeUnit.SECONDS.sleep(2);
-		pr.buildPathTransformation(trans2,tts);
-
-
-		OL.addOrder(trans3);
-		OL.printOrders();
-		System.out.println("------------------------------------------------------------");
-
-		pr.buildPathTransformation(trans3,tts);
-
-		//pr.mchs[0].state = false;
-		//pr.mchs[1].state = false;
-		//pr.mchs[2].state = false;
-		//pr.mchs[3].state = false;
-
-		//System.out.println("------------------------------------------------------------");
-
-		//pr.buildPathTransformation(trans2,tts);
-
-		//System.out.println("------------------------------------------------------------");
-		//pr.buildPathUnloading(u);
-
-		//System.out.println("------------------------------------------------------------");
-
-			 */
 			opc.connect();
 		}
-		//----------------------------------------------------LOIRO---------------------------------------------------------//
-		
+
 		sw.initApp();
 		//sw.run();
 
@@ -149,6 +78,11 @@ public class Main {
 		pr.aux_trans2.orderNumber = -1;
 		pr.transBefore = new Transformação();
 		pr.transBefore.orderNumber = -1;
+		pr.aux_trans1Before = new Transformação();
+		pr.aux_trans2Before = new Transformação();
+		pr.aux_trans1Before.orderNumber = -1;
+		pr.aux_trans2Before.orderNumber = -1;
+		
 		int l=0;
 		String ordem="aaa";
 		Erp=new Erp_connection(OL);
