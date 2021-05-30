@@ -38,20 +38,26 @@ public class Transformação extends Order {
 		this.From=From;
 		this.To= To;
 		int aux=0;
-		for(int j=0;j<QuantidadeEmproducao;j++)
-		{
-				aux= aux +this.checkFabrica();
-				System.out.println("OLAOLAOLA");
-				}
+		aux=this.checkFabrica();
+		System.out.println("OLAOLAOLA");
+	
 		if(aux>0)
 		{
 			this.quantTotal=QuantTotal;
 			this.quantToBe= QuantidadeAproduzir;
 			if(aux!= QuantidadeEmproducao)
 			{
-				
-				this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao-aux;
-				this.quantExe=aux;
+				if(aux<QuantidadeEmproducao)
+				{
+					this.quantProcessed=QuantidadeProduzida+QuantidadeEmproducao-aux;
+					this.quantExe=aux;
+				}
+				else if(aux>QuantidadeEmproducao)
+				{
+					this.quantProcessed=QuantidadeProduzida;
+					this.quantToBe=this.quantToBe+ (QuantidadeEmproducao-aux);
+					this.quantExe=aux;
+				}
 			}
 			else
 			{
@@ -97,18 +103,25 @@ public class Transformação extends Order {
 	}
 	void FimOrdem() {
 		this.finTime = (((int)System.currentTimeMillis()-Main.start)/1000);
-		if(finTime > this.MaxDelay)
+		if(finTime > this.deadline)
 		{
 			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
 		}
 		flagEnd = true;
+		Main.OL.calculateTimes();
 	}
 	@Override
 	public String toString()
 	{
 		return "{ORDER Nº" + this.orderNumber + " || Type: Transformation" + " || TIME: " + this.PrazoEntrega() + "}";
 	}
-
+	void estimatePenalty()
+	{
+		if(finTime > this.MaxDelay)
+		{
+			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
+		}
+	}
 	public void pecaProcessada(int to)
 	{	
 		if(!flag_dividedTrans) {
@@ -164,6 +177,7 @@ public class Transformação extends Order {
 			System.out.println("OLA3");
 			this.startTime=((int)System.currentTimeMillis()-Main.start)/1000;
 			first = false;
+			Main.OL.calculateTimes();
 		}
 		if(this.existePecas())
 		{
@@ -178,8 +192,8 @@ public class Transformação extends Order {
 				System.out.println(this.quantToBe);
 				String aux2 =this.convert(aux);
 				if(!(aux[0] == 0 && aux[1] == 0 && aux[2] == 0 && aux[3] == 0 && aux[4] == 0 && aux[5] == 0) && quantToBe>0) {
-					Main.OL.organizeTimes(this);
-
+					//Main.OL.organizeTimes(this);
+					
 
 					if(aux2.contains("1") || aux2.contains("2") || aux2.contains("3") || aux2.contains("4"))
 					{
@@ -340,15 +354,30 @@ public class Transformação extends Order {
 		return false;
 	}
 	
-
-	public int compareTo(Transformação o) {
-		
-		if(this.equals(o))
+	@Override
+	public int compareTo(Order o) {
+		if(o.getClass().toString().contains("Transformação"))
+		{
+		if(this.equals(((Transformação)o)))
 			return 0;
-		else if (this.PrazoEntrega()+1/(this.Penalty/50) > o.PrazoEntrega()+1/(o.Penalty/50))
+		else if (this.PrazoEntrega()*1/(this.Penalty/50) > ((Transformação)o).PrazoEntrega()*1/(((Transformação)o).Penalty/50))
+		{
 			return 1;
+		}
 		else
+		{
 			return -1;
+		}
+		}
+		else
+		{
+			if(this.equals(o))
+				return 0;
+			else if (this.PrazoEntrega() > o.PrazoEntrega())
+				return 1;
+			else
+				return -1;
+		}
 	}
 	
 	public Transformação getTrans(int id) {

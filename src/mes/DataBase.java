@@ -340,7 +340,7 @@ public class DataBase {
 	}
 	void store_armazem(SystemState s)
 	{
-		String SQL= "INSERT INTO \"Armazem\" (\"ID\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\") VALUES ("+1+","+s.nP1Warehouse+","+s.nP2Warehouse+","+s.nP3Warehouse+","+s.nP4Warehouse+","+s.nP5Warehouse+","+s.nP6Warehouse+","+s.nP7Warehouse+","+s.nP8Warehouse+","+s.nP9Warehouse+")";
+		String SQL= "INSERT INTO \"Armazem\" (\"ID\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"startTime\") VALUES ("+1+","+s.nP1Warehouse+","+s.nP2Warehouse+","+s.nP3Warehouse+","+s.nP4Warehouse+","+s.nP5Warehouse+","+s.nP6Warehouse+","+s.nP7Warehouse+","+s.nP8Warehouse+","+s.nP9Warehouse+","+Main.start+")";
 		String SQL1= "UPDATE \"Armazem\" SET \"P1\" = "+s.nP1Warehouse+", \"P2\" = "+s.nP2Warehouse+",\"P3\" = "+s.nP3Warehouse+",\"P4\" = "+s.nP4Warehouse+",\"P5\" = "+s.nP5Warehouse+",\"P6\" = "+s.nP6Warehouse+", \"P7\" = "+s.nP7Warehouse + ",\"P8\" = "+s.nP8Warehouse + ",\"P9\" = "+s.nP9Warehouse+"WHERE \"ID\" = "+1;
 		if(this.existeArm(1))
 		{
@@ -404,6 +404,22 @@ public class DataBase {
 			e.printStackTrace();
 		}	
 		return null; 
+	}
+	public int get_startTime()
+	{
+		String SQL= "SELECT \"startTime\" FROM \"Armazem\"";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(SQL)) {
+			while (rs.next()) {	
+				int p1= rs.getInt("startTime");
+				return p1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return -1;
 	}
 	//void getStatistics()
 	void store_pusher(Pusher p)

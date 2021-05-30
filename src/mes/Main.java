@@ -56,6 +56,7 @@ public class Main {
 		{
 			
 			pr.sys=DB.get_armazem();
+			start=DB.get_startTime();
 			pr.sys.print_quantityPieces();
 			pr.mchs=DB.get_maquinaID();
 			pr.mchs[0].print_machine();
@@ -67,7 +68,7 @@ public class Main {
 		}
 		else
 		{
-			opc.connect();
+			
 			pr.initializeMachines();
 			//pr.mchs[1].changeTool("T2");
 			//pr.mchs[2].changeTool("T3");
@@ -133,7 +134,7 @@ public class Main {
 		//System.out.println("------------------------------------------------------------");
 
 			 */
-
+			opc.connect();
 		}
 		//----------------------------------------------------LOIRO---------------------------------------------------------//
 		
@@ -203,7 +204,7 @@ public class Main {
 			Thread.sleep(1000);
 			
 		}
-
+		
 
 	}
 

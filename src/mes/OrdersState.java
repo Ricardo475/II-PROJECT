@@ -36,13 +36,53 @@ public class OrdersState {
 		}
 		
 		while(!pqOrdem.isEmpty()) {
-
 			Order o_aux = pqOrdem.poll();
-			
 			aux.add(o_aux);
 		}
+
 		Main.DB.storeOrder(order);
 		OrdersList = aux;
+		calculateTimes();
+	}
+
+
+	public void calculateTimes() {
+		int begin = (((int)System.currentTimeMillis()-Main.start)/1000);
+		for(Order o:this.OrdersList)
+		{
+			if(o.getClass().toString().contains("Transformação"))
+			{
+				System.out.print(o);
+				if(!o.done)
+				{
+					if(!o.activeOrder)
+					{
+						((Transformação)o).startTime=begin;
+						String aux;
+						aux=Main.pr.contructTranformations(((Transformação)o), Main.tts);
+						String[] aux1=aux.split("/");
+						int aux2=aux1.length-1;
+						((Transformação)o).finTime= begin+ ((Transformação)o).quantTotal*20*(aux2)/8+25;
+						begin=((Transformação)o).finTime;
+					}
+					else
+					{
+						String aux;
+						aux=Main.pr.contructTranformations(((Transformação)o), Main.tts);
+						String[] aux1=aux.split("/");
+						int aux2=aux1.length-1;
+						((Transformação)o).finTime= begin+ ((Transformação)o).quantToBe*((Transformação)o).exeTime/8+((Transformação)o).quantExe*((Transformação)o).exeTime/2+25;
+						begin=((Transformação)o).finTime;
+					}
+					((Transformação)o).estimatePenalty();
+					System.out.println(((Transformação)o).finTime+ " TOTAL: " +((Transformação)o).quantTotal+ " begin: "+begin);
+				}
+				else
+				{
+					begin=((Transformação)o).finTime;
+				}
+			}
+		}
 	}
 
 
@@ -209,7 +249,7 @@ public class OrdersState {
 			return null;
 	}
 
-
+	
 	public void organizeTimes(Transformação trans) {
 		
 		int endTime_running = 0;
@@ -242,9 +282,7 @@ public class OrdersState {
 					}
 					
 					
-				}
-				
-				
+				}		
 			}
 
 				
