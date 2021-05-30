@@ -53,16 +53,16 @@ public class OrdersState {
 			if(o.getClass().toString().contains("Transformação"))
 			{
 				System.out.print(o);
-				if(!o.done)
+				if(!((Transformação)o).flagEnd)
 				{
-					if(!o.activeOrder)
+					if(((Transformação)o).first)
 					{
 						((Transformação)o).startTime=begin;
 						String aux;
 						aux=Main.pr.contructTranformations(((Transformação)o), Main.tts);
 						String[] aux1=aux.split("/");
 						int aux2=aux1.length-1;
-						((Transformação)o).finTime= begin+ ((Transformação)o).quantTotal*20*(aux2)/8+25;
+						((Transformação)o).finTime= begin+ ((Transformação)o).quantTotal*35*(aux2)/8+25;
 						begin=((Transformação)o).finTime;
 					}
 					else
@@ -71,16 +71,21 @@ public class OrdersState {
 						aux=Main.pr.contructTranformations(((Transformação)o), Main.tts);
 						String[] aux1=aux.split("/");
 						int aux2=aux1.length-1;
-						((Transformação)o).finTime= begin+ ((Transformação)o).quantToBe*((Transformação)o).exeTime/8+((Transformação)o).quantExe*((Transformação)o).exeTime/2+25;
+						System.out.println("BEGIN: "+begin+"EXE TIME: "+((Transformação)o).exeTime+ " TTRNAS: "+aux2);
+						if(aux2<2)
+						{
+							((Transformação)o).finTime= begin+ ((Transformação)o).quantToBe*(((Transformação)o).exeTime+7)/(7)+((Transformação)o).quantExe*(((Transformação)o).exeTime+6)/(7)+35;
+						}
+						else
+						{
+							((Transformação)o).finTime= begin+ ((Transformação)o).quantToBe*(((Transformação)o).exeTime+5)/(7-aux2)+((Transformação)o).quantExe*(((Transformação)o).exeTime+3)/(10-aux2);
+						}
 						begin=((Transformação)o).finTime;
 					}
 					((Transformação)o).estimatePenalty();
 					System.out.println(((Transformação)o).finTime+ " TOTAL: " +((Transformação)o).quantTotal+ " begin: "+begin);
 				}
-				else
-				{
-					begin=((Transformação)o).finTime;
-				}
+
 			}
 		}
 	}

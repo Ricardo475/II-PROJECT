@@ -203,6 +203,7 @@ public class Transformação extends Order {
 						}
 						else {
 							
+							
 							if(pr.aux_trans1.pathLeft[0]!=0) {
 								Main.opc.Set_value("atual_piece.finalType", Character.getNumericValue(pr.aux_trans1.To.charAt(1)),1);
 								Main.opc.Set_value("atual_piece.currType", Character.getNumericValue(pr.aux_trans1.From.charAt(1)),1);
