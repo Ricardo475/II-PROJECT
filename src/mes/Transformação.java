@@ -294,30 +294,7 @@ public class Transformação extends Order {
 							
 							quantExe = quantTotal - quantToBe - quantProcessed;
 							
-							
-							
-							/*
-							if(pr.aux_trans1.quantExe!=pr.aux_trans2.quantExe) {
-								
-								int least = pr.aux_trans1.quantExe;
-								
-								if(least > pr.aux_trans2.quantExe)
-									least = pr.aux_trans2.quantExe;
-								
-								if(quantExe!= least)
-									quantToBe--;
-								
-								quantExe = least;
-								
-								
-							}
-							else {
-								quantExe = pr.aux_trans1.quantExe;
-								quantToBe--;
-								
-							}
-							*/
-							
+						
 							
 						}
 						flag = false;
