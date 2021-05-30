@@ -298,8 +298,12 @@ public class PathFinder {
 				aux_trans2.quantExe--;
 			}
 			
+			trans.quantExe = trans.quantTotal - trans.quantProcessed - trans.quantToBe;
+			
 			System.out.println("AUX1 BEING PROCESSED: " + aux_trans1.quantExe);
 			System.out.println("AUX2 BEING PROCESSED: " + aux_trans2.quantExe);
+			System.out.println("AUX1 TO BE: " + aux_trans1.quantToBe);
+			System.out.println("AUX2 TO BE: " + aux_trans2.quantToBe);
 			
 			if(trans.pathLeft[0]!=0 && trans.pathRight[0]!=0) {
 				
@@ -391,9 +395,19 @@ public class PathFinder {
 					}
 				}
 				else if(aux_trans1.quantToBe==0 && aux_trans2.quantToBe==0) {
-					trans.quantToBe = 0;
-					trans.quantExe++;
-					//return res;
+					
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					trans.orderDisactivate();
+					//pr.sys.increasePieces(this.To,this.quantTotal); 
+					trans.quantExe = trans.quantTotal - trans.quantProcessed - trans.quantToBe;
+					trans.done=true;
+					System.out.println("ORDEM "+trans.getOrderNumber()+" ACABOU");
+					return res;
 				}
 				
 				
@@ -405,22 +419,22 @@ public class PathFinder {
 					
 					while(trans.pathRight[count]!=0) 
 						count++;
-						
+					
+					int number = 0;
+					
+					if(trans.pathRight[0]==5)
+						number = 4;
+					else if(trans.pathRight[0]==6)
+						number = 3;
+					else if(trans.pathRight[0]==7)
+						number = 2;
+					else if(trans.pathRight[0]==7)
+						number = 1;
 					//System.out.println("COUNT = " + count);
 					if(orderBefore != trans.getOrderNumber()) {
-											
+					
+						
 						for(int i = 4; i < 8; i++) {
-							
-							int number = 0;
-							
-							if(trans.pathRight[0]==5)
-								number = 4;
-							else if(trans.pathRight[0]==6)
-								number = 3;
-							else if(trans.pathRight[0]==7)
-								number = 2;
-							else if(trans.pathRight[0]==7)
-								number = 1;
 							
 							if((short)Main.opc.get_Value("CR1T"+number+".Oper_Faltam", 3)==0) {
 								if(trans.toolUsingRight[i]==1)
@@ -440,24 +454,16 @@ public class PathFinder {
 					}
 					
 					
-					int number = 0;
 					
-					if(trans.pathRight[0]==5)
-						number = 4;
-					else if(trans.pathRight[0]==6)
-						number = 3;
-					else if(trans.pathRight[0]==7)
-						number = 2;
-					else if(trans.pathRight[0]==7)
-						number = 1;
 					
-					System.out.println("MACHINE: " + number);
+				//	System.out.println("MACHINE: " + number);
 					
 					if((short)Main.opc.get_Value("CR1T"+number+".Oper_Faltam", 3)==0 && aux_trans2.quantTotal!=0){
 						res = trans.pathRight;
 						counter_flags = 0;
 						aux_trans2.quantToBe--;
 						aux_trans2.quantExe++;
+						System.out.println("hOi!!");
 						flag_Dleft = false;
 					}
 					
@@ -571,7 +577,7 @@ public class PathFinder {
 			// TOOLS CHANGES BEFORE THE PATH (mes only)
 			//
 			
-			pathing_changeToolsMES(tool_counter,mchs_available, toolsToUse,trans.quantTotal);
+			pathing_changeToolsMES(tool_counter,mchs_available, toolsToUse,trans.quantToBe);
 
 
 			for(int i = 0; i < mchs_available.size();i++)
@@ -972,7 +978,7 @@ public class PathFinder {
 		//for(int i= 4; i<8;i++) 
 			//mchs[i].print_machine();
 		//System.out.println("------------------------------------------------------------");
-		pathing_changeToolsMES(tool_counter,mchs_available, toolsToUse,trans.quantTotal);
+		pathing_changeToolsMES(tool_counter,mchs_available, toolsToUse,trans.quantToBe);
 
 /*
 		if(trans.pathRight[0]!=0 && trans.pathRight[0]>=4 &&toolUsed[0] && toolUsed[1] && toolUsed[2]) {
