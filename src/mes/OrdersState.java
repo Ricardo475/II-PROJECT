@@ -24,25 +24,32 @@ public class OrdersState {
 
 	public void addOrder(Order order) {
 
-		PriorityQueue<Order> pqOrdem = new PriorityQueue<Order>();
-		ArrayList<Order> aux = new ArrayList<Order>();
-		System.out.println("REGISTA ORDEM");
-		pqOrdem.add(order);
-		for(int i=0; i < OrdersList.size(); i++) {
+		if(order.getClass().toString().contains("Order") || this.orderfindByID(order.orderNumber))
+		{
+			PriorityQueue<Order> pqOrdem = new PriorityQueue<Order>();
+			ArrayList<Order> aux = new ArrayList<Order>();
+			System.out.println("REGISTA ORDEM");
+			pqOrdem.add(order);
+			for(int i=0; i < OrdersList.size(); i++) {
 
-			Order o_aux = new Order();
-			o_aux = OrdersList.get(i);
-			pqOrdem.add(o_aux);
-		}
-		
-		while(!pqOrdem.isEmpty()) {
-			Order o_aux = pqOrdem.poll();
-			aux.add(o_aux);
-		}
+				Order o_aux = new Order();
+				o_aux = OrdersList.get(i);
+				pqOrdem.add(o_aux);
+			}
 
-		Main.DB.storeOrder(order);
-		OrdersList = aux;
-		calculateTimes();
+			while(!pqOrdem.isEmpty()) {
+				Order o_aux = pqOrdem.poll();
+				aux.add(o_aux);
+			}
+
+			Main.DB.storeOrder(order);
+			OrdersList = aux;
+			calculateTimes();
+		}
+		else
+		{
+			System.out.println("FORA DAQUI");
+		}
 	}
 
 
@@ -120,7 +127,7 @@ public class OrdersState {
 				}
 			}
 		}
-		
+
 		if(i!=-1)
 		{
 			if(OrdersList.get(i).getClass().toString().contains("Transformação"))
@@ -161,7 +168,7 @@ public class OrdersState {
 			return null;
 
 	}
-	
+
 	public Order OrdemPrioritária(int k)
 	{
 
@@ -202,7 +209,7 @@ public class OrdersState {
 			return null;
 		}
 	}
-	
+
 	public void pecaProc(int ID, int to)
 	{
 
@@ -218,6 +225,15 @@ public class OrdersState {
 	public void printOrders() {
 		System.out.println(OrdersList);
 
+	}
+	private boolean orderfindByID(int id)
+	{
+		for(int j=0;j<this.LengthOrderList();j++)
+		{
+			if(OrdersList.get(j).orderNumber==id)
+				return false;
+		}
+		return true;
 	}
 	private Order orderfindByTypePiece(String piece,int pos)
 	{
@@ -254,49 +270,49 @@ public class OrdersState {
 			return null;
 	}
 
-	
+
 	public void organizeTimes(Transformação trans) {
-		
+
 		int endTime_running = 0;
 		for(int i = 0; i < this.LengthOrderList(); i++) {
-			
+
 			Order o = this.OrdersList.get(i);
-			
+
 			if(!o.done) {
-				
+
 				if(o.toString().contains("Transformation") ) {
-					
+
 					if(o.getOrderNumber() == trans.getOrderNumber()) {
 						endTime_running = trans.finTime;
 						//System.out.println("TESTE TEMPOS: ORDER Nº " + o.getOrderNumber() + "|| TIME:" + endTime_running + "|| INTERATION: " + i);
 						continue;
 					}	
-					
+
 					else if(!o.activeOrder) {
-						
+
 						((Transformação)o).startTime = (int) (endTime_running*0.6);
 						((Transformação)o).finTime = (int) (endTime_running + ((Transformação)o).quantTotal*7.5);
 						endTime_running = ((Transformação)o).finTime;
 						//System.out.println("UPDATED TIME: " + ((Transformação)o).exeTime);
-					
+
 					}
-					
+
 					else if(o.activeOrder) {			
 						((Transformação)o).finTime = (int) (endTime_running + ((Transformação)o).quantTotal*7.5);
 						endTime_running = ((Transformação)o).finTime;
 					}
-					
-					
+
+
 				}		
 			}
 
-				
-				
-			
-			
-			
+
+
+
+
+
 		}
-		
+
 	}
 
 }
