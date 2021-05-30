@@ -1,0 +1,1 @@
+1º passo abrir o programa codesys e configurar a interface ethernet. Para isto tem de se abrir o codesys control win 64. Após este passo pode iniciar o codesys e abrir o .jar que contem

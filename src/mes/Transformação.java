@@ -107,6 +107,10 @@ public class Transformação extends Order {
 		{
 			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
 		}
+		else
+		{
+			PenaltyInc=0;
+		}
 		flagEnd = true;
 		Main.OL.calculateTimes();
 	}
@@ -117,9 +121,13 @@ public class Transformação extends Order {
 	}
 	void estimatePenalty()
 	{
-		if(finTime > this.MaxDelay)
+		if(finTime > this.deadline)
 		{
 			PenaltyInc= this.Penalty + this.Penalty*((int)(finTime-deadline)/50 );
+		}
+		else
+		{
+			PenaltyInc=0;
 		}
 	}
 	public void pecaProcessada(int to)
@@ -181,8 +189,7 @@ public class Transformação extends Order {
 		{
 			System.out.println("OLA3");
 			this.startTime=((int)System.currentTimeMillis()-Main.start)/1000;
-			first = false;
-			Main.OL.calculateTimes();
+			
 		}
 		if(this.existePecas())
 		{
@@ -192,6 +199,12 @@ public class Transformação extends Order {
 				System.out.println("OLA3");
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
+				if(first)
+				{
+					first = false;
+					Main.OL.calculateTimes();
+					
+				}
 				//int[] aux = {0,0,0,0,0,0};
 				System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println(this.quantToBe);
