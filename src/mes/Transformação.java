@@ -180,7 +180,7 @@ public class Transformação extends Order {
 			
 			if(this.quantToBe > 0)
 			{
-				System.out.println("OLA3");
+				
 				String Side= "";
 				int[] aux=pr.buildPathTransformation(this,Main.tts);
 				//int[] aux = {0,0,0,0,0,0};
