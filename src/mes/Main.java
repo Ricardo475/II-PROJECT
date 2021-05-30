@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.sql.SQLException;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -36,7 +37,25 @@ public class Main {
 		tts[5] = new TransformationTable("P3","P4","T3",15);
 		tts[6] = new TransformationTable("P5","P9","T3",30);
 		tts[7] = new TransformationTable("P6","P7","T3",30);
-		
+		System.out.println("DESEJA LIMPAR A BASE DE DADOS? (S/N)");
+		Scanner scanner = new Scanner(System.in);
+		String myString = scanner.nextLine();
+		while(true)
+		{
+			if(myString.contentEquals("S") || myString.contentEquals("N"))
+			{
+				break;
+			}
+			System.out.println("ENTRADA INVALIDA\nINSIRA DE NOVO(S/N): ");
+			myString = scanner.nextLine();
+			
+		}
+		if(myString.contentEquals("S"))
+		{
+			System.out.println("A apagar...");
+			DB.clearALL();
+		}
+		scanner.close();
 		if(DB.existeArm(1))
 		{
 			
@@ -122,8 +141,9 @@ public class Main {
 					
 					prio.orderActivate();
 					//System.out.println("OLA");
-					DB.storeOrder(prio);	
+						
 					prio.doOrder(pr);
+					DB.storeOrder(prio);
 					l=0;
 				}
 				else

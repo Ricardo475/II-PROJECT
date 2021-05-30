@@ -4,7 +4,7 @@ public class Unloading extends Order{
 	
 	String unloadType, dest;
 	int quantity;
-	int quantityToBe;
+	int quantityToBe,descarregada;
 	boolean flag;
 	
 	public Unloading(int orderNumber, String unloadType, String dest, int quantity) {
@@ -13,9 +13,10 @@ public class Unloading extends Order{
 		this.dest = dest;
 		this.quantity = quantity;
 		quantityToBe = quantity;
+		this.descarregada=0;
 		flag = false;
 	}
-	public Unloading(int IDOrdem,String tipo,String dest,int quant,int quantPorEnviar,boolean done,boolean activeorder)
+	public Unloading(int IDOrdem,String tipo,String dest,int quant,int quantPorEnviar,int quantidadeDescarregada,boolean done,boolean activeorder)
 	{
 		this.orderNumber=IDOrdem;
 		this.unloadType=tipo;
@@ -24,6 +25,7 @@ public class Unloading extends Order{
 		this.quantityToBe=quantPorEnviar;
 		this.done=done;
 		this.activeOrder=activeorder;
+		this.descarregada=quantidadeDescarregada;
 	}
 	@Override
 	public String toString()
@@ -49,18 +51,21 @@ public class Unloading extends Order{
 				
 			}
 			
-		
-			while((short)Main.opc.get_Value("ordem_recebida2",1)!=1){
+			//quantTotal--;
+			quantityToBe--;
+			this.descarregada++;
+			//System.out.println(this.From);
+			//pr.sys.decreasePieces(this.From);
+			flag = false;
+			
+			while((short)Main.opc.get_Value("ordem_recebida",4)!=1){
+				
 				flag = true;
 			}
 		
-			if(flag) {
-				//quantTotal--;
-				quantityToBe--;
-				//System.out.println(this.From);
-				//pr.sys.decreasePieces(this.From);
-				flag = false;
-			}
+			
+			
+			
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {

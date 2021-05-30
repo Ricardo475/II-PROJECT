@@ -122,10 +122,10 @@ public class XML_parser {
 								Order order = new Order();
 								order = OL.OrdersList.get(i1);
 								
-								storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() +">"+ "\n";
+								
 
 								if(order.toString().contains("Transformation")) {
-
+									storedOrders = storedOrders + "<Order Number=" + order.getOrderNumber() +">"+ "\n";
 									storedOrders = storedOrders + "<Transform From=\"" + ((Transformação)order).From + "\" To=\"" + ((Transformação)order).To + "\" Quantity=\"" + ((Transformação)order).quantTotal + "\" Quantity1=\"" + ((Transformação)order).quantProcessed + "\" Quantity2=\""
 											+ ((Transformação)order).quantExe + "\" Quantity3=\"" + ((Transformação)order).quantToBe + "\" Time=\"" + order.instanteEnviado + "\" Time1=\"" + order.instanteChegada + "\" MaxDelay=\"" + order.MaxDelay + "\" Penalty=\"" + ((Transformação)order).Penalty + "\" Start=\"" + ((Transformação)order).startTime
 											+ "\" End=\"" + ((Transformação)order).finTime + "\" PenaltyIncurred=\"" + ((Transformação)order).PenaltyInc + "\"/>\r\n";

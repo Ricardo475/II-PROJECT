@@ -128,8 +128,8 @@ public class DataBase {
 
 	void storeOrder_Unloading(Unloading order)
 	{
-		String SQL = "INSERT INTO \"Ordens_de_descarga\" (\"IDOrdem\",\"Tipo\",\"Destino\",\"Quantidade\",\"QuantidadePorEnviar\",\"QuantidadeDescarregada\",\"Done\",\"ActiveOrder\") VALUES "+"("+order.orderNumber+",'"+order.unloadType+"','"+order.dest+"',"+order.quantity+","+order.quantityToBe+","+(order.quantityToBe+order.quantity-order.quantityToBe)+","+order.done+","+order.activeOrder+")";
-		String SQL1= "UPDATE \"Ordens_de_descarga\" SET \"QuantidadePorEnviar\" = "+order.quantityToBe+", \"QuantidadeDescarregada\" = "+(order.quantityToBe+order.quantity-order.quantityToBe)+", \"Done\" = "+ order.done+", \"ActiveOrder\" = "+order.activeOrder+ " WHERE \"IDOrdem\" = "+order.orderNumber;
+		String SQL = "INSERT INTO \"Ordens_de_descarga\" (\"IDOrdem\",\"Tipo\",\"Destino\",\"Quantidade\",\"QuantidadePorEnviar\",\"QuantidadeDescarregada\",\"Done\",\"ActiveOrder\") VALUES "+"("+order.orderNumber+",'"+order.unloadType+"','"+order.dest+"',"+order.quantity+","+order.quantityToBe+","+(order.descarregada)+","+order.done+","+order.activeOrder+")";
+		String SQL1= "UPDATE \"Ordens_de_descarga\" SET \"QuantidadePorEnviar\" = "+order.quantityToBe+", \"QuantidadeDescarregada\" = "+(order.descarregada)+", \"Done\" = "+ order.done+", \"ActiveOrder\" = "+order.activeOrder+ " WHERE \"IDOrdem\" = "+order.orderNumber;
 		if(this.existeOrderUnload(order.orderNumber))
 		{
 			try (Connection conn = connect();
@@ -182,7 +182,7 @@ public class DataBase {
 				int QuantidadeDescarregada= rs.getInt("QuantidadeDescarregada");
 				boolean done= rs.getBoolean("Done");
 				boolean ActiveOrder= rs.getBoolean("ActiveOrder");
-				Unloading aux = new Unloading(IDOrdem,tipo,Destino,Quantidade,QuantidadePorenviar,done,ActiveOrder);
+				Unloading aux = new Unloading(IDOrdem,tipo,Destino,Quantidade,QuantidadePorenviar,QuantidadeDescarregada,done,ActiveOrder);
 				Main.OL.addOrder(aux);
 			}
 		} catch (SQLException e) {
@@ -492,5 +492,16 @@ public class DataBase {
 
 		return p;
 		
+	}
+	public void clearALL()
+	{
+		String SQL="TRUNCATE  \"Armazem\" CASCADE;TRUNCATE  \"Carga\" CASCADE; TRUNCATE \"Maquinas\" CASCADE;TRUNCATE \"Ordens_de_descarga\" CASCADE; TRUNCATE \"Ordens_transformacao\" CASCADE; TRUNCATE \"Pushers\" CASCADE";
+		try (Connection conn = connect();
+				Statement stmt = conn.createStatement();) {
+
+			stmt.executeUpdate(SQL);
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }
